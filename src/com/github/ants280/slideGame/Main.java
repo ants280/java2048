@@ -1,4 +1,4 @@
-package com.github.ants280.java2048;
+package com.github.ants280.slideGame;
 
 public class Main
 {
