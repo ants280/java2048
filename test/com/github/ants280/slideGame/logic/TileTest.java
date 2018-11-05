@@ -8,7 +8,7 @@ import org.junit.Test;
 public class TileTest
 {
 	private static final Tile[] VALUES = Tile.values();
-	
+
 	@Test
 	public void testMultipleTiles()
 	{
@@ -20,7 +20,7 @@ public class TileTest
 	{
 		Assert.assertSame(2, VALUES[0].getValue());
 	}
-	
+
 	/**
 	 * Tiles values should increase by a multiple of 2 from the previous tile.
 	 */
@@ -37,7 +37,7 @@ public class TileTest
 			prevousValue *= 2;
 		}
 	}
-	
+
 	@Test
 	public void testGetDisplayValue()
 	{

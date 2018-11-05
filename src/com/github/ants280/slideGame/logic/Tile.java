@@ -18,7 +18,7 @@ public enum Tile
 	V_256(0xedcc61),
 	V_512(0xedc850),
 	V_1024(0xedc53f),
-	V_2048(0xedc22e),;
+	V_2048(0xedc22e);
 
 	private final int value;
 	private final String displayValue;

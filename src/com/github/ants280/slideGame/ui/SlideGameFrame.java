@@ -8,11 +8,10 @@ public class SlideGameFrame extends JFrame
 	public SlideGameFrame()
 	{
 		super("Slide Game");
-		
+
 		initSize();
 	}
-	
-	
+
 	private void initSize()
 	{
 		this.setMinimumSize(new Dimension(400, 100));
