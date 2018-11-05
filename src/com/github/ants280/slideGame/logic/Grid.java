@@ -4,7 +4,6 @@ import java.util.stream.IntStream;
 
 public class Grid
 {
-
 	private final int length;
 	private final Tile[][] rows;
 	private final Tile[][] cols;
@@ -22,5 +21,40 @@ public class Grid
 				.map(i -> length)
 				.mapToObj(Tile[]::new)
 				.toArray(Tile[][]::new);
+	}
+
+	public boolean slideTilesLeft()
+	{
+		return slideRows(true);
+	}
+
+	public boolean slideTilesRight()
+	{
+		return slideRows(false);
+	}
+
+	public boolean slideTilesUp()
+	{
+		return slideCols(true);
+	}
+
+	public boolean slideTilesDown()
+	{
+		return slideCols(false);
+	}
+
+	boolean slideRows(boolean slideTowardStart)
+	{
+		return slideTiles(true, slideTowardStart);
+	}
+
+	boolean slideCols(boolean slideTowardStart)
+	{
+		return slideTiles(true, slideTowardStart);
+	}
+
+	private boolean slideTiles(boolean slideRows, boolean slideTowardStart)
+	{
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }
