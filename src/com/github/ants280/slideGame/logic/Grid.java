@@ -49,6 +49,11 @@ public class Grid
 		}
 	}
 
+	public Tile getTile(int r, int c)
+	{
+		return rows[r][c];
+	}
+
 	/**
 	 * Add a random tile to an empty spot on the grid.
 	 */
@@ -130,74 +135,77 @@ public class Grid
 
 		for (int i = 0; i < length; i++)
 		{
-			sum += slideTiles(i, slideRows, towardZero);
+			sum += slideTiles(slideRows, i, towardZero);
 		}
 
 		return sum;
 	}
 
-	private int slideTiles(int index, boolean slideRows, boolean towardZero)
+	/**
+	 * Slide the tiles at the specified index in the specified direction.
+	 *
+	 * @param slideRows Whether or not a row or column is being slid
+	 * (consolidated).
+	 * @param index The row or column index.
+	 * @param towardZero Whether or not to slide the row/column up/left (toward
+	 * zero) or down/right (toward the end of the array).
+	 * @return The sum of the newly created, combined tiles.
+	 */
+	private int slideTiles(boolean slideRows, int index, boolean towardZero)
 	{
 		int sum = 0;
 
 		Tile[] targetArray = slideRows ? rows[index] : cols[index];
-		Tile[][] otherMatrix = slideRows ? cols : rows;
-		int slideIndex = towardZero ? length - 1 : 0;
+		Tile[] slideArray = new Tile[length];
+		int slideIndex = towardZero ? 0 : length - 1;
 		for (int i = towardZero ? length - 1 : 0;
 				towardZero ? i >= 0 : i + 1 < length;
 				i += towardZero ? -1 : 1)
 		{
 			if (targetArray[i] != null)
 			{
-				if (slideIndex > 0 && targetArray[slideIndex] == targetArray[i])
+				if (slideIndex > 0
+						&& slideArray[slideIndex - 1] == targetArray[i])
 				{
-					Tile nextTile = targetArray[slideIndex].getNext();
-					targetArray[slideIndex] = nextTile;
-					otherMatrix[slideIndex][index] = nextTile;
+					Tile nextTile = targetArray[i].getNext();
+//					targetArray[slideIndex] = nextTile;
+//					otherMatrix[slideIndex][index] = nextTile;
+					slideArray[slideIndex - 1] = nextTile;
 					sum += nextTile.getValue();
 				}
 				else if (slideIndex != i)
 				{
-					targetArray[slideIndex] = targetArray[i];
-					otherMatrix[slideIndex][index] = otherMatrix[i][index];
-					slideIndex += towardZero ? -1 : 1;
+//					targetArray[slideIndex] = targetArray[i];
+//					otherMatrix[slideIndex][index] = otherMatrix[i][index];
+					slideArray[slideIndex] = targetArray[i];
+					slideIndex += towardZero ? 1 : -1;
 				}
 			}
 		}
 
-		if (debug)
+		for (int i = towardZero ? length - 1 : 0;
+				towardZero ? i >= 0 : i + 1 < length;
+				i += towardZero ? -1 : 1)
 		{
-			// ensure the data structure is not comprimised
-			for (int r = 0; r < length; r++)
-			{
-				for (int c = 0; c < length; c++)
-				{
-					if (rows[c][c] != cols[c][c])
-					{
-						throw new RuntimeException(String.format(
-								"ERROR: Same tile should be saved in rotated "
-										+ "data structure at [r=%d,c=%d].  "
-										+ "Found %s and %s.%n",
-								c, c, rows[c][c], cols[c][c]));
-					}
-				}
-			}
+			setTile(
+					slideRows ? index : i,
+					slideRows ? i : index,
+					slideArray[i]);
 		}
 
 		return sum;
 	}
 
-	// package-private for testing
-	void setTile(int r, int c, Tile tile
-	)
+	/**
+	 * Set the tile at the specified location. Updates the both the rows and
+	 * columns to keep the reflective data structure intact.
+	 *
+	 * Package-private for easy arrangements of tests.
+	 */
+	void setTile(int r, int c, Tile tile)
 	{
 		rows[r][c] = tile;
 		cols[c][r] = tile;
-	}
-
-	public Tile getTile(int r, int c)
-	{
-		return rows[r][c];
 	}
 
 	private static Tile[][] createTiles(int length)
