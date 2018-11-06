@@ -188,9 +188,7 @@ public class Grid
 			}
 		}
 
-		for (int i = towardZero ? length - 1 : 0;
-				towardZero ? i >= 0 : i + 1 < length;
-				i += towardZero ? -1 : 1)
+		for (int i = 0; i < length; i++)
 		{
 			setTile(
 					slideRows ? index : i,
