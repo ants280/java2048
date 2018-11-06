@@ -155,8 +155,8 @@ public class Grid
 	{
 		int sum = 0;
 
-		Tile[] targetArray = slideRows ? rows[index] : cols[index];
-		Tile[] slideArray = new Tile[length];
+		Tile[] sourceArray = slideRows ? rows[index] : cols[index];
+		Tile[] tempArrayArray = new Tile[length];
 		int slideIndex = towardZero ? 0 : length - 1;
 		int delta = towardZero ? 1 : -1;
 		boolean canCombineWithPreviousSlide = true;
@@ -164,24 +164,20 @@ public class Grid
 				towardZero ? i < length : i >= 0;
 				i += delta)
 		{
-			if (targetArray[i] != null)
+			if (sourceArray[i] != null)
 			{
 				if (slideIndex > 0
 						&& canCombineWithPreviousSlide
-						&& slideArray[slideIndex - 1] == targetArray[i])
+						&& tempArrayArray[slideIndex - 1] == sourceArray[i])
 				{
-					Tile nextTile = targetArray[i].getNext();
-//					targetArray[slideIndex] = nextTile;
-//					otherMatrix[slideIndex][index] = nextTile;
-					slideArray[slideIndex - 1] = nextTile;
+					Tile nextTile = sourceArray[i].getNext();
+					tempArrayArray[slideIndex - 1] = nextTile;
 					sum += nextTile.getValue();
 					canCombineWithPreviousSlide = false;
 				}
-				else// if (slideIndex != i)
+				else
 				{
-//					targetArray[slideIndex] = targetArray[i];
-//					otherMatrix[slideIndex][index] = otherMatrix[i][index];
-					slideArray[slideIndex] = targetArray[i];
+					tempArrayArray[slideIndex] = sourceArray[i];
 					slideIndex += delta;
 					canCombineWithPreviousSlide = true;
 				}
@@ -193,7 +189,7 @@ public class Grid
 			setTile(
 					slideRows ? index : i,
 					slideRows ? i : index,
-					slideArray[i]);
+					tempArrayArray[i]);
 		}
 
 		return sum;
