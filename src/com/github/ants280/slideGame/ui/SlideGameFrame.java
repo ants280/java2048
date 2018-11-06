@@ -27,27 +27,27 @@ public class SlideGameFrame extends JFrame
 		Grid grid = new Grid(4);
 		SlideGameCanvas slideGameCanvas = new SlideGameCanvas(grid);
 
+		JLabel gameOverLabel = new JLabel();
 		JLabel scoreLabel = new JLabel();
 		JLabel highScoreLabel = new JLabel();
 		Border border = BorderFactory.createLineBorder(SlideGameCanvas.SPACER_COLOR);
 		scoreLabel.setBorder(border);
 		highScoreLabel.setBorder(border);
 
-		this.slideGameManager = new SlideGameManager(grid, slideGameCanvas, slideGameCanvas, scoreLabel, highScoreLabel);
+		this.slideGameManager = new SlideGameManager(grid, this, slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
 		this.addKeyListener(slideGameManager);
 
-		initSize(slideGameCanvas, scoreLabel, highScoreLabel);
+		initSize(slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
 	}
 
-	private void initSize(SlideGameCanvas slideGameCanvas, JLabel scoreLabel, JLabel highScoreLabel)
+	private void initSize(SlideGameCanvas slideGameCanvas, JLabel gameOverLabel, JLabel scoreLabel, JLabel highScoreLabel)
 	{
-		JPanel labelPanel = new JPanel();
-		labelPanel.add(scoreLabel, BorderLayout.WEST);
-		labelPanel.add(highScoreLabel, BorderLayout.EAST);
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+		topPanel.add(gameOverLabel);
 		topPanel.add(Box.createGlue());
-		topPanel.add(labelPanel);
+		topPanel.add(scoreLabel);
+		topPanel.add(highScoreLabel); // TODO: the high score label is a little close to the score label.
 
 		this.setJMenuBar(createJMenuBar());
 		this.add(topPanel, BorderLayout.NORTH);
