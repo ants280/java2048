@@ -35,8 +35,6 @@ public class SlideGameFrame extends JFrame
 
 		this.slideGameManager = new SlideGameManager(grid, slideGameCanvas, slideGameCanvas, scoreLabel, highScoreLabel);
 		this.addKeyListener(slideGameManager);
-		this.addKeyListener(slideGameManager);
-		this.addKeyListener(slideGameManager);
 
 		initSize(slideGameCanvas, scoreLabel, highScoreLabel);
 	}
