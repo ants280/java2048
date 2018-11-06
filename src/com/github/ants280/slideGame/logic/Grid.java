@@ -119,7 +119,7 @@ public class Grid
 
 		return false;
 	}
-	
+
 	public boolean isFilled()
 	{
 		for (int r = 0; r < length; r++)
@@ -132,10 +132,10 @@ public class Grid
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	public boolean has2048Tile()
 	{
 		return has2048Tile;
@@ -223,19 +223,18 @@ public class Grid
 		Tile[] tempArrayArray = new Tile[length];
 		int slideIndex = towardZero ? 0 : length - 1;
 		int delta = towardZero ? 1 : -1;
-		boolean canCombineWithPreviousSlide = true;
+		boolean canCombineWithPreviousSlide = false;
 		for (int i = slideIndex;
 				towardZero ? i < length : i >= 0;
 				i += delta)
 		{
 			if (sourceArray[i] != null)
 			{
-				if (slideIndex > 0
-						&& canCombineWithPreviousSlide
-						&& tempArrayArray[slideIndex - 1] == sourceArray[i])
+				if (canCombineWithPreviousSlide
+						&& tempArrayArray[slideIndex - delta] == sourceArray[i])
 				{
 					Tile nextTile = sourceArray[i].getNext();
-					tempArrayArray[slideIndex - 1] = nextTile;
+					tempArrayArray[slideIndex - delta] = nextTile;
 					sum += nextTile.getValue();
 					canCombineWithPreviousSlide = false;
 					if (nextTile == Tile.V_2048)

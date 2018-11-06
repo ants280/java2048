@@ -141,8 +141,8 @@ public class GridTest
 
 		Assert.assertEquals(16, moveScore);
 	}
-	
-		@Test
+
+	@Test
 	public void testSlideTilesDown_16s4s()
 	{
 		grid.setTile(0, 0, Tile.V_16);
@@ -267,7 +267,7 @@ public class GridTest
 
 		Assert.assertFalse(grid.has2048Tile());
 	}
-	
+
 	@Test
 	public void testStall()
 	{
