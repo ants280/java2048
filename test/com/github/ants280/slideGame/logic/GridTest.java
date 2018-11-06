@@ -47,7 +47,7 @@ public class GridTest
 
 		grid.slideTilesRight();
 
-		Assert.assertEquals(Tile.V_2, grid.getTile(3, 0));
+		Assert.assertEquals(Tile.V_2, grid.getTile(1, 3));
 		Assert.assertNull(grid.getTile(1, 1));
 	}
 
