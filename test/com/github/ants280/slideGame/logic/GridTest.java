@@ -45,7 +45,7 @@ public class GridTest
 	{
 		grid.setTile(1, 1, Tile.V_2);
 
-		grid.slideTilesLeft();
+		grid.slideTilesRight();
 
 		Assert.assertEquals(Tile.V_2, grid.getTile(3, 0));
 		Assert.assertNull(grid.getTile(1, 1));
@@ -56,7 +56,7 @@ public class GridTest
 	{
 		grid.setTile(1, 1, Tile.V_2);
 
-		grid.slideTilesLeft();
+		grid.slideTilesUp();
 
 		Assert.assertEquals(Tile.V_2, grid.getTile(0, 1));
 		Assert.assertNull(grid.getTile(1, 1));
@@ -67,7 +67,7 @@ public class GridTest
 	{
 		grid.setTile(1, 1, Tile.V_2);
 
-		grid.slideTilesLeft();
+		grid.slideTilesDown();
 
 		Assert.assertEquals(Tile.V_2, grid.getTile(3, 1));
 		Assert.assertNull(grid.getTile(1, 1));
