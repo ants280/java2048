@@ -70,7 +70,7 @@ public class Grid
 	 */
 	public void addRandomTile()
 	{
-		if (rows[0][0] != null && !canSlideInAnyDirection())
+		if (isFilled())
 		{
 			throw new IllegalArgumentException("Cannot add random tile");
 		}
@@ -119,7 +119,23 @@ public class Grid
 
 		return false;
 	}
-
+	
+	public boolean isFilled()
+	{
+		for (int r = 0; r < length; r++)
+		{
+			for (int c = 0; c < length; c++)
+			{
+				if (getTile(r, c) == null)
+				{
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
 	public boolean has2048Tile()
 	{
 		return has2048Tile;

@@ -70,7 +70,10 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 		}
 		else
 		{
-			grid.addRandomTile();
+			if (!grid.isFilled())
+			{
+				grid.addRandomTile();
+			}
 			slideGameCanvas.repaint();
 		}
 	}

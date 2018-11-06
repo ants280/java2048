@@ -141,6 +141,19 @@ public class GridTest
 
 		Assert.assertEquals(16, moveScore);
 	}
+	
+		@Test
+	public void testSlideTilesDown_16s4s()
+	{
+		grid.setTile(0, 0, Tile.V_16);
+		grid.setTile(1, 0, Tile.V_16);
+		grid.setTile(2, 0, Tile.V_4);
+		grid.setTile(3, 0, Tile.V_4);
+
+		int moveScore = grid.slideTiles(MoveDirection.DOWN);
+
+		Assert.assertEquals(40, moveScore);
+	}
 
 	@Test
 	public void testHas2048Tile_empty()
@@ -253,5 +266,28 @@ public class GridTest
 		grid.clear();
 
 		Assert.assertFalse(grid.has2048Tile());
+	}
+	
+	@Test
+	public void testStall()
+	{
+		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 1, Tile.V_2);
+		grid.setTile(0, 2, Tile.V_4);
+		grid.setTile(0, 3, Tile.V_2);
+		grid.setTile(1, 0, Tile.V_8);
+		grid.setTile(1, 1, Tile.V_64);
+		grid.setTile(1, 2, Tile.V_8);
+		grid.setTile(1, 3, Tile.V_16);
+		grid.setTile(2, 0, Tile.V_4);
+		grid.setTile(2, 1, Tile.V_2);
+		grid.setTile(2, 2, Tile.V_32);
+		grid.setTile(2, 3, Tile.V_8);
+		grid.setTile(3, 0, Tile.V_2);
+		grid.setTile(3, 1, Tile.V_2);
+		grid.setTile(3, 2, Tile.V_4);
+		grid.setTile(3, 3, Tile.V_2);
+
+		Assert.assertTrue(grid.isFilled());
 	}
 }
