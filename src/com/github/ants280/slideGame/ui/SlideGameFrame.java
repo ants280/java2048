@@ -7,6 +7,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -52,11 +54,10 @@ public class SlideGameFrame extends JFrame
 		JPanel labelPanel = new JPanel();
 		labelPanel.add(scoreLabel, BorderLayout.WEST);
 		labelPanel.add(highScoreLabel, BorderLayout.EAST);
-//		JPanel labelPanel = new JPanel(new GridLayout(1, 2));
-//		labelPanel.add(scoreLabel);
-//		labelPanel.add(highScoreLabel);
 		JPanel topPanel = new JPanel();
-		topPanel.add(labelPanel, BorderLayout.EAST);
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
+		topPanel.add(Box.createGlue());
+		topPanel.add(labelPanel);
 
 		this.setJMenuBar(createJMenuBar());
 		this.add(topPanel, BorderLayout.NORTH);
@@ -124,6 +125,7 @@ public class SlideGameFrame extends JFrame
 			int score;
 			switch (keyEvent.getKeyCode())
 			{
+				// TODO: Ensure move can be made before making it!
 				case KeyEvent.VK_LEFT:
 					score = grid.slideTilesLeft();
 					break;
