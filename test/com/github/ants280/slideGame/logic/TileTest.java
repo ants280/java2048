@@ -63,4 +63,19 @@ public class TileTest
 			}
 		}
 	}
+
+	@Test
+	public void getNextTile()
+	{
+		for (int i = 0; i + 1 < VALUES.length; i++)
+		{
+			Assert.assertEquals(VALUES[i + 1], VALUES[i].getNext());
+		}
+	}
+
+	@Test(expected=IllegalArgumentException.class)
+	public void getNextTile_last()
+	{
+		VALUES[VALUES.length - 1].getNext();
+	}
 }

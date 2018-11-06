@@ -23,6 +23,7 @@ public enum Tile
 	private final int value;
 	private final String displayValue;
 	private final long color;
+	private static final Tile[] VALUES = values();
 
 	private Tile(long color)
 	{
@@ -49,5 +50,17 @@ public enum Tile
 	public long getColor()
 	{
 		return color;
+	}
+
+	public Tile getNext()
+	{
+		int index = ordinal();
+		
+		if (index + 1 == VALUES.length)
+		{
+			throw new IllegalArgumentException("No Tile is after the last.");
+		}
+		
+		return VALUES[index + 1];
 	}
 }
