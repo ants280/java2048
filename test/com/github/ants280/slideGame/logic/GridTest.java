@@ -97,7 +97,7 @@ public class GridTest
 
 		int moveScore = grid.slideTilesLeft();
 
-		Assert.assertEquals(4, moveScore);
+		Assert.assertEquals(12, moveScore);
 		Assert.assertEquals(Tile.V_4, grid.getTile(0, 0));
 		Assert.assertEquals(Tile.V_8, grid.getTile(0, 1));
 		Assert.assertNull(grid.getTile(0, 2));
