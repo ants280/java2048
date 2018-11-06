@@ -1,21 +1,150 @@
 package com.github.ants280.slideGame.ui;
 
+import com.github.ants280.slideGame.logic.Grid;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.border.Border;
 
 public class SlideGameFrame extends JFrame
 {
+	private final Grid grid;
+	private final SlideGameCanvas slideGameCanvas;
+	private final JLabel scoreLabel;
+	private final JLabel highScoreLabel;
+	private int score;
+	private int highScore;
+	
 	public SlideGameFrame()
 	{
 		super("Slide Game");
-
+		this.grid = new Grid(4);
+		this.slideGameCanvas = new SlideGameCanvas(grid);
+		this.addKeyListener(new SlideGameKeyListener());
+		
+		this.scoreLabel = new JLabel();
+		this.highScoreLabel = new JLabel();
+		Border border = BorderFactory.createLineBorder(SlideGameCanvas.SPACER_COLOR);
+		scoreLabel.setBorder(border);
+		highScoreLabel.setBorder(border);
+		this.score = 0;
+		this.highScore = 0;
+		
+		grid.addRandomTile();
+		grid.addRandomTile();
+		
+		updateScoreLabels();
 		initSize();
 	}
 
 	private void initSize()
 	{
-		this.setMinimumSize(new Dimension(400, 100));
+		JPanel labelPanel = new JPanel();
+		labelPanel.add(scoreLabel, BorderLayout.WEST);
+		labelPanel.add(highScoreLabel, BorderLayout.EAST);
+//		JPanel labelPanel = new JPanel(new GridLayout(1, 2));
+//		labelPanel.add(scoreLabel);
+//		labelPanel.add(highScoreLabel);
+		JPanel topPanel = new JPanel();
+		topPanel.add(labelPanel, BorderLayout.EAST);
+		
+		this.setJMenuBar(createJMenuBar());
+		this.add(topPanel, BorderLayout.NORTH);
+		this.add(slideGameCanvas);
+		
+		this.setMinimumSize(new Dimension(400, 500));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
+	}
+	
+	private void incrementScore(int additionalScore)
+	{
+		this.score += additionalScore;
+		if (score > highScore)
+		{
+			highScore = score;
+		}
+	}
+	
+	private void updateScoreLabels()
+	{
+		this.scoreLabel.setText("SCORE: " + score);
+		this.highScoreLabel.setText("BEST: " + highScore);
+	}
+
+	private JMenuBar createJMenuBar()
+	{
+		JMenuItem newGame_MI = new JMenuItem("New Game", KeyEvent.VK_N);
+		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+		newGame_MI.addActionListener(actionEvent -> this.restartGame());
+		
+		JMenuItem exit_MI = new JMenuItem("Exit", KeyEvent.VK_X);
+		exit_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
+		exit_MI.addActionListener(actionEvent -> Runtime.getRuntime().exit(0));
+		
+		JMenu actionMenu = new JMenu("Action");
+		actionMenu.add(newGame_MI);
+		actionMenu.add(exit_MI);
+		
+//		JMenu helpMenu = new JMenu("Help");
+//		helpMenu.add(help_MI);
+//		helpMenu.add(about_MI);
+
+		JMenuBar mainMenu = new JMenuBar();
+		mainMenu.add(actionMenu);
+//		mainMenu.add(helpMenu);
+		
+		return mainMenu;
+	}
+	
+	private void restartGame()
+	{
+		// TODO: restart game logic
+	}
+	
+	// It might be nice to make this a separate class.
+	private class SlideGameKeyListener extends KeyAdapter implements KeyListener
+	{
+		@Override
+		public void keyReleased(KeyEvent keyEvent)
+		{
+			int score;
+			switch (keyEvent.getKeyCode())
+			{
+				case KeyEvent.VK_LEFT:
+					score = grid.slideTilesLeft();
+					break;
+				case KeyEvent.VK_RIGHT:
+					score = grid.slideTilesRight();
+					break;
+				case KeyEvent.VK_UP:
+					score = grid.slideTilesUp();
+					break;
+				case KeyEvent.VK_DOWN:
+					score = grid.slideTilesDown();
+					break;
+				default:
+					return;
+			}
+			
+			if (score > 0)
+			{
+				SlideGameFrame.this.incrementScore(score);
+			}
+			// TODO: check if game is over
+			// TODO: Ensure tiles can be added
+			grid.addRandomTile();
+			slideGameCanvas.repaint();
+		}
 	}
 }

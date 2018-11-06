@@ -22,10 +22,10 @@ public enum Tile
 
 	private final int value;
 	private final String displayValue;
-	private final long color;
+	private final int color;
 	private static final Tile[] VALUES = values();
 
-	private Tile(long color)
+	private Tile(int color)
 	{
 		if (color < 0 || color > 0xffffff)
 		{
@@ -47,7 +47,7 @@ public enum Tile
 		return displayValue;
 	}
 
-	public long getColor()
+	public int getColor()
 	{
 		return color;
 	}

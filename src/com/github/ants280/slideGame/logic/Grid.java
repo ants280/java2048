@@ -6,7 +6,6 @@ import java.util.stream.IntStream;
 public class Grid
 {
 	private static final boolean PRINT_MOVES = false;
-	private final boolean debug;
 	private final int length;
 	private final Tile[][] rows;
 	private final Tile[][] cols;
@@ -19,23 +18,12 @@ public class Grid
 	 */
 	public Grid(int length)
 	{
-		this(length, false);
-	}
-
-	/**
-	 * Test constructor (package-private). Enables debuging.
-	 *
-	 * @param length The width and height of rows and columns in the grid.
-	 */
-	Grid(int length, boolean debug)
-	{
 		if (length < 2)
 		{
 			throw new IllegalArgumentException("Length must be large enough "
 					+ "to slide tiles.  Found: " + length);
 		}
 
-		this.debug = debug;
 		this.length = length;
 		this.rows = createTiles(length);
 		this.cols = createTiles(length);
@@ -47,6 +35,11 @@ public class Grid
 			System.out.printf(
 					"Created grid with length %d and seed %d%n", length, seed);
 		}
+	}
+
+	public int getLength()
+	{
+		return length;
 	}
 
 	public Tile getTile(int r, int c)
@@ -69,7 +62,7 @@ public class Grid
 			r = random.nextInt(length);
 			c = random.nextInt(length);
 		}
-		while (getTile(r, c) == null);
+		while (getTile(r, c) != null);
 
 		if (PRINT_MOVES)
 		{

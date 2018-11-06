@@ -53,7 +53,7 @@ public class TileTest
 	@Test
 	public void testUniqueColors()
 	{
-		Collection<Long> colors = new HashSet<>();
+		Collection<Integer> colors = new HashSet<>();
 
 		for (Tile tile : VALUES)
 		{
@@ -73,7 +73,7 @@ public class TileTest
 		}
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void getNextTile_last()
 	{
 		VALUES[VALUES.length - 1].getNext();

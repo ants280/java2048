@@ -28,6 +28,13 @@ public class GridTest
 			}
 		}
 	}
+	
+	@Test
+	public void testAddRandomTileOnEmptyBoard()
+	{
+		// it should not cause an infinite loop
+		grid.addRandomTile();
+	}
 
 	@Test
 	public void testSlideTilesLeft()
