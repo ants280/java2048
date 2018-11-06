@@ -1,7 +1,5 @@
-package com.github.ants280.slideGame;
+package com.github.ants280.slideGame.ui;
 
-import com.github.ants280.slideGame.ui.SlideFrameUncaughtExceptionHandler;
-import com.github.ants280.slideGame.ui.SlideGameFrame;
 import java.awt.Window;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
