@@ -1,8 +1,6 @@
 package com.github.ants280.slideGame.logic;
 
 import java.util.Random;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Grid
 {
@@ -53,11 +51,16 @@ public class Grid
 
 	/**
 	 * Add a random tile to an empty spot on the grid.
+	 * 
+	 * TODO: This may be slow with fairly-filled game boards due to random adding.
 	 */
 	public void addRandomTile()
 	{
-		// This may be slow with large game lengths.
-		// TODO: this will infinite-loop if the grid is filled, so it is buggy.
+		if (rows[0][0] != null && !canSlideInAnyDirection())
+		{
+			throw new IllegalArgumentException("Cannot add random tile");
+		}
+		
 		int r, c;
 
 		Tile tile = random.nextInt(10) == 0 ? Tile.V_4 : Tile.V_2;
@@ -92,8 +95,15 @@ public class Grid
 
 	public boolean canSlideInAnyDirection()
 	{
-		return Stream.of(MOVE_DIRECTIONS)
-				.anyMatch(this::canSlideTiles);
+		for (MoveDirection moveDirection : MOVE_DIRECTIONS)
+		{
+			if (canSlideTiles(moveDirection))
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public boolean has2048Tile()
@@ -237,10 +247,14 @@ public class Grid
 
 	private static Tile[][] createTiles(int length)
 	{
-		return IntStream.range(0, length)
-				.map(i -> length)
-				.mapToObj(Tile[]::new)
-				.toArray(Tile[][]::new);
+		Tile[][] tiles = new Tile[length][];
+		
+		for (int i = 0; i < length; i++)
+		{
+			tiles[i] = new Tile[length];
+		}
+		
+		return tiles;
 	}
 
 	public static enum MoveDirection

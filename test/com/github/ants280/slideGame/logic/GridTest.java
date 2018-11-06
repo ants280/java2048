@@ -37,6 +37,19 @@ public class GridTest
 		grid.addRandomTile();
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddRandomTileOnUnSlideableBoard()
+	{
+		grid = new Grid(2);
+		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 1, Tile.V_4);
+		grid.setTile(1, 0, Tile.V_4);
+		grid.setTile(1, 1, Tile.V_2);
+
+		// it should not cause an infinite loop
+		grid.addRandomTile();
+	}
+
 	@Test
 	public void testSlideTilesLeft()
 	{
@@ -156,35 +169,35 @@ public class GridTest
 
 		Assert.assertTrue(grid.has2048Tile());
 	}
-	
+
 	@Test
 	public void testCanSlideTilesInAnyDirection_empty()
 	{
 		Assert.assertFalse(grid.canSlideInAnyDirection());
 	}
-	
+
 	@Test
 	public void testCanSlideTiles_middle()
 	{
 		grid.setTile(1, 1, Tile.V_2);
-		
+
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.LEFT));
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.RIGHT));
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.UP));
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.DOWN));
 	}
-	
+
 	@Test
 	public void testCanSlideTiles_topLeft()
 	{
 		grid.setTile(0, 0, Tile.V_2);
-		
+
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.LEFT));
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.RIGHT));
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.UP));
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.DOWN));
 	}
-	
+
 	@Test
 	public void testCanSlideTiles_combine()
 	{
@@ -192,10 +205,10 @@ public class GridTest
 		grid.setTile(0, 1, Tile.V_4);
 		grid.setTile(0, 2, Tile.V_4);
 		grid.setTile(0, 3, Tile.V_8);
-		
+
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.LEFT));
 	}
-	
+
 	@Test
 	public void testCanSlideTiles_staggered()
 	{
@@ -204,10 +217,10 @@ public class GridTest
 		grid.setTile(0, 1, Tile.V_4);
 		grid.setTile(1, 0, Tile.V_4);
 		grid.setTile(1, 1, Tile.V_2);
-		
+
 		Assert.assertFalse(grid.canSlideInAnyDirection());
 	}
-	
+
 	@Test
 	public void testCanSlideTiles_staggered_oddLength()
 	{
@@ -215,7 +228,7 @@ public class GridTest
 		grid.setTile(0, 0, Tile.V_2);
 		grid.setTile(0, 1, Tile.V_4);
 		grid.setTile(0, 2, Tile.V_8);
-		
+
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.LEFT));
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.RIGHT));
 	}
