@@ -111,4 +111,21 @@ public class GridTest
 		Assert.assertNull(grid.getTile(0, 2));
 		Assert.assertNull(grid.getTile(0, 3));
 	}
+	
+	@Test
+	public void testSlideTiles_22_allRows()
+	{
+		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 1, Tile.V_2);
+		grid.setTile(1, 0, Tile.V_2);
+		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(2, 0, Tile.V_2);
+		grid.setTile(2, 1, Tile.V_2);
+		grid.setTile(3, 0, Tile.V_2);
+		grid.setTile(3, 1, Tile.V_2);
+
+		int moveScore = grid.slideTiles(MoveDirection.LEFT);
+
+		Assert.assertEquals(16, moveScore);
+	}
 }
