@@ -21,6 +21,7 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 	private final JLabel highScoreLabel;
 	private int score;
 	private int highScore;
+	private boolean listenersActive;
 
 	static
 	{
@@ -48,6 +49,7 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 		this.highScoreLabel = highScoreLabel;
 		this.score = 0;
 		this.highScore = 0;
+		this.listenersActive = true; // the slideGameRootComponent should add this as various listeners after this has been constructed.
 
 		initGame();
 	}
@@ -66,14 +68,17 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 		if (!grid.canSlideInAnyDirection() || grid.has2048Tile())
 		{
 			// TODO: paint special text on canvas (win/lose), add keylistener on restart
-			slideGameRootComponent.removeKeyListener(this); // TODO: need to add key listener when new game is started.  Does two
+			removeListeners();
 		}
 		else
 		{
-			if (!grid.isFilled())
+			grid.addRandomTile();
+
+			if (!grid.canSlideInAnyDirection())
 			{
-				grid.addRandomTile();
+				removeListeners();
 			}
+			
 			slideGameCanvas.repaint();
 		}
 	}
@@ -91,6 +96,18 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 		grid.clear();
 		initGame();
 		slideGameCanvas.repaint();
+
+		if (!listenersActive)
+		{
+			slideGameRootComponent.addKeyListener(this);
+		}
+	}
+	
+	private void removeListeners()
+	{
+		slideGameRootComponent.removeKeyListener(this);
+		
+		listenersActive = false;
 	}
 
 	private void incrementScore(int additionalScore)
