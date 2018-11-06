@@ -30,8 +30,9 @@ public class SlideGameFrame extends JFrame
 	private final JLabel highScoreLabel;
 	private int score;
 	private int highScore;
-	
+
 	private static final Map<Integer, MoveDirection> keyCodeMoveDirections = new HashMap<>(); // TODO: is final, but unmodifiable :(
+
 	static
 	{
 		Stream.of(KeyEvent.VK_W, KeyEvent.VK_UP)
@@ -108,7 +109,7 @@ public class SlideGameFrame extends JFrame
 	{
 		JMenuItem newGame_MI = new JMenuItem("New Game", KeyEvent.VK_N);
 		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
-		newGame_MI.addActionListener(actionEvent -> this.restartGame());
+		newGame_MI.addActionListener(actionEvent -> this.newGame());
 
 		JMenuItem exit_MI = new JMenuItem("Exit", KeyEvent.VK_X);
 		exit_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
@@ -128,9 +129,15 @@ public class SlideGameFrame extends JFrame
 		return mainMenu;
 	}
 
-	private void restartGame()
+	private void newGame()
 	{
-		// TODO: restart game logic
+		// TODO: much of this code is duplicated elsewhere on creation.
+		grid.clear();
+		score = 0;
+		grid.addRandomTile();
+		grid.addRandomTile();
+		updateScoreLabels();
+		slideGameCanvas.repaint();
 	}
 
 	// It might be nice to make this a separate class.
@@ -140,16 +147,16 @@ public class SlideGameFrame extends JFrame
 		public void keyReleased(KeyEvent keyEvent)
 		{
 			MoveDirection moveDirection = keyCodeMoveDirections.get(keyEvent.getKeyCode());
-			
+
 			if (moveDirection == null || !grid.canSlideTiles(moveDirection))
 			{
 				return;
 			}
-			
+
 			int moveScore = grid.slideTiles(moveDirection);
 
 			SlideGameFrame.this.incrementScore(moveScore);
-			
+
 			if (!grid.canSlideInAnyDirection() || grid.has2048Tile())
 			{
 				// TODO: paint special text on canvas (win/lose), add keylistener on restart

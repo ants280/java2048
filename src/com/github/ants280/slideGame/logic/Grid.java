@@ -49,10 +49,24 @@ public class Grid
 		return rows[r][c];
 	}
 
+	public void clear()
+	{
+		for (int r = 0; r < length; r++)
+		{
+			for (int c = 0; c < length; c++)
+			{
+				setTile(r, c, null);
+			}
+		}
+
+		has2048Tile = false;
+	}
+
 	/**
 	 * Add a random tile to an empty spot on the grid.
-	 * 
-	 * TODO: This may be slow with fairly-filled game boards due to random adding.
+	 *
+	 * TODO: This may be slow with fairly-filled game boards due to random
+	 * adding.
 	 */
 	public void addRandomTile()
 	{
@@ -60,7 +74,7 @@ public class Grid
 		{
 			throw new IllegalArgumentException("Cannot add random tile");
 		}
-		
+
 		int r, c;
 
 		Tile tile = random.nextInt(10) == 0 ? Tile.V_4 : Tile.V_2;
@@ -102,7 +116,7 @@ public class Grid
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -171,7 +185,7 @@ public class Grid
 				}
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -248,12 +262,12 @@ public class Grid
 	private static Tile[][] createTiles(int length)
 	{
 		Tile[][] tiles = new Tile[length][];
-		
+
 		for (int i = 0; i < length; i++)
 		{
 			tiles[i] = new Tile[length];
 		}
-		
+
 		return tiles;
 	}
 

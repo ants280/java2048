@@ -232,4 +232,26 @@ public class GridTest
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.LEFT));
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.RIGHT));
 	}
+
+	@Test
+	public void testClear()
+	{
+		grid.setTile(1, 1, Tile.V_2);
+
+		grid.clear();
+
+		Assert.assertFalse(grid.canSlideInAnyDirection());
+	}
+
+	@Test
+	public void testClearOnWin()
+	{
+		grid.setTile(0, 0, Tile.V_1024);
+		grid.setTile(0, 1, Tile.V_1024);
+
+		grid.slideTiles(MoveDirection.LEFT);
+		grid.clear();
+
+		Assert.assertFalse(grid.has2048Tile());
+	}
 }
