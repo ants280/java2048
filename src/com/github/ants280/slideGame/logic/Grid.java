@@ -126,7 +126,7 @@ public class Grid
 
 	private int slideCols(boolean towardZero)
 	{
-		return slideTiles(true, towardZero);
+		return slideTiles(false, towardZero);
 	}
 
 	private int slideTiles(boolean slideRows, boolean towardZero)
