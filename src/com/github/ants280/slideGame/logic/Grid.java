@@ -5,7 +5,8 @@ import java.util.stream.IntStream;
 
 public class Grid
 {
-	private static final boolean DEBUG = false;
+	private static final boolean PRINT_MOVES = false;
+	private final boolean debug;
 	private final int length;
 	private final Tile[][] rows;
 	private final Tile[][] cols;
@@ -18,19 +19,30 @@ public class Grid
 	 */
 	public Grid(int length)
 	{
+		this(length, false);
+	}
+
+	/**
+	 * Test constructor (package-private). Enables debuging.
+	 *
+	 * @param length The width and height of rows and columns in the grid.
+	 */
+	Grid(int length, boolean debug)
+	{
 		if (length < 2)
 		{
 			throw new IllegalArgumentException("Length must be large enough "
-				+ "to slide tiles.  Found: " + length);
+					+ "to slide tiles.  Found: " + length);
 		}
-		
+
+		this.debug = debug;
 		this.length = length;
 		this.rows = createTiles(length);
 		this.cols = createTiles(length);
 		long seed = System.currentTimeMillis();
 		this.random = new Random(seed);
 
-		if (DEBUG)
+		if (PRINT_MOVES)
 		{
 			System.out.printf(
 					"Created grid with length %d and seed %d%n", length, seed);
@@ -54,7 +66,7 @@ public class Grid
 		}
 		while (getTile(r, c) == null);
 
-		if (DEBUG)
+		if (PRINT_MOVES)
 		{
 			System.out.printf("\tAdding %s Tile at [%d,%d]%n", tile, r, c);
 		}
@@ -64,7 +76,7 @@ public class Grid
 
 	public int slideTilesLeft()
 	{
-		if (DEBUG)
+		if (PRINT_MOVES)
 		{
 			System.out.println("\tLEFT");
 		}
@@ -74,7 +86,7 @@ public class Grid
 
 	public int slideTilesRight()
 	{
-		if (DEBUG)
+		if (PRINT_MOVES)
 		{
 			System.out.println("\tRIGHT");
 		}
@@ -84,7 +96,7 @@ public class Grid
 
 	public int slideTilesUp()
 	{
-		if (DEBUG)
+		if (PRINT_MOVES)
 		{
 			System.out.println("\tUP");
 		}
@@ -94,7 +106,7 @@ public class Grid
 
 	public int slideTilesDown()
 	{
-		if (DEBUG)
+		if (PRINT_MOVES)
 		{
 			System.out.println("\tDOWN");
 		}
@@ -126,43 +138,65 @@ public class Grid
 
 	private int slideTiles(int index, boolean slideRows, boolean towardZero)
 	{
-		Tile[] slidTiles = new Tile[length];
-		
 		int sum = 0;
-		
-		for (int i = 0; i + 1 < length; i++)
+
+		Tile[] targetArray = slideRows ? rows[index] : cols[index];
+		Tile[][] otherMatrix = slideRows ? cols : rows;
+		int slideIndex = towardZero ? length - 1 : 0;
+		for (int i = towardZero ? length - 1 : 0;
+				towardZero ? i >= 0 : i + 1 < length;
+				i += towardZero ? -1 : 1)
 		{
-			//TODO
+			if (targetArray[i] != null)
+			{
+				if (slideIndex > 0 && targetArray[slideIndex] == targetArray[i])
+				{
+					Tile nextTile = targetArray[slideIndex].getNext();
+					targetArray[slideIndex] = nextTile;
+					otherMatrix[slideIndex][index] = nextTile;
+					sum += nextTile.getValue();
+				}
+				else if (slideIndex != i)
+				{
+					targetArray[slideIndex] = targetArray[i];
+					otherMatrix[slideIndex][index] = otherMatrix[i][index];
+					slideIndex += towardZero ? -1 : 1;
+				}
+			}
+		}
+
+		if (debug)
+		{
+			// ensure the data structure is not comprimised
+			for (int r = 0; r < length; r++)
+			{
+				for (int c = 0; c < length; c++)
+				{
+					if (rows[c][c] != cols[c][c])
+					{
+						throw new RuntimeException(String.format(
+								"ERROR: Same tile should be saved in rotated "
+										+ "data structure at [r=%d,c=%d].  "
+										+ "Found %s and %s.%n",
+								c, c, rows[c][c], cols[c][c]));
+					}
+				}
+			}
 		}
 
 		return sum;
 	}
 
 	// package-private for testing
-	void setTile(int r, int c, Tile tile)
+	void setTile(int r, int c, Tile tile
+	)
 	{
-		if (DEBUG)
-		{
-			System.out.printf("Setting tile at [%d,%d] to %s%n", r, c, tile);
-		}
-
 		rows[r][c] = tile;
 		cols[c][r] = tile;
 	}
 
 	public Tile getTile(int r, int c)
 	{
-		if (DEBUG)
-		{
-			if (rows[r][c] != cols[c][r])
-			{
-				System.err.printf(
-						"ERROR: Same tile should be saved in rotated data "
-						+ "structure at r=%d,c=%d.  Found %s and %s.%n",
-						r, c, rows[r][c], cols[c][r]);
-			}
-		}
-
 		return rows[r][c];
 	}
 
