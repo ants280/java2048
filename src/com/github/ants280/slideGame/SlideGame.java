@@ -32,7 +32,7 @@ public class SlideGame implements Runnable
 
 		Window frame = new SlideGameFrame();
 		Thread.setDefaultUncaughtExceptionHandler(
-			new SlideFrameUncaughtExceptionHandler(frame));
+				new SlideFrameUncaughtExceptionHandler(frame));
 
 		// Center the Window on the screen.
 		frame.setLocationRelativeTo(null);
