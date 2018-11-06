@@ -29,7 +29,7 @@ public class GridTest
 			}
 		}
 	}
-	
+
 	@Test
 	public void testAddRandomTileOnEmptyBoard()
 	{
@@ -111,7 +111,7 @@ public class GridTest
 		Assert.assertNull(grid.getTile(0, 2));
 		Assert.assertNull(grid.getTile(0, 3));
 	}
-	
+
 	@Test
 	public void testSlideTiles_22_allRows()
 	{
@@ -127,5 +127,96 @@ public class GridTest
 		int moveScore = grid.slideTiles(MoveDirection.LEFT);
 
 		Assert.assertEquals(16, moveScore);
+	}
+
+	@Test
+	public void testHas2048Tile_empty()
+	{
+		Assert.assertFalse(grid.has2048Tile());
+	}
+
+	@Test
+	public void testHas2048Tile_smallTiles()
+	{
+		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 1, Tile.V_2);
+
+		grid.slideTiles(MoveDirection.LEFT);
+
+		Assert.assertFalse(grid.has2048Tile());
+	}
+
+	@Test
+	public void testHas2048Tile_slide1024Tiles()
+	{
+		grid.setTile(0, 0, Tile.V_1024);
+		grid.setTile(0, 1, Tile.V_1024);
+
+		grid.slideTiles(MoveDirection.LEFT);
+
+		Assert.assertTrue(grid.has2048Tile());
+	}
+	
+	@Test
+	public void testCanSlideTilesInAnyDirection_empty()
+	{
+		Assert.assertFalse(grid.canSlideInAnyDirection());
+	}
+	
+	@Test
+	public void testCanSlideTiles_middle()
+	{
+		grid.setTile(1, 1, Tile.V_2);
+		
+		Assert.assertTrue(grid.canSlideTiles(MoveDirection.LEFT));
+		Assert.assertTrue(grid.canSlideTiles(MoveDirection.RIGHT));
+		Assert.assertTrue(grid.canSlideTiles(MoveDirection.UP));
+		Assert.assertTrue(grid.canSlideTiles(MoveDirection.DOWN));
+	}
+	
+	@Test
+	public void testCanSlideTiles_topLeft()
+	{
+		grid.setTile(0, 0, Tile.V_2);
+		
+		Assert.assertFalse(grid.canSlideTiles(MoveDirection.LEFT));
+		Assert.assertTrue(grid.canSlideTiles(MoveDirection.RIGHT));
+		Assert.assertFalse(grid.canSlideTiles(MoveDirection.UP));
+		Assert.assertTrue(grid.canSlideTiles(MoveDirection.DOWN));
+	}
+	
+	@Test
+	public void testCanSlideTiles_combine()
+	{
+		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 1, Tile.V_4);
+		grid.setTile(0, 2, Tile.V_4);
+		grid.setTile(0, 3, Tile.V_8);
+		
+		Assert.assertTrue(grid.canSlideTiles(MoveDirection.LEFT));
+	}
+	
+	@Test
+	public void testCanSlideTiles_staggered()
+	{
+		grid = new Grid(2);
+		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 1, Tile.V_4);
+		grid.setTile(1, 0, Tile.V_4);
+		grid.setTile(1, 1, Tile.V_2);
+		
+		Assert.assertFalse(grid.canSlideInAnyDirection());
+	}
+	
+	@Test
+	public void testCanSlideTiles_staggered_oddLength()
+	{
+		grid = new Grid(3);
+		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 1, Tile.V_4);
+		grid.setTile(0, 2, Tile.V_8);
+		
+		Assert.assertFalse(grid.canSlideTiles(MoveDirection.LEFT));
+		Assert.assertFalse(grid.canSlideTiles(MoveDirection.RIGHT));
 	}
 }

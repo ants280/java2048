@@ -2,14 +2,17 @@ package com.github.ants280.slideGame.logic;
 
 import java.util.Random;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Grid
 {
+	private static final MoveDirection[] MOVE_DIRECTIONS = MoveDirection.values();
 	private static final boolean PRINT_MOVES = false;
 	private final int length;
 	private final Tile[][] rows;
 	private final Tile[][] cols;
 	private final Random random;
+	private boolean has2048Tile;
 
 	/**
 	 * Creates an empty, square grid of tiles.
@@ -29,6 +32,7 @@ public class Grid
 		this.cols = createTiles(length);
 		long seed = System.currentTimeMillis();
 		this.random = new Random(seed);
+		this.has2048Tile = false;
 
 		if (PRINT_MOVES)
 		{
@@ -79,6 +83,37 @@ public class Grid
 				moveDirection == MoveDirection.LEFT || moveDirection == MoveDirection.UP);
 	}
 
+	public boolean canSlideTiles(MoveDirection moveDirection)
+	{
+		return canSlideTiles(
+				moveDirection == MoveDirection.LEFT || moveDirection == MoveDirection.RIGHT,
+				moveDirection == MoveDirection.LEFT || moveDirection == MoveDirection.UP);
+	}
+
+	public boolean canSlideInAnyDirection()
+	{
+		return Stream.of(MOVE_DIRECTIONS)
+				.anyMatch(this::canSlideTiles);
+	}
+
+	public boolean has2048Tile()
+	{
+		return has2048Tile;
+	}
+
+	private boolean canSlideTiles(boolean slideRows, boolean towardZero)
+	{
+		for (int i = 0; i < length; i++)
+		{
+			if (canSlideTiles(slideRows, i, towardZero))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private int slideTiles(boolean slideRows, boolean towardZero)
 	{
 		int sum = 0;
@@ -89,6 +124,45 @@ public class Grid
 		}
 
 		return sum;
+	}
+
+	/**
+	 * Determines if the row or column can be slid in the specified direction.
+	 * That is, if sliding the row/column moves/changes the tiles at all.
+	 *
+	 * @param slideRows Whether or not a row or column is being slid
+	 * (consolidated).
+	 * @param index The row or column index.
+	 * @param towardZero Whether or not to slide the row/column up/left (toward
+	 * zero) or down/right (toward the end of the array).
+	 * @return The if the row/column can be slid in the specified direction.
+	 */
+	private boolean canSlideTiles(boolean slideRows, int index, boolean towardZero)
+	{
+		Tile[] sourceArray = slideRows ? rows[index] : cols[index];
+		int slideIndex = towardZero ? 0 : length - 1;
+		Tile lastSlidTile = null;
+		int delta = towardZero ? 1 : -1;
+		for (int i = slideIndex;
+				towardZero ? i < length : i >= 0;
+				i += delta)
+		{
+			if (sourceArray[i] != null)
+			{
+				if (lastSlidTile == sourceArray[i]
+						|| i != slideIndex)
+				{
+					return true;
+				}
+				else
+				{
+					lastSlidTile = sourceArray[i];
+					slideIndex += delta;
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	/**
@@ -124,6 +198,10 @@ public class Grid
 					tempArrayArray[slideIndex - 1] = nextTile;
 					sum += nextTile.getValue();
 					canCombineWithPreviousSlide = false;
+					if (nextTile == Tile.V_2048)
+					{
+						has2048Tile = true;
+					}
 				}
 				else
 				{
@@ -164,7 +242,7 @@ public class Grid
 				.mapToObj(Tile[]::new)
 				.toArray(Tile[][]::new);
 	}
-	
+
 	public static enum MoveDirection
 	{
 		LEFT, RIGHT, UP, DOWN;

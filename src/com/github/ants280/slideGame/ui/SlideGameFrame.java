@@ -141,7 +141,7 @@ public class SlideGameFrame extends JFrame
 		{
 			MoveDirection moveDirection = keyCodeMoveDirections.get(keyEvent.getKeyCode());
 			
-			if (moveDirection == null)
+			if (moveDirection == null || !grid.canSlideTiles(moveDirection))
 			{
 				return;
 			}
@@ -149,10 +149,17 @@ public class SlideGameFrame extends JFrame
 			int moveScore = grid.slideTiles(moveDirection);
 
 			SlideGameFrame.this.incrementScore(moveScore);
-			// TODO: check if game is over
-			// TODO: Ensure tiles can be added
-			grid.addRandomTile();
-			slideGameCanvas.repaint();
+			
+			if (!grid.canSlideInAnyDirection() || grid.has2048Tile())
+			{
+				// TODO: paint special text on canvas (win/lose), add keylistener on restart
+				SlideGameFrame.this.removeKeyListener(this);
+			}
+			else
+			{
+				grid.addRandomTile();
+				slideGameCanvas.repaint();
+			}
 		}
 	}
 }
