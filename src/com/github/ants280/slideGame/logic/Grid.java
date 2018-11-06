@@ -78,6 +78,7 @@ public class Grid
 		int r, c;
 
 		Tile tile = random.nextInt(10) == 0 ? Tile.V_4 : Tile.V_2;
+		//Tile tile = Tile.V_2048; // useful for testing game winning :D
 		do
 		{
 			r = random.nextInt(length);

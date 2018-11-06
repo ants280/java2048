@@ -56,11 +56,6 @@ public enum Tile
 	{
 		int index = ordinal();
 		
-		if (index + 1 == VALUES.length)
-		{
-			throw new IllegalArgumentException("No Tile is after the last.");
-		}
-		
-		return VALUES[index + 1];
+		return (index + 1 == VALUES.length) ? this : VALUES[index + 1];
 	}
 }

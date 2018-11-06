@@ -72,10 +72,4 @@ public class TileTest
 			Assert.assertEquals(VALUES[i + 1], VALUES[i].getNext());
 		}
 	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void getNextTile_last()
-	{
-		VALUES[VALUES.length - 1].getNext();
-	}
 }
