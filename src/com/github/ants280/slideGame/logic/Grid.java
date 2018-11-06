@@ -10,7 +10,7 @@ public class Grid
 	private final Tile[][] rows;
 	private final Tile[][] cols;
 	private final Random random;
-	private boolean has2048Tile;
+	private boolean has2048Tile; // TODO: Be able to specify the maximum (goal) tile
 
 	/**
 	 * Creates an empty, square grid of tiles.
