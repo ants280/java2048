@@ -72,54 +72,11 @@ public class Grid
 		setTile(r, c, tile);
 	}
 
-	public int slideTilesLeft()
+	public int slideTiles(MoveDirection moveDirection)
 	{
-		if (PRINT_MOVES)
-		{
-			System.out.println("\tLEFT");
-		}
-
-		return slideRows(true);
-	}
-
-	public int slideTilesRight()
-	{
-		if (PRINT_MOVES)
-		{
-			System.out.println("\tRIGHT");
-		}
-
-		return slideRows(false);
-	}
-
-	public int slideTilesUp()
-	{
-		if (PRINT_MOVES)
-		{
-			System.out.println("\tUP");
-		}
-
-		return slideCols(true);
-	}
-
-	public int slideTilesDown()
-	{
-		if (PRINT_MOVES)
-		{
-			System.out.println("\tDOWN");
-		}
-
-		return slideCols(false);
-	}
-
-	private int slideRows(boolean towardZero)
-	{
-		return slideTiles(true, towardZero);
-	}
-
-	private int slideCols(boolean towardZero)
-	{
-		return slideTiles(false, towardZero);
+		return slideTiles(
+				moveDirection == MoveDirection.LEFT || moveDirection == MoveDirection.RIGHT,
+				moveDirection == MoveDirection.LEFT || moveDirection == MoveDirection.UP);
 	}
 
 	private int slideTiles(boolean slideRows, boolean towardZero)
@@ -206,5 +163,10 @@ public class Grid
 				.map(i -> length)
 				.mapToObj(Tile[]::new)
 				.toArray(Tile[][]::new);
+	}
+	
+	public static enum MoveDirection
+	{
+		LEFT, RIGHT, UP, DOWN;
 	}
 }

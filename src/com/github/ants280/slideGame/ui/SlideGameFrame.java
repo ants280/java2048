@@ -1,11 +1,15 @@
 package com.github.ants280.slideGame.ui;
 
 import com.github.ants280.slideGame.logic.Grid;
+import com.github.ants280.slideGame.logic.Grid.MoveDirection;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -26,6 +30,19 @@ public class SlideGameFrame extends JFrame
 	private final JLabel highScoreLabel;
 	private int score;
 	private int highScore;
+	
+	private static final Map<Integer, MoveDirection> keyCodeMoveDirections = new HashMap<>(); // TODO: is final, but unmodifiable :(
+	static
+	{
+		Stream.of(KeyEvent.VK_W, KeyEvent.VK_UP)
+				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.UP));
+		Stream.of(KeyEvent.VK_A, KeyEvent.VK_LEFT)
+				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.LEFT));
+		Stream.of(KeyEvent.VK_S, KeyEvent.VK_DOWN)
+				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.DOWN));
+		Stream.of(KeyEvent.VK_D, KeyEvent.VK_RIGHT)
+				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.RIGHT));
+	}
 
 	public SlideGameFrame()
 	{
@@ -122,27 +139,16 @@ public class SlideGameFrame extends JFrame
 		@Override
 		public void keyReleased(KeyEvent keyEvent)
 		{
-			int score;
-			switch (keyEvent.getKeyCode())
+			MoveDirection moveDirection = keyCodeMoveDirections.get(keyEvent.getKeyCode());
+			
+			if (moveDirection == null)
 			{
-				// TODO: Ensure move can be made before making it!
-				case KeyEvent.VK_LEFT:
-					score = grid.slideTilesLeft();
-					break;
-				case KeyEvent.VK_RIGHT:
-					score = grid.slideTilesRight();
-					break;
-				case KeyEvent.VK_UP:
-					score = grid.slideTilesUp();
-					break;
-				case KeyEvent.VK_DOWN:
-					score = grid.slideTilesDown();
-					break;
-				default:
-					return;
+				return;
 			}
+			
+			int moveScore = grid.slideTiles(moveDirection);
 
-			SlideGameFrame.this.incrementScore(score);
+			SlideGameFrame.this.incrementScore(moveScore);
 			// TODO: check if game is over
 			// TODO: Ensure tiles can be added
 			grid.addRandomTile();

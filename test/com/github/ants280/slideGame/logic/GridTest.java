@@ -1,5 +1,6 @@
 package com.github.ants280.slideGame.logic;
 
+import com.github.ants280.slideGame.logic.Grid.MoveDirection;
 import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,7 +42,7 @@ public class GridTest
 	{
 		grid.setTile(1, 1, Tile.V_2);
 
-		grid.slideTilesLeft();
+		grid.slideTiles(MoveDirection.LEFT);
 
 		Assert.assertEquals(Tile.V_2, grid.getTile(1, 0));
 		Assert.assertNull(grid.getTile(1, 1));
@@ -52,7 +53,7 @@ public class GridTest
 	{
 		grid.setTile(1, 1, Tile.V_2);
 
-		grid.slideTilesRight();
+		grid.slideTiles(MoveDirection.RIGHT);
 
 		Assert.assertEquals(Tile.V_2, grid.getTile(1, 3));
 		Assert.assertNull(grid.getTile(1, 1));
@@ -63,7 +64,7 @@ public class GridTest
 	{
 		grid.setTile(1, 1, Tile.V_2);
 
-		grid.slideTilesUp();
+		grid.slideTiles(MoveDirection.UP);
 
 		Assert.assertEquals(Tile.V_2, grid.getTile(0, 1));
 		Assert.assertNull(grid.getTile(1, 1));
@@ -74,7 +75,7 @@ public class GridTest
 	{
 		grid.setTile(1, 1, Tile.V_2);
 
-		grid.slideTilesDown();
+		grid.slideTiles(MoveDirection.DOWN);
 
 		Assert.assertEquals(Tile.V_2, grid.getTile(3, 1));
 		Assert.assertNull(grid.getTile(1, 1));
@@ -86,7 +87,7 @@ public class GridTest
 		grid.setTile(0, 1, Tile.V_2);
 		grid.setTile(0, 3, Tile.V_2);
 
-		int moveScore = grid.slideTilesLeft();
+		int moveScore = grid.slideTiles(MoveDirection.LEFT);
 
 		Assert.assertEquals(4, moveScore);
 		Assert.assertEquals(Tile.V_4, grid.getTile(0, 0));
@@ -102,7 +103,7 @@ public class GridTest
 		grid.setTile(0, 2, Tile.V_4);
 		grid.setTile(0, 3, Tile.V_4);
 
-		int moveScore = grid.slideTilesLeft();
+		int moveScore = grid.slideTiles(MoveDirection.LEFT);
 
 		Assert.assertEquals(12, moveScore);
 		Assert.assertEquals(Tile.V_4, grid.getTile(0, 0));
