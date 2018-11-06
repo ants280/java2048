@@ -31,18 +31,18 @@ public class SlideGameFrame extends JFrame
 	private int score;
 	private int highScore;
 
-	private static final Map<Integer, MoveDirection> keyCodeMoveDirections = new HashMap<>(); // TODO: is final, but unmodifiable :(
+	private static final Map<Integer, MoveDirection> MOVE_DIRECTIONS = new HashMap<>(); // TODO: is final, but unmodifiable :(
 
 	static
 	{
 		Stream.of(KeyEvent.VK_W, KeyEvent.VK_UP)
-				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.UP));
+				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, MoveDirection.UP));
 		Stream.of(KeyEvent.VK_A, KeyEvent.VK_LEFT)
-				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.LEFT));
+				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, MoveDirection.LEFT));
 		Stream.of(KeyEvent.VK_S, KeyEvent.VK_DOWN)
-				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.DOWN));
+				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, MoveDirection.DOWN));
 		Stream.of(KeyEvent.VK_D, KeyEvent.VK_RIGHT)
-				.forEach(keyCode -> keyCodeMoveDirections.put(keyCode, MoveDirection.RIGHT));
+				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, MoveDirection.RIGHT));
 	}
 
 	public SlideGameFrame()
@@ -146,7 +146,7 @@ public class SlideGameFrame extends JFrame
 		@Override
 		public void keyReleased(KeyEvent keyEvent)
 		{
-			MoveDirection moveDirection = keyCodeMoveDirections.get(keyEvent.getKeyCode());
+			MoveDirection moveDirection = MOVE_DIRECTIONS.get(keyEvent.getKeyCode());
 
 			if (moveDirection == null || !grid.canSlideTiles(moveDirection))
 			{
