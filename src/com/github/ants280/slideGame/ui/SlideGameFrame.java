@@ -24,14 +24,14 @@ public class SlideGameFrame extends JFrame
 	private final JLabel highScoreLabel;
 	private int score;
 	private int highScore;
-	
+
 	public SlideGameFrame()
 	{
 		super("Slide Game");
 		this.grid = new Grid(4);
 		this.slideGameCanvas = new SlideGameCanvas(grid);
 		this.addKeyListener(new SlideGameKeyListener());
-		
+
 		this.scoreLabel = new JLabel();
 		this.highScoreLabel = new JLabel();
 		Border border = BorderFactory.createLineBorder(SlideGameCanvas.SPACER_COLOR);
@@ -39,10 +39,10 @@ public class SlideGameFrame extends JFrame
 		highScoreLabel.setBorder(border);
 		this.score = 0;
 		this.highScore = 0;
-		
+
 		grid.addRandomTile();
 		grid.addRandomTile();
-		
+
 		updateScoreLabels();
 		initSize();
 	}
@@ -57,25 +57,29 @@ public class SlideGameFrame extends JFrame
 //		labelPanel.add(highScoreLabel);
 		JPanel topPanel = new JPanel();
 		topPanel.add(labelPanel, BorderLayout.EAST);
-		
+
 		this.setJMenuBar(createJMenuBar());
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(slideGameCanvas);
-		
+
 		this.setMinimumSize(new Dimension(400, 500));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 	}
-	
+
 	private void incrementScore(int additionalScore)
 	{
-		this.score += additionalScore;
-		if (score > highScore)
+		if (additionalScore != 0)
 		{
-			highScore = score;
+			this.score += additionalScore;
+			if (score > highScore)
+			{
+				highScore = score;
+			}
+			updateScoreLabels();
 		}
 	}
-	
+
 	private void updateScoreLabels()
 	{
 		this.scoreLabel.setText("SCORE: " + score);
@@ -87,31 +91,30 @@ public class SlideGameFrame extends JFrame
 		JMenuItem newGame_MI = new JMenuItem("New Game", KeyEvent.VK_N);
 		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 		newGame_MI.addActionListener(actionEvent -> this.restartGame());
-		
+
 		JMenuItem exit_MI = new JMenuItem("Exit", KeyEvent.VK_X);
 		exit_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
 		exit_MI.addActionListener(actionEvent -> Runtime.getRuntime().exit(0));
-		
+
 		JMenu actionMenu = new JMenu("Action");
 		actionMenu.add(newGame_MI);
 		actionMenu.add(exit_MI);
-		
+
 //		JMenu helpMenu = new JMenu("Help");
 //		helpMenu.add(help_MI);
 //		helpMenu.add(about_MI);
-
 		JMenuBar mainMenu = new JMenuBar();
 		mainMenu.add(actionMenu);
 //		mainMenu.add(helpMenu);
-		
+
 		return mainMenu;
 	}
-	
+
 	private void restartGame()
 	{
 		// TODO: restart game logic
 	}
-	
+
 	// It might be nice to make this a separate class.
 	private class SlideGameKeyListener extends KeyAdapter implements KeyListener
 	{
@@ -136,11 +139,8 @@ public class SlideGameFrame extends JFrame
 				default:
 					return;
 			}
-			
-			if (score > 0)
-			{
-				SlideGameFrame.this.incrementScore(score);
-			}
+
+			SlideGameFrame.this.incrementScore(score);
 			// TODO: check if game is over
 			// TODO: Ensure tiles can be added
 			grid.addRandomTile();
