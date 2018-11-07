@@ -12,20 +12,23 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class SlideGameManager implements KeyListener, MouseListener
+public class SlideGameManager
 {
-	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS = new HashMap<>();
 	private final Grid grid;
 	private final JFrame slideGameRootComponent;
 	private final JComponent slideGameCanvas;
 	private final JLabel gameOverLabel;
 	private final JLabel scoreLabel;
 	private final JLabel highScoreLabel;
+	private final KeyListener keyListener;
+	private final MouseListener mouseListener;
 	private int score;
 	private int highScore;
 	private boolean gameOver;
 	private boolean gameWon;
 	private MouseEvent mousePressedLocation;
+
+	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS = new HashMap<>();
 
 	static
 	{
@@ -53,6 +56,8 @@ public class SlideGameManager implements KeyListener, MouseListener
 		this.gameOverLabel = gameOverLabel;
 		this.scoreLabel = scoreLabel;
 		this.highScoreLabel = highScoreLabel;
+		this.keyListener = new SlideGameKeyListener(this::keyReleased);
+		this.mouseListener = new SlideGameMouseListener(this::mousePressed, this::mouseReleased);
 		this.score = 0;
 		this.highScore = 0;
 		this.gameOver = false;
@@ -120,15 +125,15 @@ public class SlideGameManager implements KeyListener, MouseListener
 
 	private void addListeners()
 	{
-		slideGameRootComponent.addKeyListener(this);
-		slideGameCanvas.addMouseListener(this);
+		slideGameRootComponent.addKeyListener(keyListener);
+		slideGameCanvas.addMouseListener(mouseListener);
 		mousePressedLocation = null;
 	}
 
 	private void removeListeners()
 	{
-		slideGameRootComponent.removeKeyListener(this);
-		slideGameCanvas.addMouseListener(this);
+		slideGameRootComponent.removeKeyListener(keyListener);
+		slideGameCanvas.addMouseListener(mouseListener);
 		mousePressedLocation = null;
 	}
 
@@ -153,31 +158,11 @@ public class SlideGameManager implements KeyListener, MouseListener
 		highScoreLabel.setText("BEST: " + highScore);
 	}
 
-	@Override
 	public void keyReleased(KeyEvent e)
 	{
 		makeMove(MOVE_DIRECTIONS.get(e.getKeyCode()));
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e)
-	{
-		// NOOP
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e)
-	{
-		// NOOP
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e)
-	{
-		// NOOP
-	}
-
-	@Override
 	public void mousePressed(MouseEvent e)
 	{
 		if (e.getButton() != MouseEvent.BUTTON1)
@@ -188,7 +173,6 @@ public class SlideGameManager implements KeyListener, MouseListener
 		mousePressedLocation = e;
 	}
 
-	@Override
 	public void mouseReleased(MouseEvent e)
 	{
 		if (e.getButton() != MouseEvent.BUTTON1 || mousePressedLocation == null)
@@ -200,6 +184,7 @@ public class SlideGameManager implements KeyListener, MouseListener
 		int deltaY = e.getY() - mousePressedLocation.getY();
 		int absDeltaX = Math.abs(deltaX);
 		int absDeltaY = Math.abs(deltaY);
+
 		if (absDeltaX > absDeltaY)
 		{
 			if (deltaX < 0)
@@ -222,17 +207,5 @@ public class SlideGameManager implements KeyListener, MouseListener
 				makeMove(Grid.MoveDirection.DOWN);
 			}
 		}
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e)
-	{
-		// NOOP
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e)
-	{
-		// NOOP
 	}
 }
