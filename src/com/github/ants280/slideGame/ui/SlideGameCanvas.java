@@ -114,6 +114,6 @@ public class SlideGameCanvas extends JComponent
 				(int) (c * colWidth + halfSpacerColWidth), // x
 				(int) (r * rowHeight + halfSpacerRowHeight), // y
 				(int) tileColWidth, // width
-				(int) tileRowHeight); // height);
+				(int) tileRowHeight); // height
 	}
 }
