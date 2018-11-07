@@ -95,9 +95,9 @@ public class SlideGameCanvas extends JComponent
 			double fontHeightPx = TILE_FONT.getSize() * 0.75d;
 			FontMetrics fontMetrics = g.getFontMetrics();
 			int textWidth = fontMetrics.stringWidth(displayValue);
-			int colWidthOffset = (int) (((c + 0.5d) * colWidth) - (textWidth / 2));
-			int rowHeightOffset = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
-			g.drawString(displayValue, colWidthOffset, rowHeightOffset);
+			int x = (int) (((c + 0.5d) * colWidth) - (textWidth / 2));
+			int y = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
+			g.drawString(displayValue, x, y);
 		}
 	}
 }
