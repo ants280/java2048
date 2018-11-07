@@ -71,6 +71,7 @@ public class SlideGameFrame extends JFrame
 		actionMenu.add(newGame_MI);
 		actionMenu.add(exit_MI);
 
+		// TODO: Add help menu
 //		JMenu helpMenu = new JMenu("Help");
 //		helpMenu.add(help_MI);
 //		helpMenu.add(about_MI);
