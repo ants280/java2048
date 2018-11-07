@@ -94,7 +94,7 @@ public class SlideGameCanvas extends JComponent
 			g.setColor(SlideGameColors.TILE_TEXT_COLOR);
 			double fontHeightPx = TILE_FONT.getSize() * 0.75d;
 			FontMetrics fontMetrics = g.getFontMetrics();
-			int textWidth = fontMetrics.charsWidth(displayValue.toCharArray(), 0, displayValue.length());
+			int textWidth = fontMetrics.stringWidth(displayValue);
 			int colWidthOffset = (int) (((c + 0.5d) * colWidth) - (textWidth / 2));
 			int rowHeightOffset = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
 			g.drawString(displayValue, colWidthOffset, rowHeightOffset);
