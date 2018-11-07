@@ -41,22 +41,30 @@ public class SlideGameCanvas extends JComponent
 		double halfSpacerColWidth = spacerColWidth / 2d;
 		double halfSpacerRowHeight = spacerRowHeight / 2d;
 
+		paintGrid(g, width, height, length, colWidth, rowHeight, spacerColWidth, spacerRowHeight, halfSpacerColWidth, halfSpacerRowHeight);
+		paintTiles(length, g, colWidth, rowHeight, tileColWidth, tileRowHeight, halfSpacerColWidth, halfSpacerRowHeight);
+	}
+
+	private void paintGrid(Graphics g, int width, int height, int length, double colWidth, double rowHeight, double spacerColWidth, double spacerRowHeight, double halfSpacerColWidth, double halfSpacerRowHeight)
+	{
 		// draw vertical and horizontal bars
 		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= length; c++)
 		{
 			double colOffset = c * colWidth;
-			g.fillRect(
-					(int) (colOffset - halfSpacerColWidth),
+			g.fillRect((int) (colOffset - halfSpacerColWidth),
 					0, (int) spacerColWidth, height);
 		}
 		for (int r = 0; r <= length; r++)
 		{
 			double rowOffset = r * rowHeight;
-			g.fillRect(
-					0, (int) (rowOffset - halfSpacerRowHeight),
+			g.fillRect(0, (int) (rowOffset - halfSpacerRowHeight),
 					width, (int) spacerRowHeight);
 		}
+	}
+
+	private void paintTiles(int length, Graphics g, double colWidth, double rowHeight, double tileColWidth, double tileRowHeight, double halfSpacerColWidth, double halfSpacerRowHeight)
+	{
 		// draw tiles
 		for (int r = 0; r < length; r++)
 		{
@@ -82,22 +90,30 @@ public class SlideGameCanvas extends JComponent
 		Tile tile = grid.getTile(r, c);
 		if (tile != null)
 		{
-			// draw tile background
-			g.setColor(SlideGameColors.getColor(tile));
-			g.fillRect(
-					(int) (c * colWidth + halfSpacerColWidth), // x
-					(int) (r * rowHeight + halfSpacerRowHeight), // y
-					(int) tileColWidth, // width
-					(int) tileRowHeight); // height);
-			// draw tile text
-			String displayValue = tile.getDisplayValue();
-			g.setColor(SlideGameColors.TILE_TEXT_COLOR);
-			double fontHeightPx = TILE_FONT.getSize() * 0.75d;
-			FontMetrics fontMetrics = g.getFontMetrics();
-			int textWidth = fontMetrics.stringWidth(displayValue);
-			int x = (int) (((c + 0.5d) * colWidth) - (textWidth / 2));
-			int y = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
-			g.drawString(displayValue, x, y);
+			paintTileBackground(g, tile, c, colWidth, halfSpacerColWidth, r, rowHeight, halfSpacerRowHeight, tileColWidth, tileRowHeight);
+			paintTileText(tile, g, c, colWidth, r, rowHeight);
 		}
+	}
+
+	private void paintTileText(Tile tile, Graphics g, int c, double colWidth, int r, double rowHeight)
+	{
+		String displayValue = tile.getDisplayValue();
+		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
+		double fontHeightPx = TILE_FONT.getSize() * 0.75d;
+		FontMetrics fontMetrics = g.getFontMetrics();
+		int textWidth = fontMetrics.stringWidth(displayValue);
+		int x = (int) (((c + 0.5d) * colWidth) - (textWidth / 2));
+		int y = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
+		g.drawString(displayValue, x, y);
+	}
+
+	private void paintTileBackground(Graphics g, Tile tile, int c, double colWidth, double halfSpacerColWidth, int r, double rowHeight, double halfSpacerRowHeight, double tileColWidth, double tileRowHeight)
+	{
+		g.setColor(SlideGameColors.getColor(tile));
+		g.fillRect(
+				(int) (c * colWidth + halfSpacerColWidth), // x
+				(int) (r * rowHeight + halfSpacerRowHeight), // y
+				(int) tileColWidth, // width
+				(int) tileRowHeight); // height);
 	}
 }
