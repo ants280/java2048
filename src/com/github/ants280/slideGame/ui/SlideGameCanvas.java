@@ -2,6 +2,7 @@ package com.github.ants280.slideGame.ui;
 
 import com.github.ants280.slideGame.logic.Grid;
 import com.github.ants280.slideGame.logic.Tile;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -90,28 +91,27 @@ public class SlideGameCanvas extends JComponent
 		Tile tile = grid.getTile(r, c);
 		if (tile != null)
 		{
-			paintTileBackground(g, tile, c, colWidth, halfSpacerColWidth, r, rowHeight, halfSpacerRowHeight, tileColWidth, tileRowHeight);
-			paintTileText(tile, g, c, colWidth, r, rowHeight);
+			paintTileBackground(SlideGameColors.getColor(tile), g, c, r, colWidth, rowHeight, tileColWidth, tileRowHeight, halfSpacerColWidth, halfSpacerRowHeight);
+			paintTileText(tile.getDisplayValue(), g, c, colWidth, r, rowHeight);
 		}
 	}
 
-	private void paintTileText(Tile tile, Graphics g, int c, double colWidth, int r, double rowHeight)
+	private void paintTileBackground(Color tileColor, Graphics g, int c, int r, double colWidth, double rowHeight, double tileColWidth, double tileRowHeight, double halfSpacerColWidth, double halfSpacerRowHeight)
 	{
-		String displayValue = tile.getDisplayValue();
+		g.setColor(tileColor);
+		int x = (int) ((c * colWidth) + halfSpacerColWidth);
+		int y = (int) ((r * rowHeight) + halfSpacerRowHeight);
+		g.fillRect(x, y, (int) tileColWidth, (int) tileRowHeight);
+	}
+
+	private void paintTileText(String tileText, Graphics g, int c, double colWidth, int r, double rowHeight)
+	{
 		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
 		double fontHeightPx = TILE_FONT.getSize() * 0.75d;
 		FontMetrics fontMetrics = g.getFontMetrics();
-		int textWidth = fontMetrics.stringWidth(displayValue);
+		int textWidth = fontMetrics.stringWidth(tileText);
 		int x = (int) (((c + 0.5d) * colWidth) - (textWidth / 2));
 		int y = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
-		g.drawString(displayValue, x, y);
-	}
-
-	private void paintTileBackground(Graphics g, Tile tile, int c, double colWidth, double halfSpacerColWidth, int r, double rowHeight, double halfSpacerRowHeight, double tileColWidth, double tileRowHeight)
-	{
-		g.setColor(SlideGameColors.getColor(tile));
-		int x = (int) (c * colWidth + halfSpacerColWidth);
-		int y = (int) (r * rowHeight + halfSpacerRowHeight);
-		g.fillRect(x, y, (int) tileColWidth, (int) tileRowHeight);
+		g.drawString(tileText, x, y);
 	}
 }
