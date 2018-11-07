@@ -153,7 +153,7 @@ public class SlideGameManager
 
 	private void updateScoreLabels()
 	{
-		gameOverLabel.setText(gameOver ? (gameWon ? "You win!" : "You Lose.") : "");
+		gameOverLabel.setText(gameOver ? (gameWon ? "You Win!" : "You Lose.") : "");
 		scoreLabel.setText("SCORE: " + score);
 		highScoreLabel.setText("BEST: " + highScore);
 	}
