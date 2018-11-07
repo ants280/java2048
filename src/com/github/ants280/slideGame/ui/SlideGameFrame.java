@@ -35,7 +35,6 @@ public class SlideGameFrame extends JFrame
 		highScoreLabel.setBorder(border);
 
 		this.slideGameManager = new SlideGameManager(grid, this, slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
-		this.addKeyListener(slideGameManager);
 
 		initSize(slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
 	}

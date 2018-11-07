@@ -1,9 +1,10 @@
 package com.github.ants280.slideGame.ui;
 
 import com.github.ants280.slideGame.logic.Grid;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -11,8 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-// TODO: remove dependency on KeyAdapter and make this also imlement MouseMotionListener
-public class SlideGameManager extends KeyAdapter implements KeyListener
+public class SlideGameManager implements KeyListener, MouseListener
 {
 	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS = new HashMap<>(); // TODO: is final, but unmodifiable :(
 	private final Grid grid;
@@ -25,6 +25,7 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 	private int highScore;
 	private boolean gameOver;
 	private boolean gameWon;
+	private MouseEvent mousePressedLocation;
 
 	static
 	{
@@ -94,6 +95,7 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 		score = 0;
 		grid.addRandomTile();
 		grid.addRandomTile();
+		addListeners();
 		updateScoreLabels();
 	}
 
@@ -105,16 +107,29 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 
 		if (gameOver)
 		{
-			slideGameRootComponent.addKeyListener(this);
+			addListeners();
 		}
 	}
-	
+
 	private void endGame()
 	{
-		slideGameRootComponent.removeKeyListener(this);
-		
 		gameOver = true;
+		removeListeners();
 		updateScoreLabels();
+	}
+
+	private void addListeners()
+	{
+		slideGameRootComponent.addKeyListener(this);
+		slideGameCanvas.addMouseListener(this);
+		mousePressedLocation = null;
+	}
+
+	private void removeListeners()
+	{
+		slideGameRootComponent.removeKeyListener(this);
+		slideGameCanvas.addMouseListener(this);
+		mousePressedLocation = null;
 	}
 
 	private void incrementScore(int additionalScore)
@@ -126,7 +141,7 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 			{
 				highScore = score;
 			}
-			
+
 			updateScoreLabels();
 		}
 	}
@@ -139,8 +154,85 @@ public class SlideGameManager extends KeyAdapter implements KeyListener
 	}
 
 	@Override
-	public void keyReleased(KeyEvent keyEvent)
+	public void keyReleased(KeyEvent e)
 	{
-		makeMove(MOVE_DIRECTIONS.get(keyEvent.getKeyCode()));
+		makeMove(MOVE_DIRECTIONS.get(e.getKeyCode()));
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e)
+	{
+		// NOOP
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		// NOOP
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e)
+	{
+		// NOOP
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e)
+	{
+		if (e.getButton() != MouseEvent.BUTTON1)
+		{
+			return;
+		}
+
+		mousePressedLocation = e;
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e)
+	{
+		if (e.getButton() != MouseEvent.BUTTON1 || mousePressedLocation == null)
+		{
+			return;
+		}
+		
+		int deltaX = e.getX() - mousePressedLocation.getX();
+		int deltaY = e.getY() - mousePressedLocation.getY();
+		int absDeltaX = Math.abs(deltaX);
+		int absDeltaY = Math.abs(deltaY);
+		if (absDeltaX > absDeltaY)
+		{
+			if (deltaX < 0)
+			{
+				makeMove(Grid.MoveDirection.LEFT);
+			}
+			else if (deltaX > 0)
+			{
+				makeMove(Grid.MoveDirection.RIGHT);
+			}
+		}
+		else if (absDeltaY > absDeltaX)
+		{
+			if (deltaY < 0)
+			{
+				makeMove(Grid.MoveDirection.UP);
+			}
+			else if (deltaY > 0)
+			{
+				makeMove(Grid.MoveDirection.DOWN);
+			}
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e)
+	{
+		// NOOP
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e)
+	{
+		// NOOP
 	}
 }
