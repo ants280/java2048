@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 
 public class SlideGameManager implements KeyListener, MouseListener
 {
-	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS = new HashMap<>(); // TODO: is final, but unmodifiable :(
+	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS = new HashMap<>();
 	private final Grid grid;
 	private final JFrame slideGameRootComponent;
 	private final JComponent slideGameCanvas;
@@ -195,7 +195,7 @@ public class SlideGameManager implements KeyListener, MouseListener
 		{
 			return;
 		}
-		
+
 		int deltaX = e.getX() - mousePressedLocation.getX();
 		int deltaY = e.getY() - mousePressedLocation.getY();
 		int absDeltaX = Math.abs(deltaX);

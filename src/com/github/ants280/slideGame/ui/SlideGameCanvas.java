@@ -19,7 +19,7 @@ public class SlideGameCanvas extends JComponent
 		this.grid = grid;
 		this.setBackground(SlideGameColors.EMPTY_TILE_COLOR);
 	}
-	
+
 	@Override
 	public void paint(Graphics g)
 	{
@@ -54,8 +54,8 @@ public class SlideGameCanvas extends JComponent
 		{
 			double rowOffset = r * rowHeight;
 			g.fillRect(
-					0, (int) (rowOffset - halfSpacerRowHeight)
-					, width, (int) spacerRowHeight);
+					0, (int) (rowOffset - halfSpacerRowHeight),
+					width, (int) spacerRowHeight);
 		}
 		// draw tiles
 		for (int r = 0; r < length; r++)

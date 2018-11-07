@@ -45,14 +45,14 @@ public class SlideFrameUncaughtExceptionHandler implements UncaughtExceptionHand
 			panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 			JOptionPane.showOptionDialog(
-				parentComponent,
-				panel,
-				"Error",
-				JOptionPane.DEFAULT_OPTION,
-				JOptionPane.ERROR_MESSAGE,
-				null,
-				null,
-				null);
+					parentComponent,
+					panel,
+					"Error",
+					JOptionPane.DEFAULT_OPTION,
+					JOptionPane.ERROR_MESSAGE,
+					null,
+					null,
+					null);
 		}
 		catch (HeadlessException throwable)
 		{
@@ -67,4 +67,3 @@ public class SlideFrameUncaughtExceptionHandler implements UncaughtExceptionHand
 		return stackTraceWriter.toString();
 	}
 }
-
