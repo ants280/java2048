@@ -110,10 +110,8 @@ public class SlideGameCanvas extends JComponent
 	private void paintTileBackground(Graphics g, Tile tile, int c, double colWidth, double halfSpacerColWidth, int r, double rowHeight, double halfSpacerRowHeight, double tileColWidth, double tileRowHeight)
 	{
 		g.setColor(SlideGameColors.getColor(tile));
-		g.fillRect(
-				(int) (c * colWidth + halfSpacerColWidth), // x
-				(int) (r * rowHeight + halfSpacerRowHeight), // y
-				(int) tileColWidth, // width
-				(int) tileRowHeight); // height
+		int x = (int) (c * colWidth + halfSpacerColWidth);
+		int y = (int) (r * rowHeight + halfSpacerRowHeight);
+		g.fillRect(x, y, (int) tileColWidth, (int) tileRowHeight);
 	}
 }
