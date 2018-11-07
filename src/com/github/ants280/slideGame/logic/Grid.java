@@ -77,8 +77,8 @@ public class Grid
 
 		int r, c;
 
-		Tile tile = random.nextInt(10) == 0 ? Tile.V_4 : Tile.V_2;
-		//Tile tile = Tile.V_2048; // useful for testing game winning :D
+		Tile tile = random.nextInt(10) == 0 ? Tile.TWO.getNext() : Tile.TWO;
+		//tile = Tile.V_2.getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext(); // useful for testing game winning :D
 		do
 		{
 			r = random.nextInt(length);
@@ -238,7 +238,7 @@ public class Grid
 					tempArrayArray[slideIndex - delta] = nextTile;
 					sum += nextTile.getValue();
 					canCombineWithPreviousSlide = false;
-					if (nextTile == Tile.V_2048)
+					if (nextTile.getValue() == 2048)
 					{
 						has2048Tile = true;
 					}

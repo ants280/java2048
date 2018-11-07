@@ -9,6 +9,18 @@ public class GridTest
 {
 	private static final int LENGTH = 4;
 	private Grid grid;
+	
+	private static final Tile TILE_2 = Tile.TWO;
+	private static final Tile TILE_4 = TILE_2.getNext();
+	private static final Tile TILE_8 = TILE_4.getNext();
+	private static final Tile TILE_16 = TILE_8.getNext();
+	private static final Tile TILE_32 = TILE_16.getNext();
+	private static final Tile TILE_64 = TILE_32.getNext();
+	private static final Tile TILE_128 = TILE_64.getNext();
+	private static final Tile TILE_256 = TILE_128.getNext();
+	private static final Tile TILE_512 = TILE_256.getNext();
+	private static final Tile TILE_1024 = TILE_512.getNext();
+	private static final Tile TILE_2048 = TILE_1024.getNext();
 
 	@Before
 	public void setUp()
@@ -41,10 +53,10 @@ public class GridTest
 	public void testAddRandomTileOnUnSlideableBoard()
 	{
 		grid = new Grid(2);
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_4);
-		grid.setTile(1, 0, Tile.V_4);
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_4);
+		grid.setTile(1, 0, TILE_4);
+		grid.setTile(1, 1, TILE_2);
 
 		// it should not cause an infinite loop
 		grid.addRandomTile();
@@ -53,57 +65,57 @@ public class GridTest
 	@Test
 	public void testSlideTilesLeft()
 	{
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(1, 1, TILE_2);
 
 		grid.slideTiles(MoveDirection.LEFT);
 
-		Assert.assertEquals(Tile.V_2, grid.getTile(1, 0));
+		Assert.assertEquals(TILE_2, grid.getTile(1, 0));
 		Assert.assertNull(grid.getTile(1, 1));
 	}
 
 	@Test
 	public void testSlideTilesRight()
 	{
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(1, 1, TILE_2);
 
 		grid.slideTiles(MoveDirection.RIGHT);
 
-		Assert.assertEquals(Tile.V_2, grid.getTile(1, 3));
+		Assert.assertEquals(TILE_2, grid.getTile(1, 3));
 		Assert.assertNull(grid.getTile(1, 1));
 	}
 
 	@Test
 	public void testSlideTilesUp()
 	{
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(1, 1, TILE_2);
 
 		grid.slideTiles(MoveDirection.UP);
 
-		Assert.assertEquals(Tile.V_2, grid.getTile(0, 1));
+		Assert.assertEquals(TILE_2, grid.getTile(0, 1));
 		Assert.assertNull(grid.getTile(1, 1));
 	}
 
 	@Test
 	public void testSlideTilesDown()
 	{
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(1, 1, TILE_2);
 
 		grid.slideTiles(MoveDirection.DOWN);
 
-		Assert.assertEquals(Tile.V_2, grid.getTile(3, 1));
+		Assert.assertEquals(TILE_2, grid.getTile(3, 1));
 		Assert.assertNull(grid.getTile(1, 1));
 	}
 
 	@Test
 	public void testSlideTiles_0202()
 	{
-		grid.setTile(0, 1, Tile.V_2);
-		grid.setTile(0, 3, Tile.V_2);
+		grid.setTile(0, 1, TILE_2);
+		grid.setTile(0, 3, TILE_2);
 
 		int moveScore = grid.slideTiles(MoveDirection.LEFT);
 
 		Assert.assertEquals(4, moveScore);
-		Assert.assertEquals(Tile.V_4, grid.getTile(0, 0));
+		Assert.assertEquals(TILE_4, grid.getTile(0, 0));
 		Assert.assertNull(grid.getTile(0, 1));
 		Assert.assertNull(grid.getTile(0, 3));
 	}
@@ -111,16 +123,16 @@ public class GridTest
 	@Test
 	public void testSlideTiles_2244()
 	{
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_2);
-		grid.setTile(0, 2, Tile.V_4);
-		grid.setTile(0, 3, Tile.V_4);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_2);
+		grid.setTile(0, 2, TILE_4);
+		grid.setTile(0, 3, TILE_4);
 
 		int moveScore = grid.slideTiles(MoveDirection.LEFT);
 
 		Assert.assertEquals(12, moveScore);
-		Assert.assertEquals(Tile.V_4, grid.getTile(0, 0));
-		Assert.assertEquals(Tile.V_8, grid.getTile(0, 1));
+		Assert.assertEquals(TILE_4, grid.getTile(0, 0));
+		Assert.assertEquals(TILE_8, grid.getTile(0, 1));
 		Assert.assertNull(grid.getTile(0, 2));
 		Assert.assertNull(grid.getTile(0, 3));
 	}
@@ -128,14 +140,14 @@ public class GridTest
 	@Test
 	public void testSlideTiles_22_allRows()
 	{
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_2);
-		grid.setTile(1, 0, Tile.V_2);
-		grid.setTile(1, 1, Tile.V_2);
-		grid.setTile(2, 0, Tile.V_2);
-		grid.setTile(2, 1, Tile.V_2);
-		grid.setTile(3, 0, Tile.V_2);
-		grid.setTile(3, 1, Tile.V_2);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_2);
+		grid.setTile(1, 0, TILE_2);
+		grid.setTile(1, 1, TILE_2);
+		grid.setTile(2, 0, TILE_2);
+		grid.setTile(2, 1, TILE_2);
+		grid.setTile(3, 0, TILE_2);
+		grid.setTile(3, 1, TILE_2);
 
 		int moveScore = grid.slideTiles(MoveDirection.LEFT);
 
@@ -145,10 +157,10 @@ public class GridTest
 	@Test
 	public void testSlideTilesDown_16s4s()
 	{
-		grid.setTile(0, 0, Tile.V_16);
-		grid.setTile(1, 0, Tile.V_16);
-		grid.setTile(2, 0, Tile.V_4);
-		grid.setTile(3, 0, Tile.V_4);
+		grid.setTile(0, 0, TILE_16);
+		grid.setTile(1, 0, TILE_16);
+		grid.setTile(2, 0, TILE_4);
+		grid.setTile(3, 0, TILE_4);
 
 		int moveScore = grid.slideTiles(MoveDirection.DOWN);
 
@@ -156,16 +168,16 @@ public class GridTest
 	}
 
 	@Test
-	public void testHas2048Tile_empty()
+	public void testHas2048TILE_empty()
 	{
 		Assert.assertFalse(grid.has2048Tile());
 	}
 
 	@Test
-	public void testHas2048Tile_smallTiles()
+	public void testHas2048TILE_smallTiles()
 	{
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_2);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_2);
 
 		grid.slideTiles(MoveDirection.LEFT);
 
@@ -173,10 +185,10 @@ public class GridTest
 	}
 
 	@Test
-	public void testHas2048Tile_slide1024Tiles()
+	public void testHas2048TILE_slide1024Tiles()
 	{
-		grid.setTile(0, 0, Tile.V_1024);
-		grid.setTile(0, 1, Tile.V_1024);
+		grid.setTile(0, 0, TILE_1024);
+		grid.setTile(0, 1, TILE_1024);
 
 		grid.slideTiles(MoveDirection.LEFT);
 
@@ -192,7 +204,7 @@ public class GridTest
 	@Test
 	public void testCanSlideTiles_middle()
 	{
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(1, 1, TILE_2);
 
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.LEFT));
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.RIGHT));
@@ -203,7 +215,7 @@ public class GridTest
 	@Test
 	public void testCanSlideTiles_topLeft()
 	{
-		grid.setTile(0, 0, Tile.V_2);
+		grid.setTile(0, 0, TILE_2);
 
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.LEFT));
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.RIGHT));
@@ -214,10 +226,10 @@ public class GridTest
 	@Test
 	public void testCanSlideTiles_combine()
 	{
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_4);
-		grid.setTile(0, 2, Tile.V_4);
-		grid.setTile(0, 3, Tile.V_8);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_4);
+		grid.setTile(0, 2, TILE_4);
+		grid.setTile(0, 3, TILE_8);
 
 		Assert.assertTrue(grid.canSlideTiles(MoveDirection.LEFT));
 	}
@@ -226,10 +238,10 @@ public class GridTest
 	public void testCanSlideTiles_staggered()
 	{
 		grid = new Grid(2);
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_4);
-		grid.setTile(1, 0, Tile.V_4);
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_4);
+		grid.setTile(1, 0, TILE_4);
+		grid.setTile(1, 1, TILE_2);
 
 		Assert.assertFalse(grid.canSlideInAnyDirection());
 	}
@@ -238,9 +250,9 @@ public class GridTest
 	public void testCanSlideTiles_staggered_oddLength()
 	{
 		grid = new Grid(3);
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_4);
-		grid.setTile(0, 2, Tile.V_8);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_4);
+		grid.setTile(0, 2, TILE_8);
 
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.LEFT));
 		Assert.assertFalse(grid.canSlideTiles(MoveDirection.RIGHT));
@@ -249,7 +261,7 @@ public class GridTest
 	@Test
 	public void testClear()
 	{
-		grid.setTile(1, 1, Tile.V_2);
+		grid.setTile(1, 1, TILE_2);
 
 		grid.clear();
 
@@ -259,34 +271,45 @@ public class GridTest
 	@Test
 	public void testClearOnWin()
 	{
-		grid.setTile(0, 0, Tile.V_1024);
-		grid.setTile(0, 1, Tile.V_1024);
+		grid.setTile(0, 0, TILE_1024);
+		grid.setTile(0, 1, TILE_1024);
 
 		grid.slideTiles(MoveDirection.LEFT);
 		grid.clear();
 
 		Assert.assertFalse(grid.has2048Tile());
 	}
+	
+	@Test
+	public void testCombine2048Tiles()
+	{
+		grid.setTile(0, 0, TILE_2048);
+		grid.setTile(0, 1, TILE_2048);
+
+		grid.slideTiles(MoveDirection.LEFT);
+
+		Assert.assertEquals(Integer.valueOf(4096), grid.getTile(0, 0).getValue());
+	}
 
 	@Test
 	public void testStall()
 	{
-		grid.setTile(0, 0, Tile.V_2);
-		grid.setTile(0, 1, Tile.V_2);
-		grid.setTile(0, 2, Tile.V_4);
-		grid.setTile(0, 3, Tile.V_2);
-		grid.setTile(1, 0, Tile.V_8);
-		grid.setTile(1, 1, Tile.V_64);
-		grid.setTile(1, 2, Tile.V_8);
-		grid.setTile(1, 3, Tile.V_16);
-		grid.setTile(2, 0, Tile.V_4);
-		grid.setTile(2, 1, Tile.V_2);
-		grid.setTile(2, 2, Tile.V_32);
-		grid.setTile(2, 3, Tile.V_8);
-		grid.setTile(3, 0, Tile.V_2);
-		grid.setTile(3, 1, Tile.V_2);
-		grid.setTile(3, 2, Tile.V_4);
-		grid.setTile(3, 3, Tile.V_2);
+		grid.setTile(0, 0, TILE_2);
+		grid.setTile(0, 1, TILE_2);
+		grid.setTile(0, 2, TILE_4);
+		grid.setTile(0, 3, TILE_2);
+		grid.setTile(1, 0, TILE_8);
+		grid.setTile(1, 1, TILE_64);
+		grid.setTile(1, 2, TILE_8);
+		grid.setTile(1, 3, TILE_16);
+		grid.setTile(2, 0, TILE_4);
+		grid.setTile(2, 1, TILE_2);
+		grid.setTile(2, 2, TILE_32);
+		grid.setTile(2, 3, TILE_8);
+		grid.setTile(3, 0, TILE_2);
+		grid.setTile(3, 1, TILE_2);
+		grid.setTile(3, 2, TILE_4);
+		grid.setTile(3, 3, TILE_2);
 
 		Assert.assertTrue(grid.isFilled());
 	}

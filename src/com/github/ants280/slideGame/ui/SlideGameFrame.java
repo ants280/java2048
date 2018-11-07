@@ -30,7 +30,7 @@ public class SlideGameFrame extends JFrame
 		JLabel gameOverLabel = new JLabel();
 		JLabel scoreLabel = new JLabel();
 		JLabel highScoreLabel = new JLabel();
-		Border border = BorderFactory.createLineBorder(SlideGameCanvas.SPACER_COLOR);
+		Border border = BorderFactory.createLineBorder(SlideGameColors.SPACER_COLOR);
 		scoreLabel.setBorder(border);
 		highScoreLabel.setBorder(border);
 

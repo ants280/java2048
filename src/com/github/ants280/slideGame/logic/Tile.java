@@ -1,43 +1,28 @@
 package com.github.ants280.slideGame.logic;
 
-/**
- * The various tiles of the slideGame. Colors copied from .tile {
- * .tile.tile-[//d+] .tile-inner background } See {
- *
- * @https://github.com/gabrielecirulli/2048/blob/master/style/main.css}.
- */
-public enum Tile
+import java.util.HashMap;
+import java.util.Map;
+
+public class Tile implements Comparable<Tile>
 {
-	V_2(0xeee4da),
-	V_4(0xede0c8),
-	V_8(0xf2b179),
-	V_16(0xf59563),
-	V_32(0xf67c5f),
-	V_64(0xf65e3b),
-	V_128(0xedcf72),
-	V_256(0xedcc61),
-	V_512(0xedc850),
-	V_1024(0xedc53f),
-	V_2048(0xedc22e);
+	private final Integer value;
+	private final transient String displayValue;
+	private static final Map<Integer, Tile> TILE_CACHE = new HashMap<>();
 
-	private final int value;
-	private final String displayValue;
-	private final int color;
-	private static final Tile[] VALUES = values();
+	public static final Tile TWO = new Tile(2);
 
-	private Tile(int color)
+	static
 	{
-		if (color < 0 || color > 0xffffff)
-		{
-			throw new IllegalArgumentException("Too small/large: " + color);
-		}
-
-		this.value = (int) Math.pow(2, ordinal() + 1);
-		this.displayValue = Integer.toString(value);
-		this.color = color;
+		TILE_CACHE.put(2, TWO);
 	}
 
-	public int getValue()
+	private Tile(Integer value)
+	{
+		this.value = value;
+		this.displayValue = value.toString();
+	}
+
+	public Integer getValue()
 	{
 		return value;
 	}
@@ -47,15 +32,40 @@ public enum Tile
 		return displayValue;
 	}
 
-	public int getColor()
-	{
-		return color;
-	}
-
 	public Tile getNext()
 	{
-		int index = ordinal();
-		
-		return (index + 1 == VALUES.length) ? this : VALUES[index + 1];
+		int nextValue = Math.multiplyExact(2, value);
+
+		if (!TILE_CACHE.containsKey(nextValue))
+		{
+			TILE_CACHE.put(nextValue, new Tile(nextValue));
+		}
+
+		return TILE_CACHE.get(nextValue);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return this.value;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		return this == obj
+				|| (obj != null && getClass() == obj.getClass() && this.value.equals(((Tile) obj).getValue()));
+	}
+
+	@Override
+	public int compareTo(Tile o)
+	{
+		return value.compareTo(o.getValue());
+	}
+
+	@Override
+	public String toString()
+	{
+		return String.format("Tile{%d}", value);
 	}
 }

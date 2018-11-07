@@ -2,33 +2,22 @@ package com.github.ants280.slideGame.ui;
 
 import com.github.ants280.slideGame.logic.Grid;
 import com.github.ants280.slideGame.logic.Tile;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import javax.swing.JComponent;
 
 public class SlideGameCanvas extends JComponent
 {
 	private final Grid grid;
 	private final Font TILE_FONT = new Font("times", Font.PLAIN, 96); // TODO: make font scale
-	// TODO: store colors in Tile?
-	public static final Color EMPTY_TILE_COLOR = new Color(0xCDC1B4);
-	public static final Color TILE_TEXT_COLOR = new Color(0x776E65);
-	public static final Color SPACER_COLOR = new Color(0xBBADA0);
-	private static final Map<Tile, Color> TILE_COLOR_CACHE = Arrays.stream(Tile.values())
-			.collect(Collectors.toMap(Function.identity(), SlideGameCanvas::getColorFromTile));
 
 	public SlideGameCanvas(Grid grid)
 	{
 		super();
 
 		this.grid = grid;
-		this.setBackground(EMPTY_TILE_COLOR);
+		this.setBackground(SlideGameColors.EMPTY_TILE_COLOR);
 	}
 	
 	@Override
@@ -53,7 +42,7 @@ public class SlideGameCanvas extends JComponent
 		double halfSpacerRowHeight = spacerRowHeight / 2d;
 
 		// draw vertical and horizontal bars
-		g.setColor(SPACER_COLOR);
+		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= length; c++)
 		{
 			double colOffset = c * colWidth;
@@ -94,7 +83,7 @@ public class SlideGameCanvas extends JComponent
 		if (tile != null)
 		{
 			// draw tile background
-			g.setColor(TILE_COLOR_CACHE.get(tile));
+			g.setColor(SlideGameColors.getColor(tile));
 			g.fillRect(
 					(int) (c * colWidth + halfSpacerColWidth), // x
 					(int) (r * rowHeight + halfSpacerRowHeight), // y
@@ -102,7 +91,7 @@ public class SlideGameCanvas extends JComponent
 					(int) tileRowHeight); // height);
 			// draw tile text
 			String displayValue = tile.getDisplayValue();
-			g.setColor(TILE_TEXT_COLOR);
+			g.setColor(SlideGameColors.TILE_TEXT_COLOR);
 			double fontHeightPx = TILE_FONT.getSize() * 0.75d;
 			FontMetrics fontMetrics = g.getFontMetrics();
 			int textWidth = fontMetrics.charsWidth(displayValue.toCharArray(), 0, displayValue.length());
@@ -110,10 +99,5 @@ public class SlideGameCanvas extends JComponent
 			int rowHeightOffset = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
 			g.drawString(displayValue, colWidthOffset, rowHeightOffset);
 		}
-	}
-	
-	private static Color getColorFromTile(Tile tile)
-	{
-		return new Color((int) tile.getColor());
 	}
 }
