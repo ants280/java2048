@@ -29,7 +29,6 @@ public class SlideGameCanvas extends JComponent
 		// TODO: Ensure width = height.
 		int width = this.getWidth();
 		int height = this.getHeight();
-		g.clearRect(0, 0, width, height);
 
 		int gridLength = grid.getLength();
 		double tilePercentage = 0.90d;
@@ -42,6 +41,7 @@ public class SlideGameCanvas extends JComponent
 		double halfSpacerColWidth = spacerColWidth / 2d;
 		double halfSpacerRowHeight = spacerRowHeight / 2d;
 
+		g.clearRect(0, 0, width, height);
 		paintGrid(
 				gridLength,
 				g,
