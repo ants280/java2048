@@ -10,19 +10,37 @@ public class Grid
 	private final Tile[][] rows;
 	private final Tile[][] cols;
 	private final Random random;
-	private boolean has2048Tile; // TODO: Be able to specify the maximum (goal) tile
+	private final int goalTileValue;
+	private boolean goalTileCreated;
+
+	public Grid()
+	{
+		this(4);
+	}
+
+	public Grid(int length)
+	{
+		this(length, 2048);
+	}
 
 	/**
 	 * Creates an empty, square grid of tiles.
 	 *
 	 * @param length The width and height of rows and columns in the grid.
+	 * @param goalTileValue The value of the Tile used to determine when the
+	 * game is over.
 	 */
-	public Grid(int length)
+	public Grid(int length, int goalTileValue)
 	{
 		if (length < 2)
 		{
 			throw new IllegalArgumentException("Length must be large enough "
 					+ "to slide tiles.  Found: " + length);
+		}
+		// copied from https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2 :
+		if (goalTileValue == 0 || (goalTileValue & (goalTileValue - 1)) != 0)
+		{
+			throw new IllegalArgumentException("Goal tile value must be a value of 2");
 		}
 
 		this.length = length;
@@ -30,7 +48,8 @@ public class Grid
 		this.cols = createTiles(length);
 		long seed = System.currentTimeMillis();
 		this.random = new Random(seed);
-		this.has2048Tile = false;
+		this.goalTileValue = goalTileValue;
+		this.goalTileCreated = false;
 
 		if (PRINT_MOVES)
 		{
@@ -59,7 +78,7 @@ public class Grid
 			}
 		}
 
-		has2048Tile = false;
+		goalTileCreated = false;
 	}
 
 	/**
@@ -78,7 +97,7 @@ public class Grid
 		int r, c;
 
 		Tile tile = random.nextInt(10) == 0 ? Tile.TWO.getNext() : Tile.TWO;
-		//tile = Tile.V_2.getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext(); // useful for testing game winning :D
+		tile = Tile.TWO.getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext(); // useful for testing game winning :D
 		do
 		{
 			r = random.nextInt(length);
@@ -137,9 +156,9 @@ public class Grid
 		return true;
 	}
 
-	public boolean has2048Tile()
+	public boolean goalTileCreated()
 	{
-		return has2048Tile;
+		return goalTileCreated;
 	}
 
 	private boolean canSlideTiles(boolean slideRows, boolean towardZero)
@@ -238,9 +257,9 @@ public class Grid
 					tempArrayArray[slideIndex - delta] = nextTile;
 					sum += nextTile.getValue();
 					canCombineWithPreviousSlide = false;
-					if (nextTile.getValue() == 2048)
+					if (nextTile.getValue() == goalTileValue)
 					{
-						has2048Tile = true;
+						goalTileCreated = true;
 					}
 				}
 				else

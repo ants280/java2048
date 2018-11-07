@@ -116,7 +116,6 @@ public class SlideGameFrame extends JFrame
 				+ "using WSAD controls, or clicking and dragging in the desired direction on the\n"
 				+ "grid. After each turn a new tile is added. WThe game is over if the grid is\n"
 				+ "full and no moves can be made and is won when the 2048 tile is created.";
-
 		String title = "Help for " + getTitle();
 		showPopup(message, title, JOptionPane.QUESTION_MESSAGE);
 	}

@@ -9,7 +9,7 @@ public class GridTest
 {
 	private static final int LENGTH = 4;
 	private Grid grid;
-	
+
 	private static final Tile TILE_2 = Tile.TWO;
 	private static final Tile TILE_4 = TILE_2.getNext();
 	private static final Tile TILE_8 = TILE_4.getNext();
@@ -26,6 +26,20 @@ public class GridTest
 	public void setUp()
 	{
 		grid = new Grid(LENGTH);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor_bad_length()
+	{
+		Grid grid1 = new Grid(1);
+		Assert.fail("Should not be constructable: " + grid1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor_badGoalTileValue()
+	{
+		Grid grid2 = new Grid(4, 17);
+		Assert.fail("Should not be constructable: " + grid2);
 	}
 
 	@Test
@@ -170,7 +184,7 @@ public class GridTest
 	@Test
 	public void testHas2048TILE_empty()
 	{
-		Assert.assertFalse(grid.has2048Tile());
+		Assert.assertFalse(grid.goalTileCreated());
 	}
 
 	@Test
@@ -181,7 +195,7 @@ public class GridTest
 
 		grid.slideTiles(MoveDirection.LEFT);
 
-		Assert.assertFalse(grid.has2048Tile());
+		Assert.assertFalse(grid.goalTileCreated());
 	}
 
 	@Test
@@ -192,7 +206,7 @@ public class GridTest
 
 		grid.slideTiles(MoveDirection.LEFT);
 
-		Assert.assertTrue(grid.has2048Tile());
+		Assert.assertTrue(grid.goalTileCreated());
 	}
 
 	@Test
@@ -277,9 +291,9 @@ public class GridTest
 		grid.slideTiles(MoveDirection.LEFT);
 		grid.clear();
 
-		Assert.assertFalse(grid.has2048Tile());
+		Assert.assertFalse(grid.goalTileCreated());
 	}
-	
+
 	@Test
 	public void testCombine2048Tiles()
 	{

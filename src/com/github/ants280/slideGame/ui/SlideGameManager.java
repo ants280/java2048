@@ -77,9 +77,9 @@ public class SlideGameManager
 
 		this.incrementScore(moveScore);
 
-		if (!grid.canSlideInAnyDirection() || grid.has2048Tile())
+		if (!grid.canSlideInAnyDirection() || grid.goalTileCreated())
 		{
-			gameWon = grid.has2048Tile();
+			gameWon = grid.goalTileCreated();
 			endGame();
 		}
 		else
