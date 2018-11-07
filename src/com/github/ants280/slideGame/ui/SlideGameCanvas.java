@@ -86,13 +86,13 @@ public class SlideGameCanvas extends JComponent
 			double tileColWidth, double tileRowHeight,
 			double halfSpacerColWidth, double halfSpacerRowHeight)
 	{
-		for (int r = 0; r < gridLength; r++)
+		for (int c = 0; c < gridLength; c++)
 		{
-			for (int c = 0; c < gridLength; c++)
+			for (int r = 0; r < gridLength; r++)
 			{
 				paintTile(
 						g,
-						r, c,
+						c, r,
 						colWidth, rowHeight,
 						tileColWidth, tileRowHeight,
 						halfSpacerColWidth, halfSpacerRowHeight);
@@ -102,7 +102,7 @@ public class SlideGameCanvas extends JComponent
 
 	private void paintTile(
 			Graphics g,
-			int r, int c,
+			int c, int r,
 			double colWidth, double rowHeight,
 			double tileColWidth, double tileRowHeight,
 			double halfSpacerColWidth, double halfSpacerRowHeight)
