@@ -26,12 +26,12 @@ public class SlideGameColors
 			0xf2b179, // 8
 			0xf59563, // 16
 			0xf67c5f, // 32
-			0xf65e3b, //64
+			0xf65e3b, // 64
 			0xedcf72, // 128
 			0xedcc61, // 256
 			0xedc850, // 512
 			0xedc53f, // 1024
-			0xedc22e // 2048
+			0xedc22e, // 2048
 		};
 
 		Tile tile = Tile.TWO;
