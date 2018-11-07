@@ -97,7 +97,7 @@ public class Grid
 		int r, c;
 
 		Tile tile = random.nextInt(10) == 0 ? Tile.TWO.getNext() : Tile.TWO;
-		tile = Tile.TWO.getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext(); // useful for testing game winning :D
+		//tile = Tile.TWO.getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext(); // useful for testing game winning :D
 		do
 		{
 			r = random.nextInt(length);
