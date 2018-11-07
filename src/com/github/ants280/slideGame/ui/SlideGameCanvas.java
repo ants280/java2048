@@ -31,28 +31,6 @@ public class SlideGameCanvas extends JComponent
 		this.setBackground(EMPTY_TILE_COLOR);
 	}
 	
-	/**
-	 * {@inheritDoc} Contains Double-Buffering logic to make painting more
-	 * smooth.
-	 *
-	 * @param g The Canvass Graphics to pain on.
-	 */
-	/*
-	@Override
-	public void update(Graphics g)
-	{
-		//System.out.println(this.isDoubleBuffered());
-		BufferedImage lastDrawnImage
-			= (BufferedImage) this.createImage(this.getWidth(),
-				this.getHeight());
-
-		//Draws the shape onto the BufferedImage
-		this.paint(lastDrawnImage.getGraphics());
-
-		//Draws the BufferedImage onto the PaintPanel
-		g.drawImage(lastDrawnImage, 0, 0, this);
-	}
-	 */
 	@Override
 	public void paint(Graphics g)
 	{
