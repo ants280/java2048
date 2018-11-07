@@ -65,7 +65,6 @@ public class SlideGameCanvas extends JComponent
 			double spacerColWidth, double spacerRowHeight,
 			double halfSpacerColWidth, double halfSpacerRowHeight)
 	{
-		// draw vertical and horizontal bars
 		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= gridLength; c++)
 		{
@@ -88,7 +87,6 @@ public class SlideGameCanvas extends JComponent
 			double tileColWidth, double tileRowHeight,
 			double halfSpacerColWidth, double halfSpacerRowHeight)
 	{
-		// draw tiles
 		for (int r = 0; r < gridLength; r++)
 		{
 			for (int c = 0; c < gridLength; c++)
