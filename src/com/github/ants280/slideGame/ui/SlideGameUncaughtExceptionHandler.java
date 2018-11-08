@@ -16,11 +16,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.DefaultEditorKit;
 
-public class SlideFrameUncaughtExceptionHandler implements UncaughtExceptionHandler
+public class SlideGameUncaughtExceptionHandler implements UncaughtExceptionHandler
 {
 	private final Component parentComponent;
 
-	public SlideFrameUncaughtExceptionHandler(Component parentComponent)
+	public SlideGameUncaughtExceptionHandler(Component parentComponent)
 	{
 		this.parentComponent = parentComponent;
 	}
