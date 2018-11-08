@@ -8,12 +8,15 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 
-public class SlideGameCanvas extends JComponent
+/**
+ * The component the slideGame is painted on.
+ */
+public class SlideGameDisplayComponent extends JComponent
 {
 	private final Grid grid;
 	private final Font TILE_FONT = new Font("times", Font.PLAIN, 96); // TODO: make font scale
 
-	public SlideGameCanvas(Grid grid)
+	public SlideGameDisplayComponent(Grid grid)
 	{
 		super();
 

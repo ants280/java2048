@@ -9,6 +9,7 @@ import java.util.stream.IntStream;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -34,18 +35,16 @@ public class SlideGameFrame extends JFrame
 		super("Slide Game");
 
 		Grid grid = new Grid(4);
-		SlideGameCanvas slideGameCanvas = new SlideGameCanvas(grid);
-
+		JComponent slideGameCanvas = new SlideGameDisplayComponent(grid);
 		JLabel gameOverLabel = createJLabel(false);
 		JLabel scoreLabel = createJLabel(true);
 		JLabel highScoreLabel = createJLabel(true);
-
 		this.slideGameManager = new SlideGameManager(grid, this, slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
 
 		initSize(slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
 	}
 
-	private void initSize(SlideGameCanvas slideGameCanvas, JLabel gameOverLabel, JLabel scoreLabel, JLabel highScoreLabel)
+	private void initSize(JComponent slideGameCanvas, JLabel gameOverLabel, JLabel scoreLabel, JLabel highScoreLabel)
 	{
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
