@@ -124,8 +124,7 @@ public class Grid
 	/**
 	 * Add a random tile to an empty spot on the grid.
 	 *
-	 * TODO: This may be slow with fairly-filled game boards due to random
-	 * adding.
+	 * This may be slow with fairly-filled game boards due to random adding.
 	 */
 	public void addRandomTile()
 	{
