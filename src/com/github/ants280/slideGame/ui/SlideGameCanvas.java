@@ -68,8 +68,8 @@ public class SlideGameCanvas extends JComponent
 		for (int c = 0; c <= gridLength; c++)
 		{
 			double colOffset = c * colWidth;
-			g.fillRect((int) (colOffset - halfSpacerColWidth),
-					0, (int) spacerColWidth, height);
+			g.fillRect((int) (colOffset - halfSpacerColWidth), 0,
+					(int) spacerColWidth, height);
 		}
 		for (int r = 0; r <= gridLength; r++)
 		{
