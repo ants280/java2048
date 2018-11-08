@@ -318,7 +318,8 @@ public class Grid
 
 	/**
 	 * Set the tile at the specified location. Updates the both the rows and
-	 * columns to keep the reflective data structure intact.
+	 * columns to keep the reflective data structure intact. TODO: change tile
+	 * indexing to be [c,r] based, like [x,y] and the awt painting system.
 	 *
 	 * Package-private for easy arrangements of tests.
 	 */
