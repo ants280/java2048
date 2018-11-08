@@ -133,7 +133,7 @@ public class SlideGameFrame extends JFrame
 
 	private void showSetGridLengthPopup()
 	{
-		String title = "Set grid length for " + getTitle();
+		String message = "Set grid length for " + getTitle();
 		Object[] selectionValues = new Object[8];
 		for (int i = 0; i < selectionValues.length; i++)
 		{
@@ -141,14 +141,14 @@ public class SlideGameFrame extends JFrame
 		}
 		int initialSelectionValue = slideGameManager.getGridLength();
 		showOptionDialog(
-				title,
+				message,
 				selectionValues, initialSelectionValue,
 				slideGameManager::setGridLength);
 	}
 
 	private void showSetGoalTileValuePopup()
 	{
-		String title = "Set goal tile value for " + getTitle();
+		String message = "Set goal tile value for " + getTitle();
 		Object[] selectionValues = new Object[9];
 		for (int i = 0; i < selectionValues.length; i++)
 		{
@@ -156,19 +156,19 @@ public class SlideGameFrame extends JFrame
 		}
 		int initialSelectionValue = slideGameManager.getGoalTileValue();
 		showOptionDialog(
-				title,
+				message,
 				selectionValues, initialSelectionValue,
 				slideGameManager::setGoalTileValue);
 	}
 
 	private void showOptionDialog(
-			String title,
+			String message,
 			Object[] selectionValues, Object initialSelectionValue,
 			Consumer<Integer> setValueFunction)
 	{
 		Object optionChoice = JOptionPane.showInputDialog(
 				this,
-				"", title,
+				message, "Change field for " + getTitle(),
 				JOptionPane.QUESTION_MESSAGE, null,
 				selectionValues, initialSelectionValue);
 		if (optionChoice != null)
