@@ -176,9 +176,4 @@ public class SlideGameFrame extends JFrame
 			setValueFunction.accept(Integer.parseInt(optionChoice.toString()));
 		}
 	}
-
-	private static int log2(int value)
-	{
-		return (int) (Math.log(value) / Math.log(2d));
-	}
 }
