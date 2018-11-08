@@ -1,7 +1,7 @@
 package com.github.ants280.slideGame.logic;
 
 import com.github.ants280.slideGame.logic.Grid.MoveDirection;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
