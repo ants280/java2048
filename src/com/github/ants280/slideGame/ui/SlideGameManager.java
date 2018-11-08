@@ -121,6 +121,8 @@ public class SlideGameManager
 
 	private void initGame()
 	{
+		gameOver = false;
+		gameWon = false;
 		score = 0;
 		grid.addRandomTile();
 		grid.addRandomTile();
