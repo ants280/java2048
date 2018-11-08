@@ -42,6 +42,13 @@ public class GridTest
 		Assert.fail("Should not be constructable: " + grid2);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor_badGoalTileValue2()
+	{
+		Grid grid3 = new Grid(4, Integer.MIN_VALUE);
+		Assert.fail("Should not be constructable: " + grid3);
+	}
+
 	@Test
 	public void testInitialGridEmpty()
 	{

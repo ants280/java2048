@@ -38,7 +38,7 @@ public class Grid
 					+ "to slide tiles.  Found: " + length);
 		}
 		// copied from https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2 :
-		if (goalTileValue == 0 || (goalTileValue & (goalTileValue - 1)) != 0)
+		if (goalTileValue < 2 || (goalTileValue & (goalTileValue - 1)) != 0)
 		{
 			throw new IllegalArgumentException("Goal tile value must be a value of 2");
 		}
