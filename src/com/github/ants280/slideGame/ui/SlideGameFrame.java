@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -134,11 +135,11 @@ public class SlideGameFrame extends JFrame
 	private void showSetGridLengthPopup()
 	{
 		String message = "Set grid length for " + getTitle();
-		Object[] selectionValues = new Object[8];
-		for (int i = 0; i < selectionValues.length; i++)
-		{
-			selectionValues[i] = i + 2;
-		}
+		int goalTileValue = slideGameManager.getGoalTileValue();
+		int minimumGridLength = (int) Math.ceil(Math.sqrt((Math.log(goalTileValue) / Math.log(2d)) - 1));
+		Object[] selectionValues = IntStream.range(minimumGridLength, minimumGridLength + 10)
+				.mapToObj(Integer::valueOf)
+				.toArray();
 		int initialSelectionValue = slideGameManager.getGridLength();
 		showOptionDialog(
 				message,
@@ -149,11 +150,13 @@ public class SlideGameFrame extends JFrame
 	private void showSetGoalTileValuePopup()
 	{
 		String message = "Set goal tile value for " + getTitle();
-		Object[] selectionValues = new Object[9];
-		for (int i = 0; i < selectionValues.length; i++)
-		{
-			selectionValues[i] = (int) Math.pow(2, i + 3);
-		}
+		int gridLength = slideGameManager.getGridLength();
+		int maximumGoalTileValue = (int) Math.pow(2, Math.pow(gridLength, 2));
+		Object[] selectionValues = IntStream.range(0, 10)
+				.map(i -> (int) Math.pow(2, i + 3))
+				.filter(possibleGoalTileValue -> possibleGoalTileValue <= maximumGoalTileValue)
+				.mapToObj(Integer::valueOf)
+				.toArray();
 		int initialSelectionValue = slideGameManager.getGoalTileValue();
 		showOptionDialog(
 				message,
@@ -161,7 +164,6 @@ public class SlideGameFrame extends JFrame
 				slideGameManager::setGoalTileValue);
 	}
 
-	// TODO: make sure setting the length/goaltilevalue is legal
 	private void showOptionDialog(
 			String message,
 			Object[] selectionValues, Object initialSelectionValue,
