@@ -112,7 +112,7 @@ public class SlideGameCanvas extends JComponent
 			double tileColWidth, double tileRowHeight,
 			double halfSpacerColWidth, double halfSpacerRowHeight)
 	{
-		Tile tile = grid.getTile(r, c);
+		Tile tile = grid.getTile(c, r);
 		if (tile != null)
 		{
 			paintTileBackground(
