@@ -77,6 +77,17 @@ public class SlideGameManager
 		newGame();
 	}
 
+	public int getGoalTileValue()
+	{
+		return grid.getGoalTileValue();
+	}
+
+	public void setGoalTileValue(int goalTileValue)
+	{
+		grid.setGoalTileValue(goalTileValue);
+		newGame();
+	}
+
 	public void makeMove(Grid.MoveDirection moveDirection)
 	{
 		if (moveDirection == null || !grid.canSlideTiles(moveDirection))

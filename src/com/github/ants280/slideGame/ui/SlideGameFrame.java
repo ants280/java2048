@@ -4,6 +4,7 @@ import com.github.ants280.slideGame.logic.Grid;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.util.function.Consumer;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -14,9 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.KeyStroke;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 
 public class SlideGameFrame extends JFrame
@@ -65,6 +64,9 @@ public class SlideGameFrame extends JFrame
 		JMenuItem setGridLength_MI = new JMenuItem("Set grid length");
 		setGridLength_MI.addActionListener(actionEvent -> this.showSetGridLengthPopup());
 
+		JMenuItem setGoalTileValue_MI = new JMenuItem("Set goal tile value");
+		setGoalTileValue_MI.addActionListener(actionEvent -> this.showSetGoalTileValuePopup());
+
 		JMenuItem newGame_MI = new JMenuItem("New Game", KeyEvent.VK_N);
 		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 		newGame_MI.addActionListener(actionEvent -> slideGameManager.newGame());
@@ -83,8 +85,7 @@ public class SlideGameFrame extends JFrame
 
 		JMenu actionMenu = new JMenu("Action");
 		actionMenu.add(setGridLength_MI);
-		// TODO: set goal tile value slider
-		//actionMenu.add(setGoalTile_MI);
+		actionMenu.add(setGoalTileValue_MI);
 		actionMenu.addSeparator();
 		actionMenu.add(newGame_MI);
 		actionMenu.add(exit_MI);
@@ -132,22 +133,52 @@ public class SlideGameFrame extends JFrame
 
 	private void showSetGridLengthPopup()
 	{
-		SpinnerNumberModel model = new SpinnerNumberModel(slideGameManager.getGridLength(), 2, 10, 1);
-		JSpinner spinner = new JSpinner(model);
-		if (JOptionPane.showOptionDialog(
-				this,
-				spinner,
-				"Set grid length for " + getTitle(),
-				JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE,
-				null,
-				null,
-				null)
-				== JOptionPane.OK_OPTION)
+		String title = "Set grid length for " + getTitle();
+		Object[] selectionValues = new Object[8];
+		for (int i = 0; i < selectionValues.length; i++)
 		{
-			int newValue = Integer.parseInt(model.getValue().toString());
-			slideGameManager.setGridLength(newValue);
+			selectionValues[i] = i + 2;
 		}
+		int initialSelectionValue = slideGameManager.getGridLength();
+		showOptionDialog(
+				title,
+				selectionValues, initialSelectionValue,
+				slideGameManager::setGridLength);
+	}
 
+	private void showSetGoalTileValuePopup()
+	{
+		String title = "Set goal tile value for " + getTitle();
+		Object[] selectionValues = new Object[9];
+		for (int i = 0; i < selectionValues.length; i++)
+		{
+			selectionValues[i] = (int) Math.pow(2, i + 3);
+		}
+		int initialSelectionValue = slideGameManager.getGoalTileValue();
+		showOptionDialog(
+				title,
+				selectionValues, initialSelectionValue,
+				slideGameManager::setGoalTileValue);
+	}
+
+	private void showOptionDialog(
+			String title,
+			Object[] selectionValues, Object initialSelectionValue,
+			Consumer<Integer> setValueFunction)
+	{
+		Object optionChoice = JOptionPane.showInputDialog(
+				this,
+				"", title,
+				JOptionPane.QUESTION_MESSAGE, null,
+				selectionValues, initialSelectionValue);
+		if (optionChoice != null)
+		{
+			setValueFunction.accept(Integer.parseInt(optionChoice.toString()));
+		}
+	}
+
+	private static int log2(int value)
+	{
+		return (int) (Math.log(value) / Math.log(2d));
 	}
 }

@@ -9,7 +9,7 @@ public class Grid
 	private Tile[][] rows;
 	private Tile[][] cols;
 	private final Random random;
-	private final int goalTileValue;
+	private int goalTileValue;
 	private boolean goalTileCreated;
 
 	public Grid()
@@ -37,7 +37,7 @@ public class Grid
 					+ "to slide tiles.  Found: " + length);
 		}
 		// copied from https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2 :
-		if (goalTileValue < 2 || (goalTileValue & (goalTileValue - 1)) != 0)
+		if (goalTileValue < 8 || (goalTileValue & (goalTileValue - 1)) != 0)
 		{
 			throw new IllegalArgumentException("Goal tile value must be a value of 2");
 		}
@@ -61,6 +61,18 @@ public class Grid
 		this.rows = createTiles(length);
 		this.cols = createTiles(length);
 		this.goalTileCreated = false;
+	}
+
+	public int getGoalTileValue()
+	{
+		return goalTileValue;
+	}
+
+	// TODO: make sure setting the goal tile works with the length and vis-versa... Maybe do this check somewhere else...
+	public void setGoalTileValue(int goalTileValue)
+	{
+		this.goalTileValue = goalTileValue;
+		this.clear();
 	}
 
 	public Tile getTile(int r, int c)
