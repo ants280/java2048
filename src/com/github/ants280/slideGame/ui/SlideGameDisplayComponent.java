@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
 /**
@@ -14,6 +16,10 @@ import javax.swing.JComponent;
 public class SlideGameDisplayComponent extends JComponent
 {
 	private final Grid grid;
+	private static final RenderingHints ANTIALIAS_ON_RENDERING_HINT
+			= new RenderingHints(
+					RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 	private Font tileFont;
 
 	public SlideGameDisplayComponent(Grid grid)
@@ -25,9 +31,9 @@ public class SlideGameDisplayComponent extends JComponent
 	}
 
 	@Override
-	public void paint(Graphics g)
+	public void paintComponent(Graphics g)
 	{
-		super.paint(g);
+		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
 
 		// TODO: Ensure width = height.
 		int width = this.getWidth();
@@ -36,7 +42,7 @@ public class SlideGameDisplayComponent extends JComponent
 		double tilePercentage = 0.90d;
 		double colWidth = width / gridLength;
 		double rowHeight = height / gridLength;
-		// if the tile width/height are not rounded to integers, the painting may leave gapps.
+		// Painting may leave gaps if the tile width/height are not rounded.
 		double tileColWidth = round(colWidth * tilePercentage);
 		double tileRowHeight = round(rowHeight * tilePercentage);
 		double spacerColWidth = colWidth - tileColWidth;
