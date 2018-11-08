@@ -6,9 +6,9 @@ public class Grid
 {
 	private static final MoveDirection[] MOVE_DIRECTIONS = MoveDirection.values();
 	private static final boolean PRINT_MOVES = false;
-	private final int length;
-	private final Tile[][] rows;
-	private final Tile[][] cols;
+	private int length;
+	private Tile[][] rows;
+	private Tile[][] cols;
 	private final Random random;
 	private final int goalTileValue;
 	private boolean goalTileCreated;
@@ -51,7 +51,7 @@ public class Grid
 		this.goalTileValue = goalTileValue;
 		this.goalTileCreated = false;
 
-		if (PRINT_MOVES)
+		if (PRINT_MOVES) // TODO: delete PRINT_MOVES code, delete special seed.
 		{
 			System.out.printf(
 					"Created grid with length %d and seed %d%n", length, seed);
@@ -61,6 +61,14 @@ public class Grid
 	public int getLength()
 	{
 		return length;
+	}
+
+	public void setLength(int length)
+	{
+		this.length = length;
+		this.rows = createTiles(length);
+		this.cols = createTiles(length);
+		this.goalTileCreated = false;
 	}
 
 	public Tile getTile(int r, int c)

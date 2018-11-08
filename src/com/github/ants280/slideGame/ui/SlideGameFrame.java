@@ -14,7 +14,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.KeyStroke;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 
 public class SlideGameFrame extends JFrame
@@ -60,6 +62,9 @@ public class SlideGameFrame extends JFrame
 
 	private JMenuBar createJMenuBar()
 	{
+		JMenuItem setGridLength_MI = new JMenuItem("Set grid length");
+		setGridLength_MI.addActionListener(actionEvent -> this.showSetGridLengthPopup());
+
 		JMenuItem newGame_MI = new JMenuItem("New Game", KeyEvent.VK_N);
 		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
 		newGame_MI.addActionListener(actionEvent -> slideGameManager.newGame());
@@ -77,10 +82,10 @@ public class SlideGameFrame extends JFrame
 		about_MI.addActionListener(actionEvent -> this.showAboutPopup());
 
 		JMenu actionMenu = new JMenu("Action");
-		// TODO: set size, goal sliders
-		//actionMenu.add(setGridSize_MI);
+		actionMenu.add(setGridLength_MI);
+		// TODO: set goal tile value slider
 		//actionMenu.add(setGoalTile_MI);
-		//actionMenu.addSeparator();
+		actionMenu.addSeparator();
 		actionMenu.add(newGame_MI);
 		actionMenu.add(exit_MI);
 
@@ -123,5 +128,26 @@ public class SlideGameFrame extends JFrame
 	private void showPopup(String message, String title, int messageType)
 	{
 		JOptionPane.showMessageDialog(this, message, title, messageType);
+	}
+
+	private void showSetGridLengthPopup()
+	{
+		SpinnerNumberModel model = new SpinnerNumberModel(slideGameManager.getGridLength(), 2, 10, 1);
+		JSpinner spinner = new JSpinner(model);
+		if (JOptionPane.showOptionDialog(
+				this,
+				spinner,
+				"Set grid length for " + getTitle(),
+				JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				null,
+				null)
+				== JOptionPane.OK_OPTION)
+		{
+			int newValue = Integer.parseInt(model.getValue().toString());
+			slideGameManager.setGridLength(newValue);
+		}
+
 	}
 }

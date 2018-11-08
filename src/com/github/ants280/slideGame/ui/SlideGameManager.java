@@ -66,6 +66,17 @@ public class SlideGameManager
 		initGame();
 	}
 
+	public int getGridLength()
+	{
+		return grid.getLength();
+	}
+
+	public void setGridLength(int length)
+	{
+		grid.setLength(length);
+		newGame();
+	}
+
 	public void makeMove(Grid.MoveDirection moveDirection)
 	{
 		if (moveDirection == null || !grid.canSlideTiles(moveDirection))
