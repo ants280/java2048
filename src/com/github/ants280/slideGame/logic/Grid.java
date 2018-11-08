@@ -5,7 +5,6 @@ import java.util.Random;
 public class Grid
 {
 	private static final MoveDirection[] MOVE_DIRECTIONS = MoveDirection.values();
-	private static final boolean PRINT_MOVES = false;
 	private int length;
 	private Tile[][] rows;
 	private Tile[][] cols;
@@ -46,16 +45,9 @@ public class Grid
 		this.length = length;
 		this.rows = createTiles(length);
 		this.cols = createTiles(length);
-		long seed = System.currentTimeMillis();
-		this.random = new Random(seed);
+		this.random = new Random();
 		this.goalTileValue = goalTileValue;
 		this.goalTileCreated = false;
-
-		if (PRINT_MOVES) // TODO: delete PRINT_MOVES code, delete special seed.
-		{
-			System.out.printf(
-					"Created grid with length %d and seed %d%n", length, seed);
-		}
 	}
 
 	public int getLength()
@@ -112,11 +104,6 @@ public class Grid
 			c = random.nextInt(length);
 		}
 		while (getTile(r, c) != null);
-
-		if (PRINT_MOVES)
-		{
-			System.out.printf("\tAdding %s Tile at [%d,%d]%n", tile, r, c);
-		}
 
 		setTile(r, c, tile);
 	}
