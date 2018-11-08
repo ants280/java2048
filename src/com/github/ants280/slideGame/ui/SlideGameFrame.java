@@ -161,6 +161,7 @@ public class SlideGameFrame extends JFrame
 				slideGameManager::setGoalTileValue);
 	}
 
+	// TODO: make sure setting the length/goaltilevalue is legal
 	private void showOptionDialog(
 			String message,
 			Object[] selectionValues, Object initialSelectionValue,

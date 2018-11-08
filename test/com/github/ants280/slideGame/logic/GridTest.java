@@ -258,7 +258,7 @@ public class GridTest
 	@Test
 	public void testCanSlideTiles_staggered()
 	{
-		grid = new Grid(2);
+		grid = new Grid(2, 8);
 		grid.setTile(0, 0, TILE_2);
 		grid.setTile(0, 1, TILE_4);
 		grid.setTile(1, 0, TILE_4);
@@ -270,7 +270,7 @@ public class GridTest
 	@Test
 	public void testCanSlideTiles_staggered_oddLength()
 	{
-		grid = new Grid(3);
+		grid = new Grid(3, 512);
 		grid.setTile(0, 0, TILE_2);
 		grid.setTile(0, 1, TILE_4);
 		grid.setTile(0, 2, TILE_8);
@@ -333,5 +333,31 @@ public class GridTest
 		grid.setTile(3, 3, TILE_2);
 
 		Assert.assertTrue(grid.isFilled());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetLength_tooSmallForGoalTileValue()
+	{
+		grid.setLength(2);
+
+		Assert.fail("It should not be possible to set a grid length less than sqrt(log_2(goalTileValue)-1)");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetGoalTileValue_tooLargeForGridLength()
+	{
+		grid.setGoalTileValue(131072); // 2^17 = 131072
+
+		Assert.fail("It should not be possible to set a grid goal tile value of over 2^((gridLength^2)+1");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructor_invalidArgCombination()
+	{
+		// stuck state: [[512,256,128],[64,32,16],[8,4,2]]
+		// Actually, it is possible to win if the last tile generated is a 4 (not a 2), but that depends on the random tile frequencies.
+		Grid gridX = new Grid(3, 1024);
+
+		Assert.fail("It should not be possible to create a grid with length = 3 and : " + gridX);
 	}
 }

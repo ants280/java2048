@@ -48,6 +48,9 @@ public class Grid
 		this.random = new Random();
 		this.goalTileValue = goalTileValue;
 		this.goalTileCreated = false;
+
+		validateLength(length);
+		validateGoalTileValue(goalTileValue);
 	}
 
 	public int getLength()
@@ -57,6 +60,7 @@ public class Grid
 
 	public void setLength(int length)
 	{
+		validateLength(length);
 		this.length = length;
 		this.rows = createTiles(length);
 		this.cols = createTiles(length);
@@ -68,11 +72,35 @@ public class Grid
 		return goalTileValue;
 	}
 
-	// TODO: make sure setting the goal tile works with the length and vis-versa... Maybe do this check somewhere else...
 	public void setGoalTileValue(int goalTileValue)
 	{
+		validateGoalTileValue(goalTileValue);
 		this.goalTileValue = goalTileValue;
 		this.clear();
+	}
+
+	private void validateLength(int length)
+	{
+		int minimumLength = (int) Math.ceil(Math.sqrt(log2(goalTileValue) - 1));
+
+		if (length < minimumLength)
+		{
+			throw new IllegalArgumentException(String.format(
+					"Length of %d is too small to win with a goalTileValue of %d.  Must be at least %d",
+					length, goalTileValue, minimumLength));
+		}
+	}
+
+	private void validateGoalTileValue(int goalTileValue)
+	{
+		int maximumGoalTileValue = (int) Math.pow(2, Math.pow(length, 2));
+
+		if (goalTileValue > maximumGoalTileValue)
+		{
+			throw new IllegalArgumentException(String.format(
+					"Goal tile of value of %d is too large to win with a grid length of %d.  Must be at least %d",
+					goalTileValue, length, maximumGoalTileValue));
+		}
 	}
 
 	public Tile getTile(int r, int c)
@@ -311,6 +339,11 @@ public class Grid
 		}
 
 		return tiles;
+	}
+
+	private static double log2(int value)
+	{
+		return Math.log(value) / Math.log(2);
 	}
 
 	public static enum MoveDirection
