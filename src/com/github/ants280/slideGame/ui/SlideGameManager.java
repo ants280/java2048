@@ -26,6 +26,7 @@ public class SlideGameManager
 	private int highScore;
 	private boolean gameOver;
 	private boolean gameWon;
+	private boolean listenersAdded;
 	private MouseEvent mousePressedLocation;
 
 	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS = new HashMap<>();
@@ -62,6 +63,7 @@ public class SlideGameManager
 		this.highScore = 0;
 		this.gameOver = false;
 		this.gameWon = false;
+		this.listenersAdded = false;
 
 		initGame();
 	}
@@ -131,11 +133,6 @@ public class SlideGameManager
 		grid.clear();
 		initGame();
 		slideGameCanvas.repaint();
-
-		if (gameOver)
-		{
-			addListeners();
-		}
 	}
 
 	private void endGame()
@@ -147,9 +144,13 @@ public class SlideGameManager
 
 	private void addListeners()
 	{
-		slideGameRootComponent.addKeyListener(keyListener);
-		slideGameCanvas.addMouseListener(mouseListener);
-		mousePressedLocation = null;
+		if (!listenersAdded)
+		{
+			slideGameRootComponent.addKeyListener(keyListener);
+			slideGameCanvas.addMouseListener(mouseListener);
+			mousePressedLocation = null;
+			listenersAdded = true;
+		}
 	}
 
 	private void removeListeners()
@@ -157,6 +158,7 @@ public class SlideGameManager
 		slideGameRootComponent.removeKeyListener(keyListener);
 		slideGameCanvas.addMouseListener(mouseListener);
 		mousePressedLocation = null;
+		listenersAdded = false;
 	}
 
 	private void incrementScore(int additionalScore)
