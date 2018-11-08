@@ -81,7 +81,7 @@ public class Grid
 
 	private void validateLength(int length)
 	{
-		int minimumLength = (int) Math.ceil(Math.sqrt(log2(goalTileValue) - 1));
+		int minimumLength = (int) Math.ceil(Math.sqrt((Math.log(goalTileValue) / Math.log(2)) - 1));
 
 		if (length < minimumLength)
 		{
@@ -339,11 +339,6 @@ public class Grid
 		}
 
 		return tiles;
-	}
-
-	private static double log2(int value)
-	{
-		return Math.log(value) / Math.log(2);
 	}
 
 	public static enum MoveDirection
