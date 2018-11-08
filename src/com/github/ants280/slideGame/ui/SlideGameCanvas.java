@@ -67,14 +67,14 @@ public class SlideGameCanvas extends JComponent
 		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= gridLength; c++)
 		{
-			double colOffset = c * colWidth;
-			g.fillRect((int) (colOffset - halfSpacerColWidth), 0,
+			g.fillRect(
+					(int) ((c * colWidth) - halfSpacerColWidth), 0,
 					(int) spacerColWidth, height);
 		}
 		for (int r = 0; r <= gridLength; r++)
 		{
-			double rowOffset = r * rowHeight;
-			g.fillRect(0, (int) (rowOffset - halfSpacerRowHeight),
+			g.fillRect(
+					0, (int) ((r * rowHeight) - halfSpacerRowHeight),
 					width, (int) spacerRowHeight);
 		}
 	}
