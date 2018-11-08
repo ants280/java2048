@@ -14,13 +14,14 @@ import javax.swing.JComponent;
 public class SlideGameDisplayComponent extends JComponent
 {
 	private final Grid grid;
-	private final Font TILE_FONT = new Font("times", Font.PLAIN, 96); // TODO: make font scale
+	private Font tileFont;
 
 	public SlideGameDisplayComponent(Grid grid)
 	{
 		super();
 
 		this.grid = grid;
+		this.tileFont = new Font("times", Font.PLAIN, 12);
 	}
 
 	@Override
@@ -42,6 +43,11 @@ public class SlideGameDisplayComponent extends JComponent
 		double spacerRowHeight = rowHeight - tileRowHeight;
 		double halfSpacerColWidth = spacerColWidth / 2d;
 		double halfSpacerRowHeight = spacerRowHeight / 2d;
+
+		// TODO: the font size only needs to be changed when the grid size (length/dimension) changes, not on every paint call.
+		double fontSize = (height / (gridLength * 3d));
+		tileFont = tileFont.deriveFont((float) fontSize);
+		g.setFont(tileFont);
 
 		paintGrid(
 				gridLength,
@@ -156,7 +162,7 @@ public class SlideGameDisplayComponent extends JComponent
 			double colWidth, double rowHeight)
 	{
 		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
-		double fontHeightPx = TILE_FONT.getSize() * 0.75d;
+		double fontHeightPx = tileFont.getSize() * 0.75d;
 		FontMetrics fontMetrics = g.getFontMetrics();
 		int textWidth = fontMetrics.stringWidth(tileText);
 		int x = round((((c + 0.5d) * colWidth) - (textWidth / 2)));
