@@ -52,7 +52,7 @@ public class SlideGameFrame extends JFrame
 		topPanel.add(gameOverLabel);
 		topPanel.add(Box.createGlue());
 		topPanel.add(scoreLabel);
-		topPanel.add(highScoreLabel); // TODO: the high score label is a little close to the score label.
+		topPanel.add(highScoreLabel);
 
 		this.setJMenuBar(createJMenuBar());
 		this.add(topPanel, BorderLayout.NORTH);
