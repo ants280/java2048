@@ -18,7 +18,6 @@ public class SlideGameCanvas extends JComponent
 		super();
 
 		this.grid = grid;
-		this.setBackground(SlideGameColors.EMPTY_TILE_COLOR);
 	}
 
 	@Override
@@ -33,14 +32,14 @@ public class SlideGameCanvas extends JComponent
 		double tilePercentage = 0.90d;
 		double colWidth = width / gridLength;
 		double rowHeight = height / gridLength;
-		double tileColWidth = colWidth * tilePercentage;
-		double tileRowHeight = rowHeight * tilePercentage;
+		// if the tile width/height are not rounded to integers, the painting may leave gapps.
+		double tileColWidth = round(colWidth * tilePercentage);
+		double tileRowHeight = round(rowHeight * tilePercentage);
 		double spacerColWidth = colWidth - tileColWidth;
 		double spacerRowHeight = rowHeight - tileRowHeight;
 		double halfSpacerColWidth = spacerColWidth / 2d;
 		double halfSpacerRowHeight = spacerRowHeight / 2d;
 
-		g.clearRect(0, 0, width, height);
 		paintGrid(
 				gridLength,
 				g,
@@ -67,15 +66,21 @@ public class SlideGameCanvas extends JComponent
 		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= gridLength; c++)
 		{
+			int x = round((c * colWidth) - halfSpacerColWidth);
+			int y = 0;
+			int verticalLineWidth = round(spacerColWidth);
 			g.fillRect(
-					(int) ((c * colWidth) - halfSpacerColWidth), 0,
-					(int) spacerColWidth, height);
+					x, y,
+					verticalLineWidth, height);
 		}
 		for (int r = 0; r <= gridLength; r++)
 		{
+			int x = 0;
+			int y = round((r * rowHeight) - halfSpacerRowHeight);
+			int horizontalLineHeight = round(spacerRowHeight);
 			g.fillRect(
-					0, (int) ((r * rowHeight) - halfSpacerRowHeight),
-					width, (int) spacerRowHeight);
+					x, y,
+					width, horizontalLineHeight);
 		}
 	}
 
@@ -134,9 +139,11 @@ public class SlideGameCanvas extends JComponent
 			double halfSpacerColWidth, double halfSpacerRowHeight)
 	{
 		g.setColor(tileColor);
-		int x = (int) ((c * colWidth) + halfSpacerColWidth);
-		int y = (int) ((r * rowHeight) + halfSpacerRowHeight);
-		g.fillRect(x, y, (int) tileColWidth, (int) tileRowHeight);
+		int x = round((c * colWidth) + halfSpacerColWidth);
+		int y = round((r * rowHeight) + halfSpacerRowHeight);
+		int width = round(tileColWidth);
+		int height = round(tileRowHeight);
+		g.fillRect(x, y, width, height);
 	}
 
 	private void paintTileText(
@@ -149,8 +156,13 @@ public class SlideGameCanvas extends JComponent
 		double fontHeightPx = TILE_FONT.getSize() * 0.75d;
 		FontMetrics fontMetrics = g.getFontMetrics();
 		int textWidth = fontMetrics.stringWidth(tileText);
-		int x = (int) (((c + 0.5d) * colWidth) - (textWidth / 2));
-		int y = (int) (((r + 0.5d) * rowHeight) + (fontHeightPx / 2));
+		int x = round((((c + 0.5d) * colWidth) - (textWidth / 2)));
+		int y = round((((r + 0.5d) * rowHeight) + (fontHeightPx / 2)));
 		g.drawString(tileText, x, y);
+	}
+
+	private static int round(double value)
+	{
+		return Math.toIntExact(Math.round(value));
 	}
 }
