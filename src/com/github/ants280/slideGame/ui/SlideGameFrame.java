@@ -22,6 +22,12 @@ import javax.swing.border.Border;
 public class SlideGameFrame extends JFrame
 {
 	private final SlideGameManager slideGameManager;
+	private static final Border EMPTY_BORDER
+			= BorderFactory.createEmptyBorder(2, 10, 2, 10); // top, left, bottom, right
+	private static final Border LINE_BORDER
+			= BorderFactory.createCompoundBorder(
+					EMPTY_BORDER,
+					BorderFactory.createLineBorder(SlideGameColors.SPACER_COLOR, 1, true)); // width = 1, rounded = true
 
 	public SlideGameFrame()
 	{
@@ -30,12 +36,9 @@ public class SlideGameFrame extends JFrame
 		Grid grid = new Grid(4);
 		SlideGameCanvas slideGameCanvas = new SlideGameCanvas(grid);
 
-		JLabel gameOverLabel = new JLabel();
-		JLabel scoreLabel = new JLabel();
-		JLabel highScoreLabel = new JLabel();
-		Border border = BorderFactory.createLineBorder(SlideGameColors.SPACER_COLOR);
-		scoreLabel.setBorder(border);
-		highScoreLabel.setBorder(border);
+		JLabel gameOverLabel = createJLabel(false);
+		JLabel scoreLabel = createJLabel(true);
+		JLabel highScoreLabel = createJLabel(true);
 
 		this.slideGameManager = new SlideGameManager(grid, this, slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
 
@@ -58,6 +61,13 @@ public class SlideGameFrame extends JFrame
 		this.setMinimumSize(new Dimension(400, 500));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
+	}
+
+	private JLabel createJLabel(boolean addBorder)
+	{
+		JLabel label = new JLabel();
+		label.setBorder(addBorder ? LINE_BORDER : EMPTY_BORDER);
+		return label;
 	}
 
 	private JMenuBar createJMenuBar()
