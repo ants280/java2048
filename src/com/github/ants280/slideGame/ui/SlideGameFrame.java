@@ -58,7 +58,7 @@ public class SlideGameFrame extends JFrame
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(slideGameCanvas);
 
-		this.setMinimumSize(new Dimension(400, 500));
+		this.setMinimumSize(new Dimension(400, 500)); // TODO: this can cut of small grid sizes.  It might be better to do something like ensure the grid is never less than 10px/cell.
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 	}
