@@ -32,6 +32,7 @@ public class GridTest
 	public void testConstructor_bad_length()
 	{
 		Grid grid1 = new Grid(1);
+
 		Assert.fail("Should not be constructable: " + grid1);
 	}
 
@@ -39,6 +40,7 @@ public class GridTest
 	public void testConstructor_badGoalTileValue()
 	{
 		Grid grid2 = new Grid(4, 17);
+
 		Assert.fail("Should not be constructable: " + grid2);
 	}
 
@@ -46,6 +48,7 @@ public class GridTest
 	public void testConstructor_badGoalTileValue2()
 	{
 		Grid grid3 = new Grid(4, Integer.MIN_VALUE);
+
 		Assert.fail("Should not be constructable: " + grid3);
 	}
 
@@ -56,7 +59,8 @@ public class GridTest
 		{
 			for (int r = 0; r < LENGTH; r++)
 			{
-				Assert.assertNull(String.format("Non-null tile found at [%d,%d]", r, c),
+				Assert.assertNull(
+						String.format("Non-null tile found at [%d,%d]", r, c),
 						grid.getTile(c, r));
 			}
 		}
@@ -312,7 +316,9 @@ public class GridTest
 
 		grid.slideTiles(MoveDirection.LEFT);
 
-		Assert.assertEquals(Integer.valueOf(4096), grid.getTile(0, 0).getValue());
+		Assert.assertEquals(
+				Integer.valueOf(4096),
+				grid.getTile(0, 0).getValue());
 	}
 
 	@Test
@@ -343,7 +349,8 @@ public class GridTest
 	{
 		grid.setLength(2);
 
-		Assert.fail("It should not be possible to set a grid length less than sqrt(log_2(goalTileValue)-1)");
+		Assert.fail("It should not be possible to set a grid length "
+				+ "less than sqrt(log_2(goalTileValue)-1)");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -351,16 +358,19 @@ public class GridTest
 	{
 		grid.setGoalTileValue(131072); // 2^17 = 131072
 
-		Assert.fail("It should not be possible to set a grid goal tile value of over 2^((gridLength^2)+1");
+		Assert.fail("It should not be possible to set a grid goal tile value "
+				+ "over 2^((gridLength^2)+1");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_invalidArgCombination()
 	{
 		// stuck state: [[512,256,128],[64,32,16],[8,4,2]]
-		// Actually, it is possible to win if the last tile generated is a 4 (not a 2), but that depends on the random tile frequencies.
+		// Actually, it is possible to win if the last tile generated
+		// is a 4 (not a 2), but that depends on the random tile frequencies.
 		Grid gridX = new Grid(3, 1024);
 
-		Assert.fail("It should not be possible to create a grid with length = 3 and : " + gridX);
+		Assert.fail("It should not be possible to create a grid "
+				+ "with length = 3 and goalTileValue = 1024 : " + gridX);
 	}
 }
