@@ -8,7 +8,8 @@ public class SlideGameComponentListener extends ComponentAdapter
 {
 	private final Consumer<ComponentEvent> componentResizedConsumer;
 
-	public SlideGameComponentListener(Consumer<ComponentEvent> componentResizedConsumer)
+	public SlideGameComponentListener(
+			Consumer<ComponentEvent> componentResizedConsumer)
 	{
 		this.componentResizedConsumer = componentResizedConsumer;
 	}

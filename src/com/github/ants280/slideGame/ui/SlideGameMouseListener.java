@@ -5,7 +5,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.function.Consumer;
 
-public class SlideGameMouseListener extends MouseAdapter implements MouseListener
+public class SlideGameMouseListener
+		extends MouseAdapter
+		implements MouseListener
 {
 	private final Consumer<MouseEvent> mousePressedConsumer;
 	private final Consumer<MouseEvent> mouseReleasedConsumer;

@@ -41,9 +41,13 @@ public class SlideGame implements Runnable
 	{
 		try
 		{
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel(
+					UIManager.getSystemLookAndFeelClassName());
 		}
-		catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex)
+		catch (ClassNotFoundException
+				| InstantiationException
+				| IllegalAccessException
+				| UnsupportedLookAndFeelException ex)
 		{
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}

@@ -16,7 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.text.DefaultEditorKit;
 
-public class SlideGameUncaughtExceptionHandler implements UncaughtExceptionHandler
+public class SlideGameUncaughtExceptionHandler
+		implements UncaughtExceptionHandler
 {
 	private final Component parentComponent;
 
@@ -30,12 +31,14 @@ public class SlideGameUncaughtExceptionHandler implements UncaughtExceptionHandl
 	{
 		try
 		{
-			JTextArea textArea = new JTextArea(getFormattedStackTrace(e), 15, 30);
+			JTextArea textArea = new JTextArea(getStackTrace(e), 15, 30);
 
-			JMenuItem copyMenuItem = new JMenuItem(new DefaultEditorKit.CopyAction());
+			JMenuItem copyMenuItem = new JMenuItem(
+					new DefaultEditorKit.CopyAction());
 			JPopupMenu popupMenu = new JPopupMenu();
 			popupMenu.add(copyMenuItem);
-			textArea.addCaretListener(caretEvent -> copyMenuItem.setEnabled(caretEvent.getDot() != caretEvent.getMark()));
+			textArea.addCaretListener(caretEvent -> copyMenuItem.setEnabled(
+					caretEvent.getDot() != caretEvent.getMark()));
 			textArea.setComponentPopupMenu(popupMenu);
 
 			JPanel panel = new JPanel();
@@ -60,10 +63,10 @@ public class SlideGameUncaughtExceptionHandler implements UncaughtExceptionHandl
 		}
 	}
 
-	private static String getFormattedStackTrace(Throwable e)
+	private static String getStackTrace(Throwable throwable)
 	{
 		StringWriter stackTraceWriter = new StringWriter();
-		e.printStackTrace(new PrintWriter(stackTraceWriter));
+		throwable.printStackTrace(new PrintWriter(stackTraceWriter));
 		return stackTraceWriter.toString();
 	}
 }
