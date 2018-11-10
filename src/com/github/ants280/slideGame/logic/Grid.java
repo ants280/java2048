@@ -4,13 +4,14 @@ import java.util.Random;
 
 public class Grid
 {
-	private static final MoveDirection[] MOVE_DIRECTIONS = MoveDirection.values();
+	private final Random random;
 	private int length;
 	private Tile[][] cols;
 	private Tile[][] rows;
-	private final Random random;
 	private int goalTileValue;
 	private boolean goalTileCreated;
+	private static final MoveDirection[] MOVE_DIRECTIONS
+			= MoveDirection.values();
 
 	public Grid()
 	{
@@ -31,21 +32,10 @@ public class Grid
 	 */
 	public Grid(int length, int goalTileValue)
 	{
-		if (length < 2)
-		{
-			throw new IllegalArgumentException("Length must be large enough "
-					+ "to slide tiles.  Found: " + length);
-		}
-		// copied from https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2 :
-		if (goalTileValue < 8 || (goalTileValue & (goalTileValue - 1)) != 0)
-		{
-			throw new IllegalArgumentException("Goal tile value must be a value of 2");
-		}
-
+		this.random = new Random();
 		this.length = length;
 		this.cols = createTiles(length);
 		this.rows = createTiles(length);
-		this.random = new Random();
 		this.goalTileValue = goalTileValue;
 		this.goalTileCreated = false;
 
@@ -81,24 +71,39 @@ public class Grid
 
 	private void validateLength(int length)
 	{
-		int minimumLength = (int) Math.ceil(Math.sqrt((Math.log(goalTileValue) / Math.log(2)) - 1));
+		if (length < 2)
+		{
+			throw new IllegalArgumentException("Length must be large enough "
+					+ "to slide tiles.  Found: " + length);
+		}
+
+		int minimumLength = (int) Math.ceil(
+				Math.sqrt((Math.log(goalTileValue) / Math.log(2)) - 1));
 
 		if (length < minimumLength)
 		{
 			throw new IllegalArgumentException(String.format(
-					"Length of %d is too small to win with a goalTileValue of %d.  Must be at least %d",
+					"Length of %d is too small to win with "
+					+ "a goalTileValue of %d.  Must be at least %d",
 					length, goalTileValue, minimumLength));
 		}
 	}
 
 	private void validateGoalTileValue(int goalTileValue)
 	{
+		if (goalTileValue < 8 || (goalTileValue & (goalTileValue - 1)) != 0)
+		{
+			throw new IllegalArgumentException(
+					"Goal tile value must be a value of 2");
+		}
+
 		int maximumGoalTileValue = (int) Math.pow(2, Math.pow(length, 2));
 
 		if (goalTileValue > maximumGoalTileValue)
 		{
 			throw new IllegalArgumentException(String.format(
-					"Goal tile of value of %d is too large to win with a grid length of %d.  Must be at least %d",
+					"Goal tile of value of %d is too large to win with "
+					+ "a grid length of %d.  Must be at least %d",
 					goalTileValue, length, maximumGoalTileValue));
 		}
 	}
@@ -136,7 +141,6 @@ public class Grid
 		int r, c;
 
 		Tile tile = random.nextInt(10) == 0 ? Tile.TWO.getNext() : Tile.TWO;
-		//tile = Tile.TWO.getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext().getNext(); // useful for testing game winning :D
 		do
 		{
 			c = random.nextInt(length);
@@ -150,15 +154,19 @@ public class Grid
 	public int slideTiles(MoveDirection moveDirection)
 	{
 		return slideTiles(
-				moveDirection == MoveDirection.UP || moveDirection == MoveDirection.DOWN,
-				moveDirection == MoveDirection.LEFT || moveDirection == MoveDirection.UP);
+				moveDirection == MoveDirection.UP
+				|| moveDirection == MoveDirection.DOWN,
+				moveDirection == MoveDirection.LEFT
+				|| moveDirection == MoveDirection.UP);
 	}
 
 	public boolean canSlideTiles(MoveDirection moveDirection)
 	{
 		return canSlideTiles(
-				moveDirection == MoveDirection.UP || moveDirection == MoveDirection.DOWN,
-				moveDirection == MoveDirection.LEFT || moveDirection == MoveDirection.UP);
+				moveDirection == MoveDirection.UP
+				|| moveDirection == MoveDirection.DOWN,
+				moveDirection == MoveDirection.LEFT
+				|| moveDirection == MoveDirection.UP);
 	}
 
 	public boolean canSlideInAnyDirection()
@@ -231,7 +239,10 @@ public class Grid
 	 * zero) or down/right (toward the end of the array).
 	 * @return The if the row/column can be slid in the specified direction.
 	 */
-	private boolean canSlideTiles(boolean slideColumns, int index, boolean towardZero)
+	private boolean canSlideTiles(
+			boolean slideColumns,
+			int index,
+			boolean towardZero)
 	{
 		Tile[] sourceArray = slideColumns ? cols[index] : rows[index];
 		int slideIndex = towardZero ? 0 : length - 1;
@@ -274,7 +285,7 @@ public class Grid
 		int sum = 0;
 
 		Tile[] sourceArray = slideColumns ? cols[index] : rows[index];
-		Tile[] tempArrayArray = new Tile[length];
+		Tile[] tempArray = new Tile[length];
 		int slideIndex = towardZero ? 0 : length - 1;
 		int delta = towardZero ? 1 : -1;
 		boolean canCombineWithPreviousSlide = false;
@@ -285,10 +296,10 @@ public class Grid
 			if (sourceArray[i] != null)
 			{
 				if (canCombineWithPreviousSlide
-						&& tempArrayArray[slideIndex - delta] == sourceArray[i])
+						&& tempArray[slideIndex - delta] == sourceArray[i])
 				{
 					Tile nextTile = sourceArray[i].getNext();
-					tempArrayArray[slideIndex - delta] = nextTile;
+					tempArray[slideIndex - delta] = nextTile;
 					sum += nextTile.getValue();
 					canCombineWithPreviousSlide = false;
 					if (nextTile.getValue() == goalTileValue)
@@ -298,7 +309,7 @@ public class Grid
 				}
 				else
 				{
-					tempArrayArray[slideIndex] = sourceArray[i];
+					tempArray[slideIndex] = sourceArray[i];
 					slideIndex += delta;
 					canCombineWithPreviousSlide = true;
 				}
@@ -310,7 +321,7 @@ public class Grid
 			setTile(
 					slideColumns ? index : i,
 					slideColumns ? i : index,
-					tempArrayArray[i]);
+					tempArray[i]);
 		}
 
 		return sum;

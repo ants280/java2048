@@ -7,13 +7,12 @@ public class Tile implements Comparable<Tile>
 {
 	private final Integer value;
 	private final transient String displayValue;
-	private static final Map<Integer, Tile> TILE_CACHE = new HashMap<>();
-
+	private static final Map<Integer, Tile> VALUE_CACHE = new HashMap<>();
 	public static final Tile TWO = new Tile(2);
 
 	static
 	{
-		TILE_CACHE.put(2, TWO);
+		VALUE_CACHE.put(2, TWO);
 	}
 
 	private Tile(Integer value)
@@ -36,12 +35,12 @@ public class Tile implements Comparable<Tile>
 	{
 		int nextValue = Math.multiplyExact(2, value);
 
-		if (!TILE_CACHE.containsKey(nextValue))
+		if (!VALUE_CACHE.containsKey(nextValue))
 		{
-			TILE_CACHE.put(nextValue, new Tile(nextValue));
+			VALUE_CACHE.put(nextValue, new Tile(nextValue));
 		}
 
-		return TILE_CACHE.get(nextValue);
+		return VALUE_CACHE.get(nextValue);
 	}
 
 	@Override
@@ -54,7 +53,9 @@ public class Tile implements Comparable<Tile>
 	public boolean equals(Object obj)
 	{
 		return this == obj
-				|| (obj != null && getClass() == obj.getClass() && this.value.equals(((Tile) obj).getValue()));
+				|| (obj != null
+				&& getClass() == obj.getClass()
+				&& this.value.equals(((Tile) obj).getValue()));
 	}
 
 	@Override
