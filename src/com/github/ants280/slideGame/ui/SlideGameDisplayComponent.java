@@ -35,10 +35,6 @@ public class SlideGameDisplayComponent extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
-		// TODO: the font size only needs to be changed when the grid size (length/dimension) changes, not on every paint call.
-		double fontSize = (getHeight() / (grid.getLength() * 3d));
-		tileFont = tileFont.deriveFont((float) fontSize);
-		g.setFont(tileFont);
 
 		int width = this.getWidth();
 		int height = this.getHeight();
@@ -50,6 +46,8 @@ public class SlideGameDisplayComponent extends JComponent
 		double tileSize = round(cellSize * 0.90d);
 		double spacerSize = cellSize - tileSize;
 		double halfSpacerSize = spacerSize / 2d;
+
+		setFont(g, gridLength, minDimension);
 
 		paintGrid(
 				gridLength,
@@ -68,6 +66,18 @@ public class SlideGameDisplayComponent extends JComponent
 				cellSize,
 				tileSize,
 				halfSpacerSize);
+	}
+
+	private void setFont(Graphics g, int gridLength, int minDimension)
+	{
+		float fontSize = (float) (minDimension / (gridLength * 3d));
+
+		if (tileFont.getSize2D() != fontSize)
+		{
+			tileFont = tileFont.deriveFont(fontSize);
+		}
+
+		g.setFont(tileFont);
 	}
 
 	private void paintGrid(
