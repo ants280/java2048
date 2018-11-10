@@ -184,12 +184,12 @@ public class SlideGameManager
 		highScoreLabel.setText("BEST: " + highScore);
 	}
 
-	public void keyReleased(KeyEvent e)
+	private void keyReleased(KeyEvent e)
 	{
 		makeMove(MOVE_DIRECTIONS.get(e.getKeyCode()));
 	}
 
-	public void mousePressed(MouseEvent e)
+	private void mousePressed(MouseEvent e)
 	{
 		if (e.getButton() != MouseEvent.BUTTON1)
 		{
@@ -199,7 +199,7 @@ public class SlideGameManager
 		mousePressedLocation = e;
 	}
 
-	public void mouseReleased(MouseEvent e)
+	private void mouseReleased(MouseEvent e)
 	{
 		if (e.getButton() != MouseEvent.BUTTON1 || mousePressedLocation == null)
 		{
