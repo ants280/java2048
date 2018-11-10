@@ -153,12 +153,15 @@ public class SlideGameFrame extends JFrame
 	private void showHelpPopup()
 	{
 		String message
-				= "Slide the tiles all to the top, bottom, left, and right of the grid to\n"
-				+ "combine tiles of equal values. When tiles combine, their combined value is\n"
-				+ "the some of the value. Combine tiles by typing the appropriate arrow key,\n"
-				+ "using WSAD controls, or clicking and dragging in the desired direction on the\n"
-				+ "grid. After each turn a new tile is added. WThe game is over if the grid is\n"
-				+ "full and no moves can be made and is won when the 2048 tile is created.";
+				= "Slide the tiles all to the top, left, bottom, and right of "
+				+ "the grid to\ncombine tiles of equal values. When tiles "
+				+ "combine, the combined tile's value\nis their sum of values."
+				+ " Combine tiles by typing the appropriate arrow key,\nusing "
+				+ "WASD controls, or clicking and dragging in the desired "
+				+ "direction on the\ngrid. After each turn a new tile is "
+				+ "added. The game is over if the grid is\nfull and no moves "
+				+ "can be made. It is won when a tile of the goal value is\n"
+				+ "created.";
 		String title = "Help for " + getTitle();
 		showPopup(message, title, JOptionPane.QUESTION_MESSAGE);
 	}
