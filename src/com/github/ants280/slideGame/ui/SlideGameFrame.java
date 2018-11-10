@@ -23,12 +23,15 @@ import javax.swing.border.Border;
 public class SlideGameFrame extends JFrame
 {
 	private final SlideGameManager slideGameManager;
-	private static final Border EMPTY_BORDER
-			= BorderFactory.createEmptyBorder(2, 10, 2, 10); // top, left, bottom, right
+	private static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder(
+			2, 10, 2, 10); // top, left, bottom, right
 	private static final Border LINE_BORDER
 			= BorderFactory.createCompoundBorder(
 					EMPTY_BORDER,
-					BorderFactory.createLineBorder(SlideGameColors.SPACER_COLOR, 1, true)); // width = 1, rounded = true
+					BorderFactory.createLineBorder(
+							SlideGameColors.SPACER_COLOR,
+							1, // width
+							true)); // rounded
 
 	public SlideGameFrame()
 	{
@@ -39,12 +42,26 @@ public class SlideGameFrame extends JFrame
 		JLabel gameOverLabel = createJLabel(false);
 		JLabel scoreLabel = createJLabel(true);
 		JLabel highScoreLabel = createJLabel(true);
-		this.slideGameManager = new SlideGameManager(grid, this, slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
+		this.slideGameManager = new SlideGameManager(
+				grid,
+				this,
+				slideGameCanvas,
+				gameOverLabel,
+				scoreLabel,
+				highScoreLabel);
 
-		initSize(slideGameCanvas, gameOverLabel, scoreLabel, highScoreLabel);
+		initSize(
+				slideGameCanvas,
+				gameOverLabel,
+				scoreLabel,
+				highScoreLabel);
 	}
 
-	private void initSize(JComponent slideGameCanvas, JLabel gameOverLabel, JLabel scoreLabel, JLabel highScoreLabel)
+	private void initSize(
+			JComponent slideGameCanvas,
+			JLabel gameOverLabel,
+			JLabel scoreLabel,
+			JLabel highScoreLabel)
 	{
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
@@ -72,26 +89,36 @@ public class SlideGameFrame extends JFrame
 	private JMenuBar createJMenuBar()
 	{
 		JMenuItem setGridLength_MI = new JMenuItem("Set grid length");
-		setGridLength_MI.addActionListener(actionEvent -> this.showSetGridLengthPopup());
+		setGridLength_MI.addActionListener(
+				actionEvent -> this.showSetGridLengthPopup());
 
 		JMenuItem setGoalTileValue_MI = new JMenuItem("Set goal tile value");
-		setGoalTileValue_MI.addActionListener(actionEvent -> this.showSetGoalTileValuePopup());
+		setGoalTileValue_MI.addActionListener(
+				actionEvent -> this.showSetGoalTileValuePopup());
 
 		JMenuItem newGame_MI = new JMenuItem("New Game", KeyEvent.VK_N);
-		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
-		newGame_MI.addActionListener(actionEvent -> slideGameManager.newGame());
+		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
+		newGame_MI.addActionListener(
+				actionEvent -> slideGameManager.newGame());
 
 		JMenuItem exit_MI = new JMenuItem("Exit", KeyEvent.VK_X);
-		exit_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
-		exit_MI.addActionListener(actionEvent -> Runtime.getRuntime().exit(0));
+		exit_MI.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
+		exit_MI.addActionListener(
+				actionEvent -> Runtime.getRuntime().exit(0));
 
 		JMenuItem help_MI = new JMenuItem("Help", KeyEvent.VK_H);
-		help_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, KeyEvent.CTRL_DOWN_MASK));
-		help_MI.addActionListener(actionEvent -> this.showHelpPopup());
+		help_MI.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_H, KeyEvent.CTRL_DOWN_MASK));
+		help_MI.addActionListener(
+				actionEvent -> this.showHelpPopup());
 
 		JMenuItem about_MI = new JMenuItem("About", KeyEvent.VK_F1);
-		about_MI.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, KeyEvent.CTRL_DOWN_MASK));
-		about_MI.addActionListener(actionEvent -> this.showAboutPopup());
+		about_MI.setAccelerator(KeyStroke.getKeyStroke(
+				KeyEvent.VK_F1, KeyEvent.CTRL_DOWN_MASK));
+		about_MI.addActionListener(
+				actionEvent -> this.showAboutPopup());
 
 		JMenu actionMenu = new JMenu("Action");
 		actionMenu.add(setGridLength_MI);
@@ -145,8 +172,10 @@ public class SlideGameFrame extends JFrame
 	{
 		String message = "Set grid length for " + getTitle();
 		int goalTileValue = slideGameManager.getGoalTileValue();
-		int minimumGridLength = (int) Math.ceil(Math.sqrt((Math.log(goalTileValue) / Math.log(2d)) - 1));
-		Object[] selectionValues = IntStream.range(minimumGridLength, minimumGridLength + 10)
+		int minimumGridLength = (int) Math.ceil(Math.sqrt(
+				(Math.log(goalTileValue) / Math.log(2d)) - 1));
+		Object[] selectionValues = IntStream.range(
+				minimumGridLength, minimumGridLength + 10)
 				.mapToObj(Integer::valueOf)
 				.toArray();
 		int initialSelectionValue = slideGameManager.getGridLength();
@@ -163,7 +192,8 @@ public class SlideGameFrame extends JFrame
 		int maximumGoalTileValue = (int) Math.pow(2, Math.pow(gridLength, 2));
 		Object[] selectionValues = IntStream.range(0, 10)
 				.map(i -> (int) Math.pow(2, i + 3))
-				.filter(possibleGoalTileValue -> possibleGoalTileValue <= maximumGoalTileValue)
+				.filter(possibleGoalTileValue
+						-> possibleGoalTileValue <= maximumGoalTileValue)
 				.mapToObj(Integer::valueOf)
 				.toArray();
 		int initialSelectionValue = slideGameManager.getGoalTileValue();

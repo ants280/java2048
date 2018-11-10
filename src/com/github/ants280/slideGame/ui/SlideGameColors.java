@@ -12,10 +12,11 @@ import java.util.TreeMap;
  */
 public class SlideGameColors
 {
-	private static final NavigableMap<Tile, Color> COLOR_CACHE = new TreeMap<>();
 	public static final Color EMPTY_TILE_COLOR = new Color(0xCDC1B4);
 	public static final Color TILE_TEXT_COLOR = new Color(0x776E65);
 	public static final Color SPACER_COLOR = new Color(0xBBADA0);
+	private static final NavigableMap<Tile, Color> COLOR_CACHE
+			= new TreeMap<>();
 
 	static
 	{
@@ -42,13 +43,12 @@ public class SlideGameColors
 			tile = tile.getNext();
 		}
 	}
-	private static final Color LAST_TILE_COLOR = COLOR_CACHE.lastEntry().getValue();
 
 	public static final Color getColor(Tile tile)
 	{
 		if (!COLOR_CACHE.containsKey(tile))
 		{
-			return LAST_TILE_COLOR;
+			return COLOR_CACHE.lastEntry().getValue();
 		}
 
 		return COLOR_CACHE.get(tile);

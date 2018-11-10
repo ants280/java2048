@@ -5,9 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,19 +28,19 @@ public class SlideGameManager
 	private boolean gameWon;
 	private boolean listenersAdded;
 	private MouseEvent mousePressedLocation;
-
-	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS = new HashMap<>();
+	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS
+			= new HashMap<>();
 
 	static
 	{
-		Stream.of(KeyEvent.VK_W, KeyEvent.VK_UP)
-				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, Grid.MoveDirection.UP));
-		Stream.of(KeyEvent.VK_A, KeyEvent.VK_LEFT)
-				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, Grid.MoveDirection.LEFT));
-		Stream.of(KeyEvent.VK_S, KeyEvent.VK_DOWN)
-				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, Grid.MoveDirection.DOWN));
-		Stream.of(KeyEvent.VK_D, KeyEvent.VK_RIGHT)
-				.forEach(keyCode -> MOVE_DIRECTIONS.put(keyCode, Grid.MoveDirection.RIGHT));
+		putMoveDirectionCodes(
+				Grid.MoveDirection.UP, KeyEvent.VK_W, KeyEvent.VK_UP);
+		putMoveDirectionCodes(
+				Grid.MoveDirection.LEFT, KeyEvent.VK_A, KeyEvent.VK_LEFT);
+		putMoveDirectionCodes(
+				Grid.MoveDirection.DOWN, KeyEvent.VK_S, KeyEvent.VK_DOWN);
+		putMoveDirectionCodes(
+				Grid.MoveDirection.RIGHT, KeyEvent.VK_D, KeyEvent.VK_RIGHT);
 	}
 
 	public SlideGameManager(
@@ -57,8 +57,11 @@ public class SlideGameManager
 		this.gameOverLabel = gameOverLabel;
 		this.scoreLabel = scoreLabel;
 		this.highScoreLabel = highScoreLabel;
-		this.keyListener = new SlideGameKeyListener(this::keyReleased);
-		this.mouseListener = new SlideGameMouseListener(this::mousePressed, this::mouseReleased);
+		this.keyListener = new SlideGameKeyListener(
+				this::keyReleased);
+		this.mouseListener = new SlideGameMouseListener(
+				this::mousePressed,
+				this::mouseReleased);
 		this.score = 0;
 		this.highScore = 0;
 		this.gameOver = false;
@@ -179,7 +182,8 @@ public class SlideGameManager
 
 	private void updateScoreLabels()
 	{
-		gameOverLabel.setText(gameOver ? (gameWon ? "You Win!" : "You Lose.") : "");
+		gameOverLabel.setText(
+				gameOver ? (gameWon ? "You Win!" : "You Lose.") : "");
 		scoreLabel.setText("SCORE: " + score);
 		highScoreLabel.setText("BEST: " + highScore);
 	}
@@ -201,7 +205,8 @@ public class SlideGameManager
 
 	private void mouseReleased(MouseEvent e)
 	{
-		if (e.getButton() != MouseEvent.BUTTON1 || mousePressedLocation == null)
+		if (e.getButton() != MouseEvent.BUTTON1
+				|| mousePressedLocation == null)
 		{
 			return;
 		}
@@ -233,5 +238,14 @@ public class SlideGameManager
 				makeMove(Grid.MoveDirection.DOWN);
 			}
 		}
+	}
+
+	private static void putMoveDirectionCodes(
+			Grid.MoveDirection moveDirection,
+			int... keyCodes)
+	{
+		Arrays.stream(keyCodes)
+				.forEach(keyCode
+						-> MOVE_DIRECTIONS.put(keyCode, moveDirection));
 	}
 }

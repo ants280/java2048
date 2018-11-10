@@ -209,11 +209,11 @@ public class SlideGameDisplayComponent extends JComponent
 			double cellSize)
 	{
 		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
-		double fontHeightPx = tileFont.getSize2D() * 0.75d;
+		double fontHeight = tileFont.getSize2D() * 0.75d;
 		FontMetrics fontMetrics = g.getFontMetrics();
 		int textWidth = fontMetrics.stringWidth(tileText);
 		int x = round(xOffset + (((c + 0.5d) * cellSize) - (textWidth / 2)));
-		int y = round(yOffset + (((r + 0.5d) * cellSize) + (fontHeightPx / 2)));
+		int y = round(yOffset + (((r + 0.5d) * cellSize) + (fontHeight / 2)));
 		g.drawString(tileText, x, y);
 	}
 
