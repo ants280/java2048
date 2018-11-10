@@ -72,14 +72,18 @@ public class GridTest
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddRandomTileOnUnSlideableBoard()
 	{
-		grid = new Grid(2);
-		grid.setTile(0, 0, TILE_2);
-		grid.setTile(1, 0, TILE_4);
-		grid.setTile(0, 1, TILE_4);
-		grid.setTile(1, 1, TILE_2);
+		for (int r = 0; r < LENGTH; r++)
+		{
+			for (int c = 0; c < LENGTH; c++)
+			{
+				grid.setTile(c, r, TILE_2);
+			}
+		}
 
 		// it should not cause an infinite loop
 		grid.addRandomTile();
+
+		Assert.fail("It should not be possible to add a tile to the grid");
 	}
 
 	@Test
