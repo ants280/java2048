@@ -16,7 +16,6 @@ import javax.swing.JComponent;
 public class SlideGameDisplayComponent extends JComponent
 {
 	private final Grid grid;
-	private static final int MIN_CELL_SIZE = 200;
 	private static final RenderingHints ANTIALIAS_ON_RENDERING_HINT
 			= new RenderingHints(
 					RenderingHints.KEY_ANTIALIASING,
