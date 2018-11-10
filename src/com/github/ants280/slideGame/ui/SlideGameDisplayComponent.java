@@ -45,7 +45,6 @@ public class SlideGameDisplayComponent extends JComponent
 		int minDimension = Math.min(width, height);
 		double xOffset = (width - minDimension) / 2d;
 		double yOffset = (height - minDimension) / 2d;
-		System.out.printf("xOffset = %f, yOffset = %f%n", xOffset, yOffset);
 		int gridLength = grid.getLength();
 		double cellSize = minDimension / (gridLength + 0d);
 		double tileSize = round(cellSize * 0.90d);
