@@ -8,6 +8,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ComponentEvent;
 import javax.swing.JComponent;
 
 /**
@@ -28,12 +29,15 @@ public class SlideGameDisplayComponent extends JComponent
 
 		this.grid = grid;
 		this.tileFont = new Font("times", Font.PLAIN, 12);
+		this.addComponentListener(
+				new SlideGameComponentListener(this::componentResized));
 	}
 
 	@Override
 	public void paintComponent(Graphics g)
 	{
 		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
+		g.setFont(tileFont);
 
 		int width = this.getWidth();
 		int height = this.getHeight();
@@ -45,8 +49,6 @@ public class SlideGameDisplayComponent extends JComponent
 		double tileSize = round(cellSize * 0.90d);
 		double spacerSize = cellSize - tileSize;
 		double halfSpacerSize = spacerSize / 2d;
-
-		setFont(g, gridLength, minDimension);
 
 		paintGrid(
 				gridLength,
@@ -67,16 +69,16 @@ public class SlideGameDisplayComponent extends JComponent
 				halfSpacerSize);
 	}
 
-	private void setFont(Graphics g, int gridLength, int minDimension)
+	private void componentResized(ComponentEvent e)
 	{
-		float fontSize = (float) (minDimension / (gridLength * 3d));
+		int minDimension = Math.min(this.getWidth(), this.getHeight());
+		float fontSize = (float) (minDimension / (grid.getLength() * 3d));
 
 		if (tileFont.getSize2D() != fontSize)
 		{
 			tileFont = tileFont.deriveFont(fontSize);
+			this.repaint();
 		}
-
-		g.setFont(tileFont);
 	}
 
 	private void paintGrid(
