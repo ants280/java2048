@@ -45,7 +45,7 @@ public class SlideGameDisplayComponent extends JComponent
 		double xOffset = (width - minDimension) / 2d;
 		double yOffset = (height - minDimension) / 2d;
 		int gridLength = grid.getLength();
-		double cellSize = minDimension / gridLength;
+		double cellSize = minDimension / (gridLength + 0d);
 		// Painting may leave gaps between tiles and spacers if not rounded.
 		double tileSize = round(cellSize * 0.90d);
 		double spacerSize = cellSize - tileSize;
