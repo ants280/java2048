@@ -52,9 +52,9 @@ public class GridTest
 	@Test
 	public void testInitialGridEmpty()
 	{
-		for (int r = 0; r < LENGTH; r++)
+		for (int c = 0; c < LENGTH; c++)
 		{
-			for (int c = 0; c < LENGTH; c++)
+			for (int r = 0; r < LENGTH; r++)
 			{
 				Assert.assertNull(String.format("Non-null tile found at [%d,%d]", r, c),
 						grid.getTile(c, r));
