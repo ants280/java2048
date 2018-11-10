@@ -16,6 +16,7 @@ import javax.swing.JComponent;
 public class SlideGameDisplayComponent extends JComponent
 {
 	private final Grid grid;
+	private static final int MIN_CELL_SIZE = 200;
 	private static final RenderingHints ANTIALIAS_ON_RENDERING_HINT
 			= new RenderingHints(
 					RenderingHints.KEY_ANTIALIASING,
@@ -44,9 +45,9 @@ public class SlideGameDisplayComponent extends JComponent
 		int minDimension = Math.min(width, height);
 		double xOffset = (width - minDimension) / 2d;
 		double yOffset = (height - minDimension) / 2d;
+		System.out.printf("xOffset = %f, yOffset = %f%n", xOffset, yOffset);
 		int gridLength = grid.getLength();
 		double cellSize = minDimension / (gridLength + 0d);
-		// Painting may leave gaps between tiles and spacers if not rounded.
 		double tileSize = round(cellSize * 0.90d);
 		double spacerSize = cellSize - tileSize;
 		double halfSpacerSize = spacerSize / 2d;
