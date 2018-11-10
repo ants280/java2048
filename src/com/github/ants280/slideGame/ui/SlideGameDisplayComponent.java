@@ -28,6 +28,12 @@ public class SlideGameDisplayComponent extends JComponent
 		super();
 
 		this.grid = grid;
+
+		init();
+	}
+
+	private void init()
+	{
 		this.tileFont = new Font("times", Font.PLAIN, 12);
 		this.addComponentListener(
 				new SlideGameComponentListener(this::componentResized));
