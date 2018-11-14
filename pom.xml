@@ -70,6 +70,7 @@
 						<manifest>
 							<mainClass>${main.class}</mainClass>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
 					</archive>
 				</configuration>
