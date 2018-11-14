@@ -44,7 +44,7 @@ public class SlideGameColors
 		}
 	}
 
-	public static final Color getColor(Tile tile)
+	public static Color getColor(Tile tile)
 	{
 		if (!COLOR_CACHE.containsKey(tile))
 		{

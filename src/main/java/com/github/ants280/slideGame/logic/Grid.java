@@ -355,8 +355,8 @@ public class Grid
 		return tiles;
 	}
 
-	public static enum MoveDirection
+	public enum MoveDirection
 	{
-		LEFT, RIGHT, UP, DOWN;
+		LEFT, RIGHT, UP, DOWN
 	}
 }

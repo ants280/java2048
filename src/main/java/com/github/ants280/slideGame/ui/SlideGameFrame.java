@@ -179,7 +179,7 @@ public class SlideGameFrame extends JFrame
 				(Math.log(goalTileValue) / Math.log(2d)) - 1));
 		Object[] selectionValues = IntStream.range(
 				minimumGridLength, minimumGridLength + 10)
-				.mapToObj(Integer::valueOf)
+				.boxed()
 				.toArray();
 		int initialSelectionValue = slideGameManager.getGridLength();
 		showOptionDialog(
@@ -197,7 +197,7 @@ public class SlideGameFrame extends JFrame
 				.map(i -> (int) Math.pow(2, i + 3))
 				.filter(possibleGoalTileValue
 						-> possibleGoalTileValue <= maximumGoalTileValue)
-				.mapToObj(Integer::valueOf)
+				.boxed()
 				.toArray();
 		int initialSelectionValue = slideGameManager.getGoalTileValue();
 		showOptionDialog(

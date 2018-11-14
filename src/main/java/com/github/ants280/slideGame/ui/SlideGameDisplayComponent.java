@@ -157,18 +157,22 @@ public class SlideGameDisplayComponent extends JComponent
 			double halfSpacerSize)
 	{
 		Tile tile = grid.getTile(c, r);
+
+		paintTileBackground(
+				tile == null
+						? SlideGameColors.EMPTY_TILE_COLOR
+						: SlideGameColors.getColor(tile),
+				g,
+				c,
+				r,
+				xOffset,
+				yOffset,
+				cellSize,
+				tileSize,
+				halfSpacerSize);
+
 		if (tile != null)
 		{
-			paintTileBackground(
-					SlideGameColors.getColor(tile),
-					g,
-					c,
-					r,
-					xOffset,
-					yOffset,
-					cellSize,
-					tileSize,
-					halfSpacerSize);
 			paintTileText(
 					tile.getDisplayValue(),
 					g,
@@ -212,8 +216,8 @@ public class SlideGameDisplayComponent extends JComponent
 		double fontHeight = tileFont.getSize2D() * 0.75d;
 		FontMetrics fontMetrics = g.getFontMetrics();
 		int textWidth = fontMetrics.stringWidth(tileText);
-		int x = round(xOffset + (((c + 0.5d) * cellSize) - (textWidth / 2)));
-		int y = round(yOffset + (((r + 0.5d) * cellSize) + (fontHeight / 2)));
+		int x = round(xOffset + (((c + 0.5d) * cellSize) - (textWidth / 2d)));
+		int y = round(yOffset + (((r + 0.5d) * cellSize) + (fontHeight / 2d)));
 		g.drawString(tileText, x, y);
 	}
 
