@@ -43,26 +43,30 @@ public class SlideGameFrame extends JFrame
 		JLabel gameOverLabel = createJLabel(false);
 		JLabel scoreLabel = createJLabel(true);
 		JLabel highScoreLabel = createJLabel(true);
+		JLabel goalLabel = createJLabel(false);
 		this.slideGameManager = new SlideGameManager(
 				grid,
 				this,
 				slideGameCanvas,
 				gameOverLabel,
 				scoreLabel,
-				highScoreLabel);
+				highScoreLabel,
+				goalLabel);
 
 		initSize(
 				slideGameCanvas,
 				gameOverLabel,
 				scoreLabel,
-				highScoreLabel);
+				highScoreLabel,
+				goalLabel);
 	}
 
 	private void initSize(
 			JComponent slideGameCanvas,
 			JLabel gameOverLabel,
 			JLabel scoreLabel,
-			JLabel highScoreLabel)
+			JLabel highScoreLabel,
+			JLabel goalLabel)
 	{
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
@@ -70,9 +74,13 @@ public class SlideGameFrame extends JFrame
 		topPanel.add(Box.createGlue());
 		topPanel.add(scoreLabel);
 		topPanel.add(highScoreLabel);
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
+		bottomPanel.add(goalLabel);
 
 		this.setJMenuBar(createJMenuBar());
 		this.add(topPanel, BorderLayout.NORTH);
+		this.add(bottomPanel, BorderLayout.SOUTH);
 		this.add(slideGameCanvas);
 
 		this.setMinimumSize(new Dimension(400, 447));

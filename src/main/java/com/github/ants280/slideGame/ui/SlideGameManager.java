@@ -20,6 +20,7 @@ public class SlideGameManager
 	private final JLabel gameOverLabel;
 	private final JLabel scoreLabel;
 	private final JLabel highScoreLabel;
+	private final JLabel goalLabel;
 	private final KeyListener keyListener;
 	private final MouseListener mouseListener;
 	private int score;
@@ -49,7 +50,8 @@ public class SlideGameManager
 			JComponent slideGameCanvas,
 			JLabel gameOverLabel,
 			JLabel scoreLabel,
-			JLabel highScoreLabel)
+			JLabel highScoreLabel,
+			JLabel goalLabel)
 	{
 		this.grid = grid;
 		this.slideGameRootComponent = slideGameRootComponent;
@@ -57,6 +59,7 @@ public class SlideGameManager
 		this.gameOverLabel = gameOverLabel;
 		this.scoreLabel = scoreLabel;
 		this.highScoreLabel = highScoreLabel;
+		this.goalLabel = goalLabel;
 		this.keyListener = new SlideGameKeyListener(
 				this::keyReleased);
 		this.mouseListener = new SlideGameMouseListener(
@@ -91,6 +94,7 @@ public class SlideGameManager
 	{
 		grid.setGoalTileValue(goalTileValue);
 		newGame();
+		updateGoalLabel();
 	}
 
 	public void makeMove(Grid.MoveDirection moveDirection)
@@ -131,6 +135,7 @@ public class SlideGameManager
 		grid.addRandomTile();
 		addListeners();
 		updateScoreLabels();
+		updateGoalLabel();
 	}
 
 	public void newGame()
@@ -186,6 +191,13 @@ public class SlideGameManager
 				gameOver ? (gameWon ? "You Win!" : "You Lose.") : "");
 		scoreLabel.setText("SCORE: " + score);
 		highScoreLabel.setText("BEST: " + highScore);
+	}
+
+	private void updateGoalLabel()
+	{
+		goalLabel.setText(String.format(
+				"Goal: Create %d tile",
+				grid.getGoalTileValue()));
 	}
 
 	private void keyReleased(KeyEvent e)
