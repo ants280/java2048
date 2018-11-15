@@ -148,6 +148,7 @@ public class SlideGameManager
 		addListeners();
 		updateScoreLabels();
 		updateGoalLabel();
+		clearMoveLabel();
 	}
 
 	public void newGame()
@@ -155,7 +156,6 @@ public class SlideGameManager
 		grid.clear();
 		initGame();
 		slideGameCanvas.repaint();
-		clearMoveLabel();
 	}
 
 	private void endGame()
@@ -224,7 +224,7 @@ public class SlideGameManager
 					(validMove ? "Moved %s" : "Cannot move %s"),
 					moveDirection.getDisplayValue()));
 			moveLabelClearingTimer.stop();
-			moveLabelClearingTimer.restart();
+			moveLabelClearingTimer.start();
 		}
 	}
 
