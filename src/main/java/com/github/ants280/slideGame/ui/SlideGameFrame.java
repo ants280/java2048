@@ -22,6 +22,7 @@ import javax.swing.border.Border;
 
 public class SlideGameFrame extends JFrame
 {
+	private static final long serialVersionUID = 5L;
 	private final SlideGameManager slideGameManager;
 	private static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder(
 			2, 10, 2, 10); // top, left, bottom, right
