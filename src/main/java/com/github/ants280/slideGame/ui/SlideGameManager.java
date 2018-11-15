@@ -1,6 +1,7 @@
 package com.github.ants280.slideGame.ui;
 
 import com.github.ants280.slideGame.logic.Grid;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -8,9 +9,11 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.Timer;
 
 public class SlideGameManager
 {
@@ -21,6 +24,8 @@ public class SlideGameManager
 	private final JLabel scoreLabel;
 	private final JLabel highScoreLabel;
 	private final JLabel goalLabel;
+	private final JLabel moveLabel;
+	private final Timer moveLabelClearingTimer;
 	private final KeyListener keyListener;
 	private final MouseListener mouseListener;
 	private int score;
@@ -51,7 +56,8 @@ public class SlideGameManager
 			JLabel gameOverLabel,
 			JLabel scoreLabel,
 			JLabel highScoreLabel,
-			JLabel goalLabel)
+			JLabel goalLabel,
+			JLabel moveLabel)
 	{
 		this.grid = grid;
 		this.slideGameRootComponent = slideGameRootComponent;
@@ -60,6 +66,10 @@ public class SlideGameManager
 		this.scoreLabel = scoreLabel;
 		this.highScoreLabel = highScoreLabel;
 		this.goalLabel = goalLabel;
+		this.moveLabel = moveLabel;
+		this.moveLabelClearingTimer = new Timer(
+				(int) TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS),
+				actionEvent -> this.clearMoveLabel());
 		this.keyListener = new SlideGameKeyListener(
 				this::keyReleased);
 		this.mouseListener = new SlideGameMouseListener(
@@ -71,6 +81,7 @@ public class SlideGameManager
 		this.gameWon = false;
 		this.listenersAdded = false;
 
+		moveLabelClearingTimer.setRepeats(false);
 		initGame();
 	}
 
@@ -99,31 +110,35 @@ public class SlideGameManager
 
 	public void makeMove(Grid.MoveDirection moveDirection)
 	{
-		if (moveDirection == null || !grid.canSlideTiles(moveDirection))
+		boolean validMove = moveDirection != null
+				&& grid.canSlideTiles(moveDirection);
+
+		if (validMove)
 		{
-			return;
-		}
 
-		int moveScore = grid.slideTiles(moveDirection);
+			int moveScore = grid.slideTiles(moveDirection);
 
-		this.incrementScore(moveScore);
+			this.incrementScore(moveScore);
 
-		if (!grid.canSlideInAnyDirection() || grid.goalTileCreated())
-		{
-			gameWon = grid.goalTileCreated();
-			endGame();
-		}
-		else
-		{
-			grid.addRandomTile();
-
-			if (!grid.canSlideInAnyDirection())
+			if (!grid.canSlideInAnyDirection() || grid.goalTileCreated())
 			{
+				gameWon = grid.goalTileCreated();
 				endGame();
 			}
+			else
+			{
+				grid.addRandomTile();
+
+				if (!grid.canSlideInAnyDirection())
+				{
+					endGame();
+				}
+			}
+
+			slideGameCanvas.repaint();
 		}
 
-		slideGameCanvas.repaint();
+		updateMoveLabel(moveDirection, validMove);
 	}
 
 	private void initGame()
@@ -143,6 +158,7 @@ public class SlideGameManager
 		grid.clear();
 		initGame();
 		slideGameCanvas.repaint();
+		clearMoveLabel();
 	}
 
 	private void endGame()
@@ -198,6 +214,27 @@ public class SlideGameManager
 		goalLabel.setText(String.format(
 				"Goal: Create %d tile",
 				grid.getGoalTileValue()));
+	}
+
+	private void updateMoveLabel(
+			Grid.MoveDirection moveDirection,
+			boolean validMove)
+	{
+		if (moveDirection != null)
+		{
+			moveLabel.setForeground(validMove ? Color.BLACK : Color.RED);
+			moveLabel.setText(String.format(
+					(validMove ? "Moved %s" : "Cannot move %s"),
+					moveDirection.getDisplayValue()));
+			moveLabelClearingTimer.stop();
+			moveLabelClearingTimer.restart();
+		}
+	}
+
+	private void clearMoveLabel()
+	{
+		moveLabelClearingTimer.stop();
+		moveLabel.setText("");
 	}
 
 	private void keyReleased(KeyEvent e)
