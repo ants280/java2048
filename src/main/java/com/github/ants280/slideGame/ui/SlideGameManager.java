@@ -1,6 +1,7 @@
 package com.github.ants280.slideGame.ui;
 
 import com.github.ants280.slideGame.logic.Grid;
+import com.github.ants280.slideGame.logic.MoveDirection;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -34,19 +35,15 @@ public class SlideGameManager
 	private boolean gameWon;
 	private boolean listenersAdded;
 	private MouseEvent mousePressedLocation;
-	private static final Map<Integer, Grid.MoveDirection> MOVE_DIRECTIONS
+	private static final Map<Integer, MoveDirection> MOVE_DIRECTIONS
 			= new HashMap<>();
 
 	static
 	{
-		putMoveDirectionCodes(
-				Grid.MoveDirection.UP, KeyEvent.VK_W, KeyEvent.VK_UP);
-		putMoveDirectionCodes(
-				Grid.MoveDirection.LEFT, KeyEvent.VK_A, KeyEvent.VK_LEFT);
-		putMoveDirectionCodes(
-				Grid.MoveDirection.DOWN, KeyEvent.VK_S, KeyEvent.VK_DOWN);
-		putMoveDirectionCodes(
-				Grid.MoveDirection.RIGHT, KeyEvent.VK_D, KeyEvent.VK_RIGHT);
+		putMoveDirectionCodes(MoveDirection.UP, KeyEvent.VK_W, KeyEvent.VK_UP);
+		putMoveDirectionCodes(MoveDirection.LEFT, KeyEvent.VK_A, KeyEvent.VK_LEFT);
+		putMoveDirectionCodes(MoveDirection.DOWN, KeyEvent.VK_S, KeyEvent.VK_DOWN);
+		putMoveDirectionCodes(MoveDirection.RIGHT, KeyEvent.VK_D, KeyEvent.VK_RIGHT);
 	}
 
 	public SlideGameManager(
@@ -108,7 +105,7 @@ public class SlideGameManager
 		updateGoalLabel();
 	}
 
-	public void makeMove(Grid.MoveDirection moveDirection)
+	public void makeMove(MoveDirection moveDirection)
 	{
 		boolean validMove = moveDirection != null
 				&& grid.canSlideTiles(moveDirection);
@@ -217,7 +214,7 @@ public class SlideGameManager
 	}
 
 	private void updateMoveLabel(
-			Grid.MoveDirection moveDirection,
+			MoveDirection moveDirection,
 			boolean validMove)
 	{
 		if (moveDirection != null)
@@ -269,28 +266,28 @@ public class SlideGameManager
 		{
 			if (deltaX < 0)
 			{
-				makeMove(Grid.MoveDirection.LEFT);
+				makeMove(MoveDirection.LEFT);
 			}
 			else if (deltaX > 0)
 			{
-				makeMove(Grid.MoveDirection.RIGHT);
+				makeMove(MoveDirection.RIGHT);
 			}
 		}
 		else if (absDeltaY > absDeltaX)
 		{
 			if (deltaY < 0)
 			{
-				makeMove(Grid.MoveDirection.UP);
+				makeMove(MoveDirection.UP);
 			}
 			else if (deltaY > 0)
 			{
-				makeMove(Grid.MoveDirection.DOWN);
+				makeMove(MoveDirection.DOWN);
 			}
 		}
 	}
 
 	private static void putMoveDirectionCodes(
-			Grid.MoveDirection moveDirection,
+			MoveDirection moveDirection,
 			int... keyCodes)
 	{
 		Arrays.stream(keyCodes)

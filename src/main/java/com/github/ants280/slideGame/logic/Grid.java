@@ -153,8 +153,7 @@ public class Grid
 
 	public int slideTiles(MoveDirection moveDirection)
 	{
-		return slideTiles(
-				moveDirection == MoveDirection.UP
+		return slideTiles(moveDirection == MoveDirection.UP
 				|| moveDirection == MoveDirection.DOWN,
 				moveDirection == MoveDirection.LEFT
 				|| moveDirection == MoveDirection.UP);
@@ -162,8 +161,7 @@ public class Grid
 
 	public boolean canSlideTiles(MoveDirection moveDirection)
 	{
-		return canSlideTiles(
-				moveDirection == MoveDirection.UP
+		return canSlideTiles(moveDirection == MoveDirection.UP
 				|| moveDirection == MoveDirection.DOWN,
 				moveDirection == MoveDirection.LEFT
 				|| moveDirection == MoveDirection.UP);
@@ -355,23 +353,4 @@ public class Grid
 		return tiles;
 	}
 
-	public enum MoveDirection
-	{
-		LEFT("Left"),
-		RIGHT("Right"),
-		UP("Up"),
-		DOWN("Down");
-
-		private final String displayValue;
-
-		private MoveDirection(String displayValue)
-		{
-			this.displayValue = displayValue;
-		}
-
-		public String getDisplayValue()
-		{
-			return displayValue;
-		}
-	}
 }
