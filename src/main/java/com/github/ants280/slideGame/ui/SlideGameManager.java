@@ -83,7 +83,7 @@ public class SlideGameManager
 		this.listenersAdded = false;
 
 		moveLabelClearingTimer.setRepeats(false);
-		initGame();
+		this.initGame();
 	}
 
 	public int getGridLength()
@@ -94,7 +94,7 @@ public class SlideGameManager
 	public void setGridLength(int length)
 	{
 		grid.setLength(length);
-		newGame();
+		this.newGame();
 	}
 
 	public int getGoalTileValue()
@@ -105,8 +105,8 @@ public class SlideGameManager
 	public void setGoalTileValue(int goalTileValue)
 	{
 		grid.setGoalTileValue(goalTileValue);
-		newGame();
-		updateGoalLabel();
+		this.newGame();
+		this.updateGoalLabel();
 	}
 
 	public void makeMove(MoveDirection moveDirection)
@@ -124,7 +124,7 @@ public class SlideGameManager
 			if (!grid.canSlideInAnyDirection() || grid.goalTileCreated())
 			{
 				gameWon = grid.goalTileCreated();
-				endGame();
+				this.endGame();
 			}
 			else
 			{
@@ -132,14 +132,14 @@ public class SlideGameManager
 
 				if (!grid.canSlideInAnyDirection())
 				{
-					endGame();
+					this.endGame();
 				}
 			}
 
 			slideGameDisplayComponent.repaint();
 		}
 
-		updateMoveLabel(moveDirection, validMove);
+		this.updateMoveLabel(moveDirection, validMove);
 	}
 
 	private void initGame()
@@ -149,24 +149,24 @@ public class SlideGameManager
 		score = 0;
 		grid.addRandomTile();
 		grid.addRandomTile();
-		addListeners();
-		updateScoreLabels();
-		updateGoalLabel();
-		clearMoveLabel();
+		this.addListeners();
+		this.updateScoreLabels();
+		this.updateGoalLabel();
+		this.clearMoveLabel();
 	}
 
 	public void newGame()
 	{
 		grid.clear();
-		initGame();
+		this.initGame();
 		slideGameDisplayComponent.repaint();
 	}
 
 	private void endGame()
 	{
 		gameOver = true;
-		removeListeners();
-		updateScoreLabels();
+		this.removeListeners();
+		this.updateScoreLabels();
 	}
 
 	private void addListeners()
@@ -198,7 +198,7 @@ public class SlideGameManager
 				highScore = score;
 			}
 
-			updateScoreLabels();
+			this.updateScoreLabels();
 		}
 	}
 
@@ -240,7 +240,7 @@ public class SlideGameManager
 
 	private void keyReleased(KeyEvent e)
 	{
-		makeMove(MOVE_DIRECTIONS.get(e.getKeyCode()));
+		this.makeMove(MOVE_DIRECTIONS.get(e.getKeyCode()));
 	}
 
 	private void mousePressed(MouseEvent e)
@@ -270,22 +270,22 @@ public class SlideGameManager
 		{
 			if (deltaX < 0)
 			{
-				makeMove(MoveDirection.LEFT);
+				this.makeMove(MoveDirection.LEFT);
 			}
 			else if (deltaX > 0)
 			{
-				makeMove(MoveDirection.RIGHT);
+				this.makeMove(MoveDirection.RIGHT);
 			}
 		}
 		else if (absDeltaY > absDeltaX)
 		{
 			if (deltaY < 0)
 			{
-				makeMove(MoveDirection.UP);
+				this.makeMove(MoveDirection.UP);
 			}
 			else if (deltaY > 0)
 			{
-				makeMove(MoveDirection.DOWN);
+				this.makeMove(MoveDirection.DOWN);
 			}
 		}
 	}

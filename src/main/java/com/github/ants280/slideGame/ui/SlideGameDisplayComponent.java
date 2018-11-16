@@ -30,7 +30,7 @@ public class SlideGameDisplayComponent extends JComponent
 
 		this.grid = grid;
 
-		init();
+		this.init();
 	}
 
 	private void init()
@@ -57,7 +57,7 @@ public class SlideGameDisplayComponent extends JComponent
 		double spacerSize = cellSize - tileSize;
 		double halfSpacerSize = spacerSize / 2d;
 
-		paintGrid(
+		this.paintGrid(
 				gridLength,
 				g,
 				xOffset,
@@ -66,7 +66,7 @@ public class SlideGameDisplayComponent extends JComponent
 				cellSize,
 				spacerSize,
 				halfSpacerSize);
-		paintTiles(
+		this.paintTiles(
 				gridLength,
 				g,
 				xOffset,
@@ -134,7 +134,7 @@ public class SlideGameDisplayComponent extends JComponent
 		{
 			for (int r = 0; r < gridLength; r++)
 			{
-				paintTile(
+				this.paintTile(
 						g,
 						c,
 						r,
@@ -159,7 +159,7 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		Tile tile = grid.getTile(c, r);
 
-		paintTileBackground(
+		this.paintTileBackground(
 				tile == null
 						? SlideGameColors.EMPTY_TILE_COLOR
 						: SlideGameColors.getColor(tile),
@@ -174,7 +174,7 @@ public class SlideGameDisplayComponent extends JComponent
 
 		if (tile != null)
 		{
-			paintTileText(
+			this.paintTileText(
 					tile.getDisplayValue(),
 					g,
 					c,

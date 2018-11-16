@@ -41,11 +41,11 @@ public class SlideGameFrame extends JFrame
 		Grid grid = new Grid();
 		JComponent slideGameDisplayComponent
 				= new SlideGameDisplayComponent(grid);
-		JLabel gameOverLabel = createJLabel(false);
-		JLabel scoreLabel = createJLabel(true);
-		JLabel highScoreLabel = createJLabel(true);
-		JLabel goalLabel = createJLabel(false);
-		JLabel moveLabel = createJLabel(false);
+		JLabel gameOverLabel = this.createJLabel(false);
+		JLabel scoreLabel = this.createJLabel(true);
+		JLabel highScoreLabel = this.createJLabel(true);
+		JLabel goalLabel = this.createJLabel(false);
+		JLabel moveLabel = this.createJLabel(false);
 		this.slideGameManager = new SlideGameManager(
 				grid,
 				this,
@@ -56,7 +56,7 @@ public class SlideGameFrame extends JFrame
 				goalLabel,
 				moveLabel);
 
-		initSize(
+		this.initSize(
 				slideGameDisplayComponent,
 				gameOverLabel,
 				scoreLabel,
@@ -163,8 +163,8 @@ public class SlideGameFrame extends JFrame
 				+ "\nCopyright(©) 2018"
 				+ "\n"
 				+ "\nBased on the game by Gabriele Cirulli.";
-		String title = "About " + getTitle();
-		showPopup(message, title, JOptionPane.INFORMATION_MESSAGE);
+		String title = "About " + this.getTitle();
+		this.showPopup(message, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	private void showHelpPopup()
@@ -179,8 +179,8 @@ public class SlideGameFrame extends JFrame
 				+ "added. The game is over if the grid is\nfull and no moves "
 				+ "can be made. It is won when a tile of the goal value is\n"
 				+ "created.";
-		String title = "Help for " + getTitle();
-		showPopup(message, title, JOptionPane.QUESTION_MESSAGE);
+		String title = "Help for " + this.getTitle();
+		this.showPopup(message, title, JOptionPane.QUESTION_MESSAGE);
 	}
 
 	private void showPopup(String message, String title, int messageType)
@@ -190,7 +190,7 @@ public class SlideGameFrame extends JFrame
 
 	private void showSetGridLengthPopup()
 	{
-		String message = "Set grid length for " + getTitle();
+		String message = "Set grid length for " + this.getTitle();
 		int goalTileValue = slideGameManager.getGoalTileValue();
 		int minimumGridLength = (int) Math.ceil(Math.sqrt(
 				(Math.log(goalTileValue) / Math.log(2d)) - 1));
@@ -199,7 +199,7 @@ public class SlideGameFrame extends JFrame
 				.boxed()
 				.toArray();
 		int initialSelectionValue = slideGameManager.getGridLength();
-		showOptionDialog(
+		this.showOptionDialog(
 				message,
 				selectionValues, initialSelectionValue,
 				slideGameManager::setGridLength);
@@ -207,7 +207,7 @@ public class SlideGameFrame extends JFrame
 
 	private void showSetGoalTileValuePopup()
 	{
-		String message = "Set goal tile value for " + getTitle();
+		String message = "Set goal tile value for " + this.getTitle();
 		int gridLength = slideGameManager.getGridLength();
 		int maximumGoalTileValue = (int) Math.pow(2, Math.pow(gridLength, 2));
 		Object[] selectionValues = IntStream.range(0, 10)
@@ -217,7 +217,7 @@ public class SlideGameFrame extends JFrame
 				.boxed()
 				.toArray();
 		int initialSelectionValue = slideGameManager.getGoalTileValue();
-		showOptionDialog(
+		this.showOptionDialog(
 				message,
 				selectionValues, initialSelectionValue,
 				slideGameManager::setGoalTileValue);
@@ -230,7 +230,7 @@ public class SlideGameFrame extends JFrame
 	{
 		Object optionChoice = JOptionPane.showInputDialog(
 				this,
-				message, "Change field for " + getTitle(),
+				message, "Change field for " + this.getTitle(),
 				JOptionPane.QUESTION_MESSAGE, null,
 				selectionValues, initialSelectionValue);
 		if (optionChoice != null)

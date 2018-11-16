@@ -39,8 +39,8 @@ public class Grid
 		this.goalTileValue = goalTileValue;
 		this.goalTileCreated = false;
 
-		validateLength(length);
-		validateGoalTileValue(goalTileValue);
+		this.validateLength(length);
+		this.validateGoalTileValue(goalTileValue);
 	}
 
 	public int getLength()
@@ -50,7 +50,7 @@ public class Grid
 
 	public void setLength(int length)
 	{
-		validateLength(length);
+		this.validateLength(length);
 		this.length = length;
 		this.cols = createTiles(length);
 		this.rows = createTiles(length);
@@ -64,7 +64,7 @@ public class Grid
 
 	public void setGoalTileValue(int goalTileValue)
 	{
-		validateGoalTileValue(goalTileValue);
+		this.validateGoalTileValue(goalTileValue);
 		this.goalTileValue = goalTileValue;
 		this.clear();
 	}
@@ -119,7 +119,7 @@ public class Grid
 		{
 			for (int c = 0; c < length; c++)
 			{
-				setTile(c, r, null);
+				this.setTile(c, r, null);
 			}
 		}
 
@@ -146,14 +146,14 @@ public class Grid
 			c = random.nextInt(length);
 			r = random.nextInt(length);
 		}
-		while (getTile(c, r) != null);
+		while (this.getTile(c, r) != null);
 
-		setTile(c, r, tile);
+		this.setTile(c, r, tile);
 	}
 
 	public int slideTiles(MoveDirection moveDirection)
 	{
-		return slideTiles(moveDirection == MoveDirection.UP
+		return this.slideTiles(moveDirection == MoveDirection.UP
 				|| moveDirection == MoveDirection.DOWN,
 				moveDirection == MoveDirection.LEFT
 				|| moveDirection == MoveDirection.UP);
@@ -161,7 +161,7 @@ public class Grid
 
 	public boolean canSlideTiles(MoveDirection moveDirection)
 	{
-		return canSlideTiles(moveDirection == MoveDirection.UP
+		return this.canSlideTiles(moveDirection == MoveDirection.UP
 				|| moveDirection == MoveDirection.DOWN,
 				moveDirection == MoveDirection.LEFT
 				|| moveDirection == MoveDirection.UP);
@@ -171,7 +171,7 @@ public class Grid
 	{
 		for (MoveDirection moveDirection : MOVE_DIRECTIONS)
 		{
-			if (canSlideTiles(moveDirection))
+			if (this.canSlideTiles(moveDirection))
 			{
 				return true;
 			}
@@ -186,7 +186,7 @@ public class Grid
 		{
 			for (int c = 0; c < length; c++)
 			{
-				if (getTile(c, r) == null)
+				if (this.getTile(c, r) == null)
 				{
 					return false;
 				}
@@ -205,7 +205,7 @@ public class Grid
 	{
 		for (int i = 0; i < length; i++)
 		{
-			if (canSlideTiles(slideColumns, i, towardZero))
+			if (this.canSlideTiles(slideColumns, i, towardZero))
 			{
 				return true;
 			}
@@ -220,7 +220,7 @@ public class Grid
 
 		for (int i = 0; i < length; i++)
 		{
-			sum += slideTiles(slideColumns, i, towardZero);
+			sum += this.slideTiles(slideColumns, i, towardZero);
 		}
 
 		return sum;
@@ -316,7 +316,7 @@ public class Grid
 
 		for (int i = 0; i < length; i++)
 		{
-			setTile(
+			this.setTile(
 					slideColumns ? index : i,
 					slideColumns ? i : index,
 					tempArray[i]);

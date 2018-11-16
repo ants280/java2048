@@ -26,7 +26,7 @@ public class SlideGame implements Runnable
 	@Override
 	public void run()
 	{
-		setLookAndFeel();
+		this.setLookAndFeel();
 
 		Window frame = new SlideGameFrame();
 		Thread.setDefaultUncaughtExceptionHandler(
