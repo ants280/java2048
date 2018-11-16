@@ -105,11 +105,11 @@ public class SlideGameFrame extends JFrame
 
 	private JMenuBar createJMenuBar()
 	{
-		JMenuItem setGridLength_MI = new JMenuItem("Set grid length");
+		JMenuItem setGridLength_MI = new JMenuItem("Set grid length...");
 		setGridLength_MI.addActionListener(
 				actionEvent -> this.showSetGridLengthPopup());
 
-		JMenuItem setGoalTileValue_MI = new JMenuItem("Set goal tile value");
+		JMenuItem setGoalTileValue_MI = new JMenuItem("Set goal tile value...");
 		setGoalTileValue_MI.addActionListener(
 				actionEvent -> this.showSetGoalTileValuePopup());
 
@@ -125,13 +125,13 @@ public class SlideGameFrame extends JFrame
 		exit_MI.addActionListener(
 				actionEvent -> Runtime.getRuntime().exit(0));
 
-		JMenuItem help_MI = new JMenuItem("Help", KeyEvent.VK_H);
+		JMenuItem help_MI = new JMenuItem("Help...", KeyEvent.VK_H);
 		help_MI.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_H, KeyEvent.CTRL_DOWN_MASK));
 		help_MI.addActionListener(
 				actionEvent -> this.showHelpPopup());
 
-		JMenuItem about_MI = new JMenuItem("About", KeyEvent.VK_F1);
+		JMenuItem about_MI = new JMenuItem("About...", KeyEvent.VK_F1);
 		about_MI.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_F1, KeyEvent.CTRL_DOWN_MASK));
 		about_MI.addActionListener(
@@ -190,7 +190,7 @@ public class SlideGameFrame extends JFrame
 
 	private void showSetGridLengthPopup()
 	{
-		String message = "Set grid length for " + this.getTitle();
+		String message = "Set grid length";
 		int goalTileValue = slideGameManager.getGoalTileValue();
 		int minimumGridLength = (int) Math.ceil(Math.sqrt(
 				(Math.log(goalTileValue) / Math.log(2d)) - 1));
@@ -207,7 +207,7 @@ public class SlideGameFrame extends JFrame
 
 	private void showSetGoalTileValuePopup()
 	{
-		String message = "Set goal tile value for " + this.getTitle();
+		String message = "Set goal tile value";
 		int gridLength = slideGameManager.getGridLength();
 		int maximumGoalTileValue = (int) Math.pow(2, Math.pow(gridLength, 2));
 		Object[] selectionValues = IntStream.range(0, 10)
