@@ -83,6 +83,7 @@ public class SlideGameFrame extends JFrame
 		bottomPanel.add(goalLabel);
 		bottomPanel.add(Box.createGlue());
 		bottomPanel.add(moveLabel);
+		slideGameDisplayComponent.setBorder(EMPTY_BORDER);
 
 		this.setJMenuBar(createJMenuBar());
 		this.add(topPanel, BorderLayout.NORTH);
