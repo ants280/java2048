@@ -38,7 +38,7 @@ public class SlideGameFrame extends JFrame
 	{
 		super("Slide Game");
 
-		Grid grid = new Grid(4);
+		Grid grid = new Grid();
 		JComponent slideGameDisplayComponent
 				= new SlideGameDisplayComponent(grid);
 		JLabel gameOverLabel = createJLabel(false);
