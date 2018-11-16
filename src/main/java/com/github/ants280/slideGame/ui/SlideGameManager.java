@@ -40,10 +40,14 @@ public class SlideGameManager
 
 	static
 	{
-		putMoveDirectionCodes(MoveDirection.UP, KeyEvent.VK_W, KeyEvent.VK_UP);
-		putMoveDirectionCodes(MoveDirection.LEFT, KeyEvent.VK_A, KeyEvent.VK_LEFT);
-		putMoveDirectionCodes(MoveDirection.DOWN, KeyEvent.VK_S, KeyEvent.VK_DOWN);
-		putMoveDirectionCodes(MoveDirection.RIGHT, KeyEvent.VK_D, KeyEvent.VK_RIGHT);
+		putMoveDirectionCodes(
+				MoveDirection.UP, KeyEvent.VK_W, KeyEvent.VK_UP);
+		putMoveDirectionCodes(
+				MoveDirection.LEFT, KeyEvent.VK_A, KeyEvent.VK_LEFT);
+		putMoveDirectionCodes(
+				MoveDirection.DOWN, KeyEvent.VK_S, KeyEvent.VK_DOWN);
+		putMoveDirectionCodes(
+				MoveDirection.RIGHT, KeyEvent.VK_D, KeyEvent.VK_RIGHT);
 	}
 
 	public SlideGameManager(
