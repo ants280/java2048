@@ -10,8 +10,6 @@ public class Grid
 	private Tile[][] rows;
 	private int goalTileValue;
 	private boolean goalTileCreated;
-	private static final MoveDirection[] MOVE_DIRECTIONS
-			= MoveDirection.values();
 
 	public Grid()
 	{
@@ -169,7 +167,7 @@ public class Grid
 
 	public boolean canSlideInAnyDirection()
 	{
-		for (MoveDirection moveDirection : MOVE_DIRECTIONS)
+		for (MoveDirection moveDirection : MoveDirection.values())
 		{
 			if (this.canSlideTiles(moveDirection))
 			{
