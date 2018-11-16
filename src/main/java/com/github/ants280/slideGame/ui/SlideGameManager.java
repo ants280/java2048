@@ -266,28 +266,30 @@ public class SlideGameManager
 		int absDeltaX = Math.abs(deltaX);
 		int absDeltaY = Math.abs(deltaY);
 
+		MoveDirection moveDirection = null;
 		if (absDeltaX > absDeltaY)
 		{
 			if (deltaX < 0)
 			{
-				this.makeMove(MoveDirection.LEFT);
+				moveDirection = MoveDirection.LEFT;
 			}
 			else if (deltaX > 0)
 			{
-				this.makeMove(MoveDirection.RIGHT);
+				moveDirection = MoveDirection.RIGHT;
 			}
 		}
 		else if (absDeltaY > absDeltaX)
 		{
 			if (deltaY < 0)
 			{
-				this.makeMove(MoveDirection.UP);
+				moveDirection = MoveDirection.UP;
 			}
 			else if (deltaY > 0)
 			{
-				this.makeMove(MoveDirection.DOWN);
+				moveDirection = MoveDirection.DOWN;
 			}
 		}
+		this.makeMove(moveDirection);
 	}
 
 	private static void putMoveDirectionCodes(
