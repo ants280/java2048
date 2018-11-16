@@ -39,7 +39,7 @@ public class SlideGameFrame extends JFrame
 		super("Slide Game");
 
 		Grid grid = new Grid(4);
-		JComponent slideGameCanvas = new SlideGameDisplayComponent(grid);
+		JComponent slideGameDisplayComponent = new SlideGameDisplayComponent(grid);
 		JLabel gameOverLabel = createJLabel(false);
 		JLabel scoreLabel = createJLabel(true);
 		JLabel highScoreLabel = createJLabel(true);
@@ -48,7 +48,7 @@ public class SlideGameFrame extends JFrame
 		this.slideGameManager = new SlideGameManager(
 				grid,
 				this,
-				slideGameCanvas,
+				slideGameDisplayComponent,
 				gameOverLabel,
 				scoreLabel,
 				highScoreLabel,
@@ -56,7 +56,7 @@ public class SlideGameFrame extends JFrame
 				moveLabel);
 
 		initSize(
-				slideGameCanvas,
+				slideGameDisplayComponent,
 				gameOverLabel,
 				scoreLabel,
 				highScoreLabel,
@@ -65,7 +65,7 @@ public class SlideGameFrame extends JFrame
 	}
 
 	private void initSize(
-			JComponent slideGameCanvas,
+			JComponent slideGameDisplayComponent,
 			JLabel gameOverLabel,
 			JLabel scoreLabel,
 			JLabel highScoreLabel,
@@ -87,7 +87,7 @@ public class SlideGameFrame extends JFrame
 		this.setJMenuBar(createJMenuBar());
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(bottomPanel, BorderLayout.SOUTH);
-		this.add(slideGameCanvas);
+		this.add(slideGameDisplayComponent);
 
 		this.setMinimumSize(new Dimension(400, 447));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

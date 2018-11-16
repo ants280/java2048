@@ -20,7 +20,7 @@ public class SlideGameManager
 {
 	private final Grid grid;
 	private final JFrame slideGameRootComponent;
-	private final JComponent slideGameCanvas;
+	private final JComponent slideGameDisplayComponent;
 	private final JLabel gameOverLabel;
 	private final JLabel scoreLabel;
 	private final JLabel highScoreLabel;
@@ -49,7 +49,7 @@ public class SlideGameManager
 	public SlideGameManager(
 			Grid grid,
 			JFrame slideGameRootComponent,
-			JComponent slideGameCanvas,
+			JComponent slideGameDisplayComponent,
 			JLabel gameOverLabel,
 			JLabel scoreLabel,
 			JLabel highScoreLabel,
@@ -58,7 +58,7 @@ public class SlideGameManager
 	{
 		this.grid = grid;
 		this.slideGameRootComponent = slideGameRootComponent;
-		this.slideGameCanvas = slideGameCanvas;
+		this.slideGameDisplayComponent = slideGameDisplayComponent;
 		this.gameOverLabel = gameOverLabel;
 		this.scoreLabel = scoreLabel;
 		this.highScoreLabel = highScoreLabel;
@@ -132,7 +132,7 @@ public class SlideGameManager
 				}
 			}
 
-			slideGameCanvas.repaint();
+			slideGameDisplayComponent.repaint();
 		}
 
 		updateMoveLabel(moveDirection, validMove);
@@ -155,7 +155,7 @@ public class SlideGameManager
 	{
 		grid.clear();
 		initGame();
-		slideGameCanvas.repaint();
+		slideGameDisplayComponent.repaint();
 	}
 
 	private void endGame()
@@ -170,7 +170,7 @@ public class SlideGameManager
 		if (!listenersAdded)
 		{
 			slideGameRootComponent.addKeyListener(keyListener);
-			slideGameCanvas.addMouseListener(mouseListener);
+			slideGameDisplayComponent.addMouseListener(mouseListener);
 			mousePressedLocation = null;
 			listenersAdded = true;
 		}
@@ -179,7 +179,7 @@ public class SlideGameManager
 	private void removeListeners()
 	{
 		slideGameRootComponent.removeKeyListener(keyListener);
-		slideGameCanvas.addMouseListener(mouseListener);
+		slideGameDisplayComponent.addMouseListener(mouseListener);
 		mousePressedLocation = null;
 		listenersAdded = false;
 	}
