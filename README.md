@@ -5,4 +5,4 @@ A clone of the classic 2048 game, but for java.  The game logic is modeled after
 ![slideGame screenshot](screenshot.png)
 
 ## License
-Java2048 is licensed under the [MIT license](LICENSE).
+Project is licensed under the [MIT license](LICENSE).
