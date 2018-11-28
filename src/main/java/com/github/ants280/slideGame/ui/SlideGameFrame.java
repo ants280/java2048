@@ -211,7 +211,7 @@ public class SlideGameFrame extends JFrame
 		int gridLength = slideGameManager.getGridLength();
 		int maximumGoalTileValue = (int) Math.pow(2, Math.pow(gridLength, 2));
 		Object[] selectionValues = IntStream.range(0, 10)
-				.map(i -> (int) Math.pow(2, i + 3))
+				.map(i -> (int) Math.pow(2d, i + 3d))
 				.filter(possibleGoalTileValue
 						-> possibleGoalTileValue <= maximumGoalTileValue)
 				.boxed()

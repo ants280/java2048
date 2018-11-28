@@ -8,7 +8,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ComponentEvent;
 import javax.swing.JComponent;
 
 /**
@@ -37,7 +36,8 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		this.tileFont = new Font("times", Font.PLAIN, 12);
 		this.addComponentListener(
-				new SlideGameComponentListener(this::componentResized));
+				new SlideGameComponentListener(
+						componentEvent -> this.componentResized()));
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class SlideGameDisplayComponent extends JComponent
 				halfSpacerSize);
 	}
 
-	private void componentResized(ComponentEvent e)
+	private void componentResized()
 	{
 		int minDimension = Math.min(this.getWidth(), this.getHeight());
 		float fontSize = (float) (minDimension / (grid.getLength() * 3d));

@@ -6,7 +6,7 @@ import java.util.Map;
 public class Tile implements Comparable<Tile>
 {
 	private final Integer value;
-	private final transient String displayValue;
+	private final String displayValue;
 	private static final Map<Integer, Tile> VALUE_CACHE = new HashMap<>();
 	public static final Tile TWO = new Tile(2);
 
