@@ -241,25 +241,26 @@ public class Grid
 			int index,
 			boolean towardZero)
 	{
-		Tile[] sourceArray = slideColumns ? cols[index] : rows[index];
-		int slideIndex = towardZero ? 0 : length - 1;
 		Tile lastSlidTile = null;
-		int delta = towardZero ? 1 : -1;
+
+		Tile[] tilesToSlide = this.getTilesToSlide(slideColumns, index);
+		int slideIndex = this.getSlideIndex(towardZero);
+		int slideDirectionDelta = this.getSlideDirectionDelta(towardZero);
 		for (int i = slideIndex;
 				towardZero ? i < length : i >= 0;
-				i += delta)
+				i += slideDirectionDelta)
 		{
-			if (sourceArray[i] != null)
+			if (tilesToSlide[i] != null)
 			{
-				if (lastSlidTile == sourceArray[i]
+				if (lastSlidTile == tilesToSlide[i]
 						|| i != slideIndex)
 				{
 					return true;
 				}
 				else
 				{
-					lastSlidTile = sourceArray[i];
-					slideIndex += delta;
+					lastSlidTile = tilesToSlide[i];
+					slideIndex += slideDirectionDelta;
 				}
 			}
 		}
@@ -280,23 +281,23 @@ public class Grid
 	private int slideTiles(boolean slideColumns, int index, boolean towardZero)
 	{
 		int sum = 0;
-
-		Tile[] sourceArray = slideColumns ? cols[index] : rows[index];
-		Tile[] tempArray = new Tile[length];
-		int slideIndex = towardZero ? 0 : length - 1;
-		int delta = towardZero ? 1 : -1;
+		Tile[] slidTiles = new Tile[length];
 		boolean canCombineWithPreviousSlide = false;
+
+		Tile[] tilesToSlide = this.getTilesToSlide(slideColumns, index);
+		int slideIndex = this.getSlideIndex(towardZero);
+		int slideDirectionDelta = this.getSlideDirectionDelta(towardZero);
 		for (int i = slideIndex;
 				towardZero ? i < length : i >= 0;
-				i += delta)
+				i += slideDirectionDelta)
 		{
-			if (sourceArray[i] != null)
+			if (tilesToSlide[i] != null)
 			{
 				if (canCombineWithPreviousSlide
-						&& tempArray[slideIndex - delta] == sourceArray[i])
+						&& slidTiles[slideIndex - slideDirectionDelta] == tilesToSlide[i])
 				{
-					Tile nextTile = sourceArray[i].getNext();
-					tempArray[slideIndex - delta] = nextTile;
+					Tile nextTile = tilesToSlide[i].getNext();
+					slidTiles[slideIndex - slideDirectionDelta] = nextTile;
 					sum += nextTile.getValue();
 					canCombineWithPreviousSlide = false;
 					if (nextTile.getValue() == goalTileValue)
@@ -306,16 +307,31 @@ public class Grid
 				}
 				else
 				{
-					tempArray[slideIndex] = sourceArray[i];
-					slideIndex += delta;
+					slidTiles[slideIndex] = tilesToSlide[i];
+					slideIndex += slideDirectionDelta;
 					canCombineWithPreviousSlide = true;
 				}
 			}
 		}
 
-		this.setTiles(slideColumns, index, tempArray);
+		this.setTiles(slideColumns, index, slidTiles);
 
 		return sum;
+	}
+
+	private Tile[] getTilesToSlide(boolean slideColumns, int index)
+	{
+		return slideColumns ? cols[index] : rows[index];
+	}
+
+	private int getSlideIndex(boolean towardZero)
+	{
+		return towardZero ? 0 : length - 1;
+	}
+
+	private int getSlideDirectionDelta(boolean towardZero)
+	{
+		return towardZero ? 1 : -1;
 	}
 
 	private void setTiles(boolean slideColumns, int index, Tile[] tempArray)
