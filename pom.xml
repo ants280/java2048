@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.ants280</groupId>
-	<artifactId>slideGame</artifactId>
+	<artifactId>slidegame</artifactId>
 	<name>Slide Game</name>
 	<version>2.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -11,8 +11,8 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<main.class>com.github.ants280.slideGame.ui.SlideGame</main.class>
-				<sonar.java.libraries>target/classes</sonar.java.libraries>
+		<main.class>com.github.ants280.slidegame.ui.SlideGame</main.class>
+		<sonar.java.libraries>target/classes</sonar.java.libraries>
 	</properties>
 	<build>
 		<!-- package and increment version: mvn clean && mvn versions:set -DremoveSnapshot && mvn package && mvn versions:set -DnextSnapshot=true -->
