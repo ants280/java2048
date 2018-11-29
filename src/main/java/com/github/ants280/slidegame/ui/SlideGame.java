@@ -1,4 +1,4 @@
-package com.github.ants280.slideGame.ui;
+package com.github.ants280.slidegame.ui;
 
 import java.awt.Window;
 import java.util.logging.Level;

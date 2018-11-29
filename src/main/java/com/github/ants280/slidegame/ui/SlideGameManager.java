@@ -1,7 +1,7 @@
-package com.github.ants280.slideGame.ui;
+package com.github.ants280.slidegame.ui;
 
-import com.github.ants280.slideGame.logic.Grid;
-import com.github.ants280.slideGame.logic.MoveDirection;
+import com.github.ants280.slidegame.logic.Grid;
+import com.github.ants280.slidegame.logic.MoveDirection;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

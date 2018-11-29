@@ -1,6 +1,6 @@
-package com.github.ants280.slideGame.ui;
+package com.github.ants280.slidegame.ui;
 
-import com.github.ants280.slideGame.logic.Grid;
+import com.github.ants280.slidegame.logic.Grid;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;

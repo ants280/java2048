@@ -1,6 +1,6 @@
-package com.github.ants280.slideGame.ui;
+package com.github.ants280.slidegame.ui;
 
-import com.github.ants280.slideGame.logic.Tile;
+import com.github.ants280.slidegame.logic.Tile;
 import java.awt.Color;
 import java.util.NavigableMap;
 import java.util.TreeMap;

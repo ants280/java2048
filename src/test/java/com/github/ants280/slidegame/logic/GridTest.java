@@ -1,4 +1,4 @@
-package com.github.ants280.slideGame.logic;
+package com.github.ants280.slidegame.logic;
 
 import org.junit.Assert;
 import org.junit.Before;
