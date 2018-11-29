@@ -10,9 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
-/**
- * The component the slideGame is painted on.
- */
 public class SlideGameDisplayComponent extends JComponent
 {
 	private static final long serialVersionUID = 1L;
