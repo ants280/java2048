@@ -4,7 +4,7 @@ import com.github.ants280.slideGame.logic.Grid;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
-import java.util.function.Consumer;
+import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -227,7 +227,7 @@ public class SlideGameFrame extends JFrame
 	private void showOptionDialog(
 			String message,
 			Object[] selectionValues, Object initialSelectionValue,
-			Consumer<Integer> setValueFunction)
+			IntConsumer setValueFunction)
 	{
 		Object optionChoice = JOptionPane.showInputDialog(
 				this,
