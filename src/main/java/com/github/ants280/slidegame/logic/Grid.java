@@ -313,6 +313,13 @@ public class Grid
 			}
 		}
 
+		this.setTiles(slideColumns, index, tempArray);
+
+		return sum;
+	}
+
+	private void setTiles(boolean slideColumns, int index, Tile[] tempArray)
+	{
 		for (int i = 0; i < length; i++)
 		{
 			this.setTile(
@@ -320,8 +327,6 @@ public class Grid
 					slideColumns ? i : index,
 					tempArray[i]);
 		}
-
-		return sum;
 	}
 
 	/**
