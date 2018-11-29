@@ -50,7 +50,7 @@ public class SlideGame implements Runnable
 				| IllegalAccessException
 				| UnsupportedLookAndFeelException ex)
 		{
-			Logger.getLogger(Sudoku.class.getName())
+			Logger.getLogger(SlideGame.class.getName())
 					.log(
 							Level.SEVERE,
 							"Could not set system Look-And-Feel",
