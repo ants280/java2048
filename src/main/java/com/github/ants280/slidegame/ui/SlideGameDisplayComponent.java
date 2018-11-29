@@ -15,8 +15,8 @@ import javax.swing.JComponent;
  */
 public class SlideGameDisplayComponent extends JComponent
 {
-	private static final long serialVersionUID = 5L;
-	private final Grid grid;
+	private static final long serialVersionUID = 1L;
+	private final transient Grid grid;
 	private static final RenderingHints ANTIALIAS_ON_RENDERING_HINT
 			= new RenderingHints(
 					RenderingHints.KEY_ANTIALIASING,
