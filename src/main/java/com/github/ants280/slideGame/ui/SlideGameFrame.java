@@ -105,48 +105,49 @@ public class SlideGameFrame extends JFrame
 
 	private JMenuBar createJMenuBar()
 	{
-		JMenuItem setGridLength_MI = new JMenuItem("Set grid length...");
-		setGridLength_MI.addActionListener(
+		JMenuItem setGridLengthMenuItem = new JMenuItem("Set grid length...");
+		setGridLengthMenuItem.addActionListener(
 				actionEvent -> this.showSetGridLengthPopup());
 
-		JMenuItem setGoalTileValue_MI = new JMenuItem("Set goal tile value...");
-		setGoalTileValue_MI.addActionListener(
+		JMenuItem setGoalTileValueMenuItem = new JMenuItem(
+				"Set goal tile value...");
+		setGoalTileValueMenuItem.addActionListener(
 				actionEvent -> this.showSetGoalTileValuePopup());
 
-		JMenuItem newGame_MI = new JMenuItem("New Game", KeyEvent.VK_N);
-		newGame_MI.setAccelerator(KeyStroke.getKeyStroke(
+		JMenuItem newGameMenuItem = new JMenuItem("New Game", KeyEvent.VK_N);
+		newGameMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK));
-		newGame_MI.addActionListener(
+		newGameMenuItem.addActionListener(
 				actionEvent -> slideGameManager.newGame());
 
-		JMenuItem exit_MI = new JMenuItem("Exit", KeyEvent.VK_X);
-		exit_MI.setAccelerator(KeyStroke.getKeyStroke(
+		JMenuItem exitMenuItem = new JMenuItem("Exit", KeyEvent.VK_X);
+		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_X, KeyEvent.CTRL_DOWN_MASK));
-		exit_MI.addActionListener(
+		exitMenuItem.addActionListener(
 				actionEvent -> Runtime.getRuntime().exit(0));
 
-		JMenuItem help_MI = new JMenuItem("Help...", KeyEvent.VK_H);
-		help_MI.setAccelerator(KeyStroke.getKeyStroke(
+		JMenuItem helpMenuItem = new JMenuItem("Help...", KeyEvent.VK_H);
+		helpMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_H, KeyEvent.CTRL_DOWN_MASK));
-		help_MI.addActionListener(
+		helpMenuItem.addActionListener(
 				actionEvent -> this.showHelpPopup());
 
-		JMenuItem about_MI = new JMenuItem("About...", KeyEvent.VK_F1);
-		about_MI.setAccelerator(KeyStroke.getKeyStroke(
+		JMenuItem aboutMenuItem = new JMenuItem("About...", KeyEvent.VK_F1);
+		aboutMenuItem.setAccelerator(KeyStroke.getKeyStroke(
 				KeyEvent.VK_F1, KeyEvent.CTRL_DOWN_MASK));
-		about_MI.addActionListener(
+		aboutMenuItem.addActionListener(
 				actionEvent -> this.showAboutPopup());
 
 		JMenu actionMenu = new JMenu("Action");
-		actionMenu.add(setGridLength_MI);
-		actionMenu.add(setGoalTileValue_MI);
+		actionMenu.add(setGridLengthMenuItem);
+		actionMenu.add(setGoalTileValueMenuItem);
 		actionMenu.addSeparator();
-		actionMenu.add(newGame_MI);
-		actionMenu.add(exit_MI);
+		actionMenu.add(newGameMenuItem);
+		actionMenu.add(exitMenuItem);
 
 		JMenu helpMenu = new JMenu("Help");
-		helpMenu.add(help_MI);
-		helpMenu.add(about_MI);
+		helpMenu.add(helpMenuItem);
+		helpMenu.add(aboutMenuItem);
 
 		JMenuBar mainMenu = new JMenuBar();
 		mainMenu.add(actionMenu);
