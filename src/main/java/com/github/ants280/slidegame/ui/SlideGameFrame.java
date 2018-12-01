@@ -3,7 +3,6 @@ package com.github.ants280.slidegame.ui;
 import com.github.ants280.slidegame.logic.Grid;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
@@ -99,7 +98,7 @@ public class SlideGameFrame
 		frame.pack();
 	}
 
-	public Window getWindow()
+	public JFrame getWindow()
 	{
 		return frame;
 	}

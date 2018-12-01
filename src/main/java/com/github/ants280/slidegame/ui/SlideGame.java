@@ -1,8 +1,8 @@
 package com.github.ants280.slidegame.ui;
 
-import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -29,7 +29,7 @@ public class SlideGame implements Runnable
 	{
 		setLookAndFeel();
 
-		Window frame = new SlideGameFrame().getWindow();
+		JFrame frame = new SlideGameFrame().getWindow();
 
 		Thread.setDefaultUncaughtExceptionHandler(
 				new SlideGameUncaughtExceptionHandler(frame));
