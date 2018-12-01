@@ -2,7 +2,6 @@ package com.github.ants280.slidegame.ui;
 
 import com.github.ants280.slidegame.logic.Grid;
 import com.github.ants280.slidegame.logic.MoveDirection;
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -10,23 +9,15 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.Timer;
 
 public class SlideGameManager
 {
 	private final Grid grid;
 	private final JFrame slideGameRootComponent;
 	private final JComponent slideGameDisplayComponent;
-	private final JLabel gameOverLabel;
-	private final JLabel scoreLabel;
-	private final JLabel highScoreLabel;
-	private final JLabel goalLabel;
-	private final JLabel moveLabel;
-	private final Timer moveLabelClearingTimer;
+	private final SlideGameLabelManager slideGameLabelManager;
 	private final KeyListener keyListener;
 	private final MouseListener mouseListener;
 	private int score;
@@ -54,23 +45,13 @@ public class SlideGameManager
 			Grid grid,
 			JFrame slideGameRootComponent,
 			JComponent slideGameDisplayComponent,
-			JLabel gameOverLabel,
-			JLabel scoreLabel,
-			JLabel highScoreLabel,
-			JLabel goalLabel,
-			JLabel moveLabel)
+			SlideGameLabelManager slideGameLabelManager)
 	{
 		this.grid = grid;
 		this.slideGameRootComponent = slideGameRootComponent;
 		this.slideGameDisplayComponent = slideGameDisplayComponent;
-		this.gameOverLabel = gameOverLabel;
-		this.scoreLabel = scoreLabel;
-		this.highScoreLabel = highScoreLabel;
-		this.goalLabel = goalLabel;
-		this.moveLabel = moveLabel;
-		this.moveLabelClearingTimer = new Timer(
-				(int) TimeUnit.MILLISECONDS.convert(1, TimeUnit.SECONDS),
-				actionEvent -> this.clearMoveLabel());
+		this.slideGameLabelManager = slideGameLabelManager;
+
 		this.keyListener = new SlideGameKeyListener(
 				this::keyReleased);
 		this.mouseListener = new SlideGameMouseListener(
@@ -82,7 +63,6 @@ public class SlideGameManager
 		this.gameWon = false;
 		this.listenersAdded = false;
 
-		moveLabelClearingTimer.setRepeats(false);
 		this.initGame();
 	}
 
@@ -106,7 +86,7 @@ public class SlideGameManager
 	{
 		grid.setGoalTileValue(goalTileValue);
 		this.newGame();
-		this.updateGoalLabel();
+		slideGameLabelManager.updateGoalLabel(grid.getGoalTileValue());
 	}
 
 	public void makeMove(MoveDirection moveDirection)
@@ -136,10 +116,16 @@ public class SlideGameManager
 				}
 			}
 
+			slideGameLabelManager.updateScoreLabels(
+					gameOver,
+					gameWon,
+					score,
+					highScore);
+
 			slideGameDisplayComponent.repaint();
 		}
 
-		this.updateMoveLabel(moveDirection, validMove);
+		slideGameLabelManager.updateMoveLabel(moveDirection, validMove);
 	}
 
 	private void initGame()
@@ -150,9 +136,13 @@ public class SlideGameManager
 		grid.addRandomTile();
 		grid.addRandomTile();
 		this.addListeners();
-		this.updateScoreLabels();
-		this.updateGoalLabel();
-		this.clearMoveLabel();
+		slideGameLabelManager.updateScoreLabels(
+				gameOver,
+				gameWon,
+				score,
+				highScore);
+		slideGameLabelManager.updateGoalLabel(grid.getGoalTileValue());
+		slideGameLabelManager.clearMoveLabel();
 	}
 
 	public void newGame()
@@ -166,7 +156,6 @@ public class SlideGameManager
 	{
 		gameOver = true;
 		this.removeListeners();
-		this.updateScoreLabels();
 	}
 
 	private void addListeners()
@@ -197,49 +186,7 @@ public class SlideGameManager
 			{
 				highScore = score;
 			}
-
-			this.updateScoreLabels();
 		}
-	}
-
-	private void updateScoreLabels()
-	{
-		String gameOverLabelText = "";
-		if (gameOver)
-		{
-			gameOverLabelText = gameWon ? "You Win!" : "You Lose.";
-		}
-		gameOverLabel.setText(gameOverLabelText);
-		scoreLabel.setText("SCORE: " + score);
-		highScoreLabel.setText("BEST: " + highScore);
-	}
-
-	private void updateGoalLabel()
-	{
-		goalLabel.setText(String.format(
-				"Goal: Create %d tile",
-				grid.getGoalTileValue()));
-	}
-
-	private void updateMoveLabel(
-			MoveDirection moveDirection,
-			boolean validMove)
-	{
-		if (moveDirection != null)
-		{
-			moveLabel.setForeground(validMove ? Color.BLACK : Color.RED);
-			moveLabel.setText(String.format(
-					(validMove ? "Moved %s" : "Cannot move %s"),
-					moveDirection.getDisplayValue()));
-			moveLabelClearingTimer.stop();
-			moveLabelClearingTimer.start();
-		}
-	}
-
-	private void clearMoveLabel()
-	{
-		moveLabelClearingTimer.stop();
-		moveLabel.setText("");
 	}
 
 	private void keyReleased(KeyEvent e)

@@ -46,15 +46,17 @@ public class SlideGameFrame extends JFrame
 		JLabel highScoreLabel = this.createJLabel(true);
 		JLabel goalLabel = this.createJLabel(false);
 		JLabel moveLabel = this.createJLabel(false);
+
 		this.slideGameManager = new SlideGameManager(
 				grid,
 				this,
 				slideGameDisplayComponent,
-				gameOverLabel,
-				scoreLabel,
-				highScoreLabel,
-				goalLabel,
-				moveLabel);
+				new SlideGameLabelManager(
+						scoreLabel,
+						highScoreLabel,
+						moveLabel,
+						goalLabel,
+						gameOverLabel));
 
 		this.initSize(
 				slideGameDisplayComponent,
