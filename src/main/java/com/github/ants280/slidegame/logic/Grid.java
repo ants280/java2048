@@ -294,7 +294,8 @@ public class Grid
 			if (tilesToSlide[i] != null)
 			{
 				if (canCombineWithPreviousSlide
-						&& slidTiles[slideIndex - slideDirectionDelta] == tilesToSlide[i])
+						&& slidTiles[slideIndex - slideDirectionDelta]
+						== tilesToSlide[i])
 				{
 					Tile nextTile = tilesToSlide[i].getNext();
 					slidTiles[slideIndex - slideDirectionDelta] = nextTile;
@@ -372,5 +373,4 @@ public class Grid
 
 		return tiles;
 	}
-
 }
