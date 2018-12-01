@@ -5,7 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.function.Consumer;
 
-public class SlideGameKeyListener extends KeyAdapter implements KeyListener
+public class SlideGameKeyListener
+		extends KeyAdapter
+		implements KeyListener
 {
 	private final Consumer<KeyEvent> keyReleasedConsumer;
 
