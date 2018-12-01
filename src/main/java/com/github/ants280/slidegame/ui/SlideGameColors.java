@@ -37,7 +37,7 @@ public class SlideGameColors
 
 		Tile tile = Tile.TWO;
 
-		for (int i = 0; i <= 10; i++)
+		for (int i = 0; i <= tileColors.length; i++)
 		{
 			COLOR_CACHE.put(tile, new Color(tileColors[i]));
 			tile = tile.getNext();
