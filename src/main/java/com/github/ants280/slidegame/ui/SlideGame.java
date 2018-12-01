@@ -29,7 +29,8 @@ public class SlideGame implements Runnable
 	{
 		setLookAndFeel();
 
-		Window frame = new SlideGameFrame();
+		Window frame = new SlideGameFrame().getWindow();
+
 		Thread.setDefaultUncaughtExceptionHandler(
 				new SlideGameUncaughtExceptionHandler(frame));
 

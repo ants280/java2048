@@ -3,6 +3,7 @@ package com.github.ants280.slidegame.ui;
 import com.github.ants280.slidegame.logic.Grid;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.util.function.IntConsumer;
 import java.util.stream.IntStream;
@@ -20,9 +21,9 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
-public class SlideGameFrame extends JFrame
+public class SlideGameFrame
 {
-	private static final long serialVersionUID = 1L;
+	private final JFrame frame;
 	private final transient SlideGameManager slideGameManager;
 	private static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder(
 			2, 10, 2, 10); // top, left, bottom, right
@@ -36,7 +37,7 @@ public class SlideGameFrame extends JFrame
 
 	public SlideGameFrame()
 	{
-		super("Slide Game");
+		this.frame = new JFrame("Slide Game");
 
 		Grid grid = new Grid();
 		JComponent slideGameDisplayComponent
@@ -49,7 +50,7 @@ public class SlideGameFrame extends JFrame
 
 		this.slideGameManager = new SlideGameManager(
 				grid,
-				this,
+				frame,
 				slideGameDisplayComponent,
 				new SlideGameLabelManager(
 						scoreLabel,
@@ -88,14 +89,19 @@ public class SlideGameFrame extends JFrame
 		bottomPanel.add(moveLabel);
 		slideGameDisplayComponent.setBorder(EMPTY_BORDER);
 
-		this.setJMenuBar(createJMenuBar());
-		this.add(topPanel, BorderLayout.NORTH);
-		this.add(bottomPanel, BorderLayout.SOUTH);
-		this.add(slideGameDisplayComponent);
+		frame.setJMenuBar(createJMenuBar());
+		frame.add(topPanel, BorderLayout.NORTH);
+		frame.add(bottomPanel, BorderLayout.SOUTH);
+		frame.add(slideGameDisplayComponent);
 
-		this.setMinimumSize(new Dimension(400, 447));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.pack();
+		frame.setMinimumSize(new Dimension(400, 447));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+	}
+
+	public Window getWindow()
+	{
+		return frame;
 	}
 
 	private JLabel createJLabel(boolean addBorder)
@@ -166,7 +172,7 @@ public class SlideGameFrame extends JFrame
 				+ "\nCopyright(©) 2018"
 				+ "\n"
 				+ "\nBased on the game by Gabriele Cirulli.";
-		String title = "About " + this.getTitle();
+		String title = "About " + frame.getTitle();
 		this.showPopup(message, title, JOptionPane.INFORMATION_MESSAGE);
 	}
 
@@ -182,13 +188,13 @@ public class SlideGameFrame extends JFrame
 				+ "added. The game is over if the grid is\nfull and no moves "
 				+ "can be made. It is won when a tile of the goal value is\n"
 				+ "created.";
-		String title = "Help for " + this.getTitle();
+		String title = "Help for " + frame.getTitle();
 		this.showPopup(message, title, JOptionPane.QUESTION_MESSAGE);
 	}
 
 	private void showPopup(String message, String title, int messageType)
 	{
-		JOptionPane.showMessageDialog(this, message, title, messageType);
+		JOptionPane.showMessageDialog(frame, message, title, messageType);
 	}
 
 	private void showSetGridLengthPopup()
@@ -232,8 +238,8 @@ public class SlideGameFrame extends JFrame
 			IntConsumer setValueFunction)
 	{
 		Object optionChoice = JOptionPane.showInputDialog(
-				this,
-				message, "Change field for " + this.getTitle(),
+				frame,
+				message, "Change field for " + frame.getTitle(),
 				JOptionPane.QUESTION_MESSAGE, null,
 				selectionValues, initialSelectionValue);
 		if (optionChoice != null)
