@@ -24,7 +24,7 @@ import javax.swing.border.Border;
 public class SlideGameFrame
 {
 	private final JFrame frame;
-	private final transient SlideGameManager slideGameManager;
+	private final SlideGameManager slideGameManager;
 	private static final Border EMPTY_BORDER = BorderFactory.createEmptyBorder(
 			2, 10, 2, 10); // top, left, bottom, right
 	private static final Border LINE_BORDER
