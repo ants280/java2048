@@ -76,6 +76,17 @@ public class TileTest
 	}
 
 	@Test
+	public void testEquals_different_null()
+	{
+		Tile tile1 = Tile.TWO;
+		Tile tile2 = null;
+
+		boolean equals = tile1.equals(tile2);
+
+		Assert.assertFalse(equals);
+	}
+
+	@Test
 	public void testCompareTo_eq()
 	{
 		Tile tile1 = Tile.TWO;
