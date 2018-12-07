@@ -408,4 +408,20 @@ public class GridTest
 
 		Assert.assertEquals(expectedGoalTileValue, goalTileValue);
 	}
+
+	@Test
+	public void testSetGoalTileValue()
+	{
+		grid.setTile(0, 0, TILE_1024);
+		grid.setTile(1, 0, TILE_1024);
+		grid.slideTiles(MoveDirection.LEFT);
+		int largerGoalTileValue = 2 * grid.getGoalTileValue();
+
+		grid.setGoalTileValue(largerGoalTileValue);
+		int goalTileValue = grid.getGoalTileValue();
+		boolean goalTileCreated = grid.goalTileCreated();
+
+		Assert.assertEquals(largerGoalTileValue, goalTileValue);
+		Assert.assertFalse(goalTileCreated);
+	}
 }
