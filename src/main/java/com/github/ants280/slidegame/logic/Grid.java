@@ -52,7 +52,7 @@ public class Grid
 		this.length = length;
 		this.cols = createTiles(length);
 		this.rows = createTiles(length);
-		this.goalTileCreated = false;
+		this.clear();
 	}
 
 	public int getGoalTileValue()
