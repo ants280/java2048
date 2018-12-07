@@ -85,6 +85,7 @@ public class TileTest
 
 		Assert.assertFalse(equals);
 	}
+
 	@Test
 	public void testEquals_different_otherObject()
 	{
