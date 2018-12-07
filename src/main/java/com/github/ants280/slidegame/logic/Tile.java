@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Tile implements Comparable<Tile>
 {
-	private final Integer value;
+	private final int value;
 	private final String displayValue;
 	private static final Map<Integer, Tile> VALUE_CACHE = new HashMap<>();
 	public static final Tile TWO = new Tile(2);
@@ -16,13 +16,13 @@ public class Tile implements Comparable<Tile>
 		VALUE_CACHE.put(2, TWO);
 	}
 
-	private Tile(Integer value)
+	private Tile(int value)
 	{
 		this.value = value;
-		this.displayValue = value.toString();
+		this.displayValue = String.valueOf(value);
 	}
 
-	public Integer getValue()
+	public int getValue()
 	{
 		return value;
 	}
@@ -62,7 +62,7 @@ public class Tile implements Comparable<Tile>
 	@Override
 	public int compareTo(Tile o)
 	{
-		return value.compareTo(o.getValue());
+		return value - o.value;
 	}
 
 	@Override

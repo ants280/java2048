@@ -25,7 +25,7 @@ public class TileTest
 				distinctTileDisplayValues.length);
 		// [ensure the last tile is 2048] :
 		Assert.assertEquals(
-				Integer.valueOf(2048),
+				2048,
 				tiles[tiles.length - 1].getValue());
 	}
 

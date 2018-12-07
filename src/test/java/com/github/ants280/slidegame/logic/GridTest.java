@@ -316,7 +316,7 @@ public class GridTest
 		grid.slideTiles(MoveDirection.LEFT);
 
 		Assert.assertEquals(
-				Integer.valueOf(4096),
+				4096,
 				grid.getTile(0, 0).getValue());
 	}
 
