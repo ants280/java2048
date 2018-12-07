@@ -105,7 +105,10 @@ public class TileTest
 	@Test
 	public void testToString()
 	{
-		//TODO
-	}
+		Tile tile1 = Tile.TWO;
 
+		String toString = tile1.toString();
+
+		Assert.assertNotNull(toString);
+	}
 }
