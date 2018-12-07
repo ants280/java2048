@@ -27,6 +27,16 @@ public class GridTest
 		grid = new Grid(LENGTH);
 	}
 
+	@Test
+	public void testConstructor_length()
+	{
+		Grid grid = new Grid();
+
+		int length = grid.getLength();
+
+		Assert.assertEquals(4, length);
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testConstructor_bad_length()
 	{
