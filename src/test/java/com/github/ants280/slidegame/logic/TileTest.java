@@ -24,15 +24,49 @@ public class TileTest
 	}
 
 	@Test
-	public void testHashCode()
+	public void testHashCode_same()
 	{
-		//TODO
+		Tile tile1 = Tile.TWO;
+		Tile tile2 = tile1;
+
+		int hashCode1 = tile1.hashCode();
+		int hashCode2 = tile2.hashCode();
+
+		Assert.assertEquals(hashCode1, hashCode2);
 	}
 
 	@Test
-	public void testEquals()
+	public void testHashCode_different()
 	{
-		//TODO
+		Tile tile1 = Tile.TWO;
+		Tile tile2 = tile1.getNext();
+
+		int hashCode1 = tile1.hashCode();
+		int hashCode2 = tile2.hashCode();
+
+		Assert.assertNotEquals(hashCode1, hashCode2);
+	}
+
+	@Test
+	public void testEquals_same()
+	{
+		Tile tile1 = Tile.TWO;
+		Tile tile2 = tile1;
+
+		boolean equals = tile1.equals(tile2);
+
+		Assert.assertTrue(equals);
+	}
+
+	@Test
+	public void testEquals_different()
+	{
+		Tile tile1 = Tile.TWO;
+		Tile tile2 = tile1.getNext();
+
+		boolean equals = tile1.equals(tile2);
+
+		Assert.assertFalse(equals);
 	}
 
 	@Test
