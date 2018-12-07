@@ -85,6 +85,16 @@ public class TileTest
 
 		Assert.assertFalse(equals);
 	}
+	@Test
+	public void testEquals_different_otherObject()
+	{
+		Object tile1 = Tile.TWO;
+		Object tile2 = 2;
+
+		boolean equals = tile1.equals(tile2);
+
+		Assert.assertFalse(equals);
+	}
 
 	@Test
 	public void testCompareTo_eq()
