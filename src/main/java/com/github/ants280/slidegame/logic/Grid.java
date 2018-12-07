@@ -136,8 +136,8 @@ public class Grid
 			throw new IllegalArgumentException("Cannot add random tile");
 		}
 
-		int r;
 		int c;
+		int r;
 
 		Tile tile = random.nextInt(10) == 0 ? Tile.TWO.getNext() : Tile.TWO;
 		do
