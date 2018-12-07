@@ -131,7 +131,7 @@ public class Grid
 	 */
 	public void addRandomTile()
 	{
-		if (isFilled())
+		if (this.isFilled())
 		{
 			throw new IllegalArgumentException("Cannot add random tile");
 		}
