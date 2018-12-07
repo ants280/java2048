@@ -1,26 +1,32 @@
 package com.github.ants280.slidegame.logic;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class TileTest
 {
-
 	@Test
 	public void testGetDisplayValue_distinct()
 	{
-		//TODO
-//		MoveDirection[] values = MoveDirection.values();
-//
-//		String[] distinctMoveDirectionDisplayValues
-//				= Arrays.stream(values)
-//						.map(MoveDirection::getDisplayValue)
-//						.distinct()
-//						.toArray(String[]::new);
-//
-//		Assert.assertEquals(
-//				values.length,
-//				distinctMoveDirectionDisplayValues.length);
+		Tile[] tiles = Stream.iterate(Tile.TWO, tile -> tile.getNext())
+				.limit(11)
+				.toArray(Tile[]::new);
+
+		String[] distinctTileDisplayValues
+				= Arrays.stream(tiles)
+						.map(Tile::getDisplayValue)
+						.distinct()
+						.toArray(String[]::new);
+
+		Assert.assertEquals(
+				tiles.length,
+				distinctTileDisplayValues.length);
+		// [ensure the last tile is 2048] :
+		Assert.assertEquals(
+				Integer.valueOf(2048),
+				tiles[tiles.length - 1].getValue());
 	}
 
 	@Test
