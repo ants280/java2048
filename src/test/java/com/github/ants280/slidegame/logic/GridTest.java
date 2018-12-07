@@ -239,6 +239,14 @@ public class GridTest
 	}
 
 	@Test
+	public void testCanSlideTilesInAnyDirection_oneTile()
+	{
+		grid.setTile(1, 1, TILE_2);
+
+		Assert.assertTrue(grid.canSlideInAnyDirection());
+	}
+
+	@Test
 	public void testCanSlideTiles_middle()
 	{
 		grid.setTile(1, 1, TILE_2);
