@@ -382,4 +382,30 @@ public class GridTest
 		Assert.fail("It should not be possible to create a grid "
 				+ "with length = 3 and goalTileValue = 1024 : " + gridX);
 	}
+
+	@Test
+	public void testSetLength()
+	{
+		grid.setTile(0, 0, TILE_1024);
+		grid.setTile(1, 0, TILE_1024);
+		grid.slideTiles(MoveDirection.LEFT);
+		int longerLength = LENGTH + 1;
+
+		grid.setLength(longerLength);
+		int length = grid.getLength();
+		boolean goalTileCreated = grid.goalTileCreated();
+
+		Assert.assertEquals(longerLength, length);
+		Assert.assertFalse(goalTileCreated);
+	}
+
+	@Test
+	public void testGetGoalTileValue_default()
+	{
+		int expectedGoalTileValue = 2048;
+
+		int goalTileValue = grid.getGoalTileValue();
+
+		Assert.assertEquals(expectedGoalTileValue, goalTileValue);
+	}
 }
