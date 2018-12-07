@@ -2,7 +2,6 @@ package com.github.ants280.slidegame.logic;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Tile implements Comparable<Tile>
 {
@@ -56,7 +55,7 @@ public class Tile implements Comparable<Tile>
 		return this == obj
 				|| (obj != null
 				&& this.getClass() == obj.getClass()
-				&& Objects.equals(value, ((Tile) obj).value));
+				&& value == ((Tile) obj).value);
 	}
 
 	@Override
