@@ -50,7 +50,7 @@ public class TileTest
 	public void testCompareTo_lt()
 	{
 		Tile tile1 = Tile.TWO;
-		Tile tile2 = tile1;
+		Tile tile2 = tile1.getNext();
 
 		int compareTo = tile1.compareTo(tile2);
 
@@ -61,11 +61,11 @@ public class TileTest
 	public void testCompareTo_gt()
 	{
 		Tile tile1 = Tile.TWO;
-		Tile tile2 = tile1;
+		Tile tile2 = tile1.getNext();
 
 		int compareTo = tile2.compareTo(tile1);
 
-		Assert.assertTrue(compareTo < 0);
+		Assert.assertTrue(compareTo > 0);
 	}
 
 	@Test
