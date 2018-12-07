@@ -30,9 +30,9 @@ public class GridTest
 	@Test
 	public void testConstructor_length()
 	{
-		Grid grid = new Grid();
+		Grid grid1 = new Grid();
 
-		int length = grid.getLength();
+		int length = grid1.getLength();
 
 		Assert.assertEquals(4, length);
 	}
