@@ -53,9 +53,9 @@ public class Tile implements Comparable<Tile>
 	public boolean equals(Object obj)
 	{
 		return this == obj
-				|| (obj != null
+				|| obj != null
 				&& this.getClass() == obj.getClass()
-				&& value == ((Tile) obj).value);
+				&& value == ((Tile) obj).value;
 	}
 
 	@Override

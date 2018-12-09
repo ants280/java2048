@@ -65,7 +65,7 @@ public class SlideGameLabelManager
 		{
 			moveLabel.setForeground(validMove ? Color.BLACK : Color.RED);
 			moveLabel.setText(String.format(
-					(validMove ? "Moved %s" : "Cannot move %s"),
+					validMove ? "Moved %s" : "Cannot move %s",
 					moveDirection.getDisplayValue()));
 			moveLabelClearingTimer.stop();
 			moveLabelClearingTimer.start();

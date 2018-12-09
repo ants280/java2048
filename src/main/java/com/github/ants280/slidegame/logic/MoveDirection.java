@@ -9,7 +9,7 @@ public enum MoveDirection
 
 	private final String displayValue;
 
-	private MoveDirection(String displayValue)
+	MoveDirection(String displayValue)
 	{
 		this.displayValue = displayValue;
 	}

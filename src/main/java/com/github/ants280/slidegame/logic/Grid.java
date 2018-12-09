@@ -76,7 +76,7 @@ public class Grid
 		}
 
 		int minimumLength = (int) Math.ceil(
-				Math.sqrt((Math.log(goalTileValue) / Math.log(2)) - 1));
+				Math.sqrt(Math.log(goalTileValue) / Math.log(2) - 1));
 
 		if (length < minimumLength)
 		{

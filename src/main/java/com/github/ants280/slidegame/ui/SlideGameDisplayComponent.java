@@ -199,8 +199,8 @@ public class SlideGameDisplayComponent extends JComponent
 		double fontHeight = tileFont.getSize2D() * 0.75d;
 		FontMetrics fontMetrics = g.getFontMetrics();
 		int textWidth = fontMetrics.stringWidth(tileText);
-		int x = round(xOffset + (((c + 0.5d) * cellSize) - (textWidth / 2d)));
-		int y = round(yOffset + (((r + 0.5d) * cellSize) + (fontHeight / 2d)));
+		int x = round(xOffset + ((c + 0.5d) * cellSize - textWidth / 2d));
+		int y = round(yOffset + ((r + 0.5d) * cellSize + fontHeight / 2d));
 		g.drawString(tileText, x, y);
 	}
 

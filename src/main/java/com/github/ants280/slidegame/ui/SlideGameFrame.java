@@ -201,7 +201,7 @@ public class SlideGameFrame
 		String message = "Set grid length";
 		int goalTileValue = slideGameManager.getGoalTileValue();
 		int minimumGridLength = (int) Math.ceil(Math.sqrt(
-				(Math.log(goalTileValue) / Math.log(2d)) - 1));
+				Math.log(goalTileValue) / Math.log(2d) - 1));
 		Object[] selectionValues = IntStream.range(
 				minimumGridLength, minimumGridLength + 10)
 				.boxed()
