@@ -80,6 +80,23 @@ public class GridTest
 	{
 		// it should not cause an infinite loop
 		grid.addRandomTile();
+
+		boolean tileAdded = false;
+		for (int r = 0; r < LENGTH && !tileAdded; r++)
+		{
+			for (int c = 0; c < LENGTH && !tileAdded; c++)
+			{
+				final Tile tile = grid.getTile(c, r);
+				if (tile != null)
+				{
+					tileAdded = true;
+					Assert.assertTrue(
+							"Expected new tile to be 2 or 4 : " + tile.toString(),
+							tile == TILE_2 || tile == TILE_4);
+				}
+			}
+		}
+		Assert.assertTrue(tileAdded);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
