@@ -15,7 +15,7 @@ public class Tile implements Comparable<Tile>
 		VALUE_CACHE.put(2, TWO);
 	}
 
-	private Tile(int value)
+	Tile(int value)
 	{
 		this.value = value;
 		this.displayValue = String.valueOf(value);
