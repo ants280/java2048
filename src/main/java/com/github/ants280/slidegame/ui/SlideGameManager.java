@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComponent;
@@ -31,14 +30,14 @@ public class SlideGameManager
 
 	static
 	{
-		putMoveDirectionCodes(
-				MoveDirection.UP, KeyEvent.VK_W, KeyEvent.VK_UP);
-		putMoveDirectionCodes(
-				MoveDirection.LEFT, KeyEvent.VK_A, KeyEvent.VK_LEFT);
-		putMoveDirectionCodes(
-				MoveDirection.DOWN, KeyEvent.VK_S, KeyEvent.VK_DOWN);
-		putMoveDirectionCodes(
-				MoveDirection.RIGHT, KeyEvent.VK_D, KeyEvent.VK_RIGHT);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_W, MoveDirection.UP);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_A, MoveDirection.LEFT);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_S, MoveDirection.DOWN);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_D, MoveDirection.RIGHT);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_UP, MoveDirection.UP);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_LEFT, MoveDirection.LEFT);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_DOWN, MoveDirection.DOWN);
+		MOVE_DIRECTIONS.put(KeyEvent.VK_RIGHT, MoveDirection.RIGHT);
 	}
 
 	public SlideGameManager(
@@ -241,14 +240,5 @@ public class SlideGameManager
 			}
 		}
 		this.makeMove(moveDirection);
-	}
-
-	private static void putMoveDirectionCodes(
-			MoveDirection moveDirection,
-			int... keyCodes)
-	{
-		Arrays.stream(keyCodes)
-				.forEach(keyCode
-						-> MOVE_DIRECTIONS.put(keyCode, moveDirection));
 	}
 }
