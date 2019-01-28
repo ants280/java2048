@@ -65,34 +65,30 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
 
-		int gridLength = grid.getLength();
 		double tileSize = cellSize * 0.90d;
 		double spacerSize = cellSize - tileSize;
 		double halfSpacerSize = spacerSize / 2d;
 
 		this.paintGrid(
-				gridLength,
 				g,
 				spacerSize,
 				halfSpacerSize);
 		this.paintTiles(
-				gridLength,
 				g,
 				tileSize,
 				halfSpacerSize);
 	}
 
 	private void paintGrid(
-			int gridLength,
 			Graphics g,
 			double spacerSize,
 			double halfSpacerSize)
 	{
 		g.setColor(SlideGameColors.SPACER_COLOR);
 
-		int gridLengthPx = round(gridLength * cellSize);
+		int gridLengthPx = round(grid.getLength() * cellSize);
 		int roundedSpacerSize = round(spacerSize);
-		for (int i = 0; i <= gridLength; i++)
+		for (int i = 0; i <= grid.getLength(); i++)
 		{
 			double lineOffset = (i * cellSize) - halfSpacerSize;
 			// vertical lines:
@@ -111,14 +107,13 @@ public class SlideGameDisplayComponent extends JComponent
 	}
 
 	private void paintTiles(
-			int gridLength,
 			Graphics g,
 			double tileSize,
 			double halfSpacerSize)
 	{
-		for (int c = 0; c < gridLength; c++)
+		for (int c = 0; c < grid.getLength(); c++)
 		{
-			for (int r = 0; r < gridLength; r++)
+			for (int r = 0; r < grid.getLength(); r++)
 			{
 				this.paintTile(
 						g,
