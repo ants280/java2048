@@ -64,6 +64,7 @@ public class SlideGameDisplayComponent extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
+		System.out.println("painting");
 
 		double tileSize = cellSize * 0.90d;
 		double spacerSize = cellSize - tileSize;
@@ -86,7 +87,7 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		g.setColor(SlideGameColors.SPACER_COLOR);
 
-		int gridLengthPx = round(grid.getLength() * cellSize);
+		int roundedGridLengthPx = round(grid.getLength() * cellSize);
 		int roundedSpacerSize = round(spacerSize);
 		for (int i = 0; i <= grid.getLength(); i++)
 		{
@@ -96,12 +97,12 @@ public class SlideGameDisplayComponent extends JComponent
 					round(xOffset + lineOffset),
 					round(yOffset),
 					roundedSpacerSize,
-					gridLengthPx);
+					roundedGridLengthPx);
 			// horizontal lines:
 			g.fillRect(
 					round(xOffset),
 					round(yOffset + lineOffset),
-					gridLengthPx,
+					roundedGridLengthPx,
 					roundedSpacerSize);
 		}
 	}
