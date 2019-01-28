@@ -88,14 +88,15 @@ public class SlideGameDisplayComponent extends JComponent
 			double spacerSize,
 			double halfSpacerSize)
 	{
-		int minDimension = gridLength * cellSize;
+		int gridLengthPx = gridLength * cellSize;
+		int roundedSpacerSize = round(spacerSize);
 		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= gridLength; c++)
 		{
 			int x = round(xOffset + (c * cellSize) - halfSpacerSize);
 			int y = round(yOffset);
-			int verticalLineWidth = round(spacerSize);
-			int height = minDimension;
+			int verticalLineWidth = roundedSpacerSize;
+			int height = gridLengthPx;
 			g.fillRect(
 					x, y,
 					verticalLineWidth, height);
@@ -104,8 +105,8 @@ public class SlideGameDisplayComponent extends JComponent
 		{
 			int x = round(xOffset);
 			int y = round(yOffset + (r * cellSize) - halfSpacerSize);
-			int width = minDimension;
-			int horizontalLineHeight = round(spacerSize);
+			int width = gridLengthPx;
+			int horizontalLineHeight = roundedSpacerSize;
 			g.fillRect(
 					x, y,
 					width, horizontalLineHeight);
