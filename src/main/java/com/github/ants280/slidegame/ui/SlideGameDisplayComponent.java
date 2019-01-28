@@ -4,7 +4,6 @@ import com.github.ants280.slidegame.logic.Grid;
 import com.github.ants280.slidegame.logic.Tile;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -18,7 +17,6 @@ public class SlideGameDisplayComponent extends JComponent
 			= new RenderingHints(
 					RenderingHints.KEY_ANTIALIASING,
 					RenderingHints.VALUE_ANTIALIAS_ON);
-	private Font tileFont;
 	private int xOffset;
 	private int yOffset;
 	private int minDimension;
@@ -34,7 +32,7 @@ public class SlideGameDisplayComponent extends JComponent
 
 	private void init()
 	{
-		this.tileFont = new Font("times", Font.PLAIN, 12);
+		this.setFont(new Font("times", Font.PLAIN, 12));
 		this.xOffset = 0;
 		this.yOffset = 0;
 		this.minDimension = -1;
@@ -47,7 +45,7 @@ public class SlideGameDisplayComponent extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
-		g.setFont(tileFont);
+//		g.setFont(tileFont);
 
 		int gridLength = grid.getLength();
 		double cellSize = minDimension / (gridLength + 0d);
@@ -79,9 +77,9 @@ public class SlideGameDisplayComponent extends JComponent
 		yOffset = (height - minDimension) / 2;
 		float fontSize = (float) (minDimension / (grid.getLength() * 3d));
 
-		if (tileFont.getSize2D() != fontSize)
+		if (this.getFont().getSize2D() != fontSize)
 		{
-			tileFont = tileFont.deriveFont(fontSize);
+			this.setFont(this.getFont().deriveFont(fontSize));
 			this.repaint();
 		}
 	}
@@ -196,9 +194,8 @@ public class SlideGameDisplayComponent extends JComponent
 			double cellSize)
 	{
 		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
-		double fontHeight = tileFont.getSize2D() * 0.75d;
-		FontMetrics fontMetrics = g.getFontMetrics();
-		int textWidth = fontMetrics.stringWidth(tileText);
+		double fontHeight = g.getFont().getSize2D() * 0.75d;
+		int textWidth = g.getFontMetrics().stringWidth(tileText);
 		int x = round(xOffset + ((c + 0.5d) * cellSize - textWidth / 2d));
 		int y = round(yOffset + ((r + 0.5d) * cellSize + fontHeight / 2d));
 		g.drawString(tileText, x, y);
