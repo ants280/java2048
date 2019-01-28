@@ -46,7 +46,7 @@ public class SlideGameDisplayComponent extends JComponent
 		int width = this.getWidth();
 		int height = this.getHeight();
 		int minDimension = Math.min(width, height);
-		double newCellSize = minDimension / (grid.getLength() + 0d);
+		double newCellSize = round(minDimension / (grid.getLength() + 0d));
 
 		if (cellSize != newCellSize)
 		{
@@ -64,9 +64,8 @@ public class SlideGameDisplayComponent extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
-		System.out.println("painting");
 
-		double tileSize = cellSize * 0.90d;
+		double tileSize = round(cellSize * 0.90d);
 		double spacerSize = cellSize - tileSize;
 		double halfSpacerSize = spacerSize / 2d;
 
