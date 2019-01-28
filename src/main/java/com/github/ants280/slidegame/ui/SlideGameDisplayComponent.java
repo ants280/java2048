@@ -101,57 +101,36 @@ public class SlideGameDisplayComponent extends JComponent
 		{
 			for (int r = 0; r < grid.getLength(); r++)
 			{
-				this.paintTile(
-						g,
-						c,
-						r);
+				this.paintTile(g, c, r);
 			}
 		}
 	}
 
-	private void paintTile(
-			Graphics g,
-			int c,
-			int r)
+	private void paintTile(Graphics g, int c, int r)
 	{
 		Tile tile = grid.getTile(c, r);
 
-		this.paintTileBackground(
-				tile == null
-						? SlideGameColors.EMPTY_TILE_COLOR
-						: SlideGameColors.getColor(tile),
-				g,
-				c,
-				r);
+		Color tileColor = tile == null
+				? SlideGameColors.EMPTY_TILE_COLOR
+				: SlideGameColors.getColor(tile);
+		this.paintTileBackground(tileColor, g, c, r);
 
 		if (tile != null)
 		{
-			this.paintTileText(
-					tile.getDisplayValue(),
-					g,
-					c,
-					r);
+			this.paintTileText(tile.getDisplayValue(), g, c, r);
 		}
 	}
 
-	private void paintTileBackground(
-			Color tileColor,
-			Graphics g,
-			int c,
-			int r)
+	private void paintTileBackground(Color tileColor, Graphics g, int c, int r)
 	{
 		g.setColor(tileColor);
 
-		int x = round(xOffset + (c * cellSize) + halfSpacerSize);
-		int y = round(yOffset + (r * cellSize) + halfSpacerSize);
+		int x = round(xOffset + c * cellSize + halfSpacerSize);
+		int y = round(yOffset + r * cellSize + halfSpacerSize);
 		g.fillRect(x, y, tileSize, tileSize);
 	}
 
-	private void paintTileText(
-			String tileText,
-			Graphics g,
-			int c,
-			int r)
+	private void paintTileText(String tileText, Graphics g, int c, int r)
 	{
 		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
 
