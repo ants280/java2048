@@ -36,8 +36,6 @@ public class SlideGameDisplayComponent extends JComponent
 	private void init()
 	{
 		this.setFont(new Font("times", Font.PLAIN, 12));
-		this.xOffset = 0;
-		this.yOffset = 0;
 		this.addComponentListener(
 				new SlideGameComponentListener(
 						componentEvent -> this.componentResized()));
