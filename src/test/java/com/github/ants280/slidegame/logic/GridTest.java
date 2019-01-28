@@ -91,7 +91,7 @@ public class GridTest
 				{
 					tileAdded = true;
 					Assert.assertTrue(
-							"Expected new tile to be 2 or 4 : " + tile.toString(),
+							"Expected new tile to be 2 or 4 : " + tile,
 							tile == TILE_2 || tile == TILE_4);
 				}
 			}

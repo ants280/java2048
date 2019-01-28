@@ -80,12 +80,14 @@ public class SlideGameDisplayComponent extends JComponent
 		for (int i = 0; i <= grid.getLength(); i++)
 		{
 			double lineOffset = (i * cellSize) - halfSpacerSize;
+
 			// vertical lines:
 			g.fillRect(
 					round(xOffset + lineOffset),
 					round(yOffset),
 					spacerSize,
 					gridLengthPx);
+
 			// horizontal lines:
 			g.fillRect(
 					round(xOffset),
