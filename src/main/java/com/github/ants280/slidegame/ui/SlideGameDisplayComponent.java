@@ -76,8 +76,7 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		g.setColor(SlideGameColors.SPACER_COLOR);
 
-		int roundedGridLengthPx = round(grid.getLength() * cellSize);
-		int roundedSpacerSize = round(spacerSize);
+		int gridLengthPx = grid.getLength() * cellSize;
 		for (int i = 0; i <= grid.getLength(); i++)
 		{
 			double lineOffset = (i * cellSize) - halfSpacerSize;
@@ -85,14 +84,14 @@ public class SlideGameDisplayComponent extends JComponent
 			g.fillRect(
 					round(xOffset + lineOffset),
 					round(yOffset),
-					roundedSpacerSize,
-					roundedGridLengthPx);
+					spacerSize,
+					gridLengthPx);
 			// horizontal lines:
 			g.fillRect(
 					round(xOffset),
 					round(yOffset + lineOffset),
-					roundedGridLengthPx,
-					roundedSpacerSize);
+					gridLengthPx,
+					spacerSize);
 		}
 	}
 
@@ -145,9 +144,7 @@ public class SlideGameDisplayComponent extends JComponent
 
 		int x = round(xOffset + (c * cellSize) + halfSpacerSize);
 		int y = round(yOffset + (r * cellSize) + halfSpacerSize);
-		int width = round(tileSize);
-		int height = round(tileSize);
-		g.fillRect(x, y, width, height);
+		g.fillRect(x, y, tileSize, tileSize);
 	}
 
 	private void paintTileText(
