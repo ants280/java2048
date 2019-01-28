@@ -41,6 +41,26 @@ public class SlideGameDisplayComponent extends JComponent
 						componentEvent -> this.componentResized()));
 	}
 
+	private void componentResized()
+	{
+		int width = this.getWidth();
+		int height = this.getHeight();
+		int gridLength = grid.getLength();
+		int minDimension = Math.min(width, height);
+		int newCellSize = minDimension / gridLength;
+
+		if (cellSize != newCellSize)
+		{
+			xOffset = (width - minDimension) / 2;
+			yOffset = (height - minDimension) / 2;
+			cellSize = newCellSize;
+
+			this.setFont(this.getFont().deriveFont((float) (cellSize / 3d)));
+			this.repaint();
+		}
+	}
+
+	//<editor-fold defaultstate="collapsed" desc="painting">
 	@Override
 	public void paintComponent(Graphics g)
 	{
@@ -61,25 +81,6 @@ public class SlideGameDisplayComponent extends JComponent
 				g,
 				tileSize,
 				halfSpacerSize);
-	}
-
-	private void componentResized()
-	{
-		int width = this.getWidth();
-		int height = this.getHeight();
-		int gridLength = grid.getLength();
-		int minDimension = Math.min(width, height);
-		int newCellSize = minDimension / gridLength;
-
-		if (cellSize != newCellSize)
-		{
-			xOffset = (width - minDimension) / 2;
-			yOffset = (height - minDimension) / 2;
-			cellSize = newCellSize;
-
-			this.setFont(this.getFont().deriveFont((float) (cellSize / 3d)));
-			this.repaint();
-		}
 	}
 
 	private void paintGrid(
@@ -196,4 +197,5 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		return Math.toIntExact(Math.round(value));
 	}
+	//</editor-fold>
 }
