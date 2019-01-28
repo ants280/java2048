@@ -19,7 +19,7 @@ public class SlideGameDisplayComponent extends JComponent
 					RenderingHints.VALUE_ANTIALIAS_ON);
 	private int xOffset;
 	private int yOffset;
-	private int cellSize;
+	private double cellSize;
 
 	public SlideGameDisplayComponent(Grid grid)
 	{
@@ -35,7 +35,7 @@ public class SlideGameDisplayComponent extends JComponent
 		this.setFont(new Font("times", Font.PLAIN, 12));
 		this.xOffset = 0;
 		this.yOffset = 0;
-		this.cellSize = 50;
+		this.cellSize = 50d;
 		this.addComponentListener(
 				new SlideGameComponentListener(
 						componentEvent -> this.componentResized()));
@@ -45,9 +45,8 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		int width = this.getWidth();
 		int height = this.getHeight();
-		int gridLength = grid.getLength();
 		int minDimension = Math.min(width, height);
-		int newCellSize = minDimension / gridLength;
+		double newCellSize = minDimension / (grid.getLength() + 0d);
 
 		if (cellSize != newCellSize)
 		{
@@ -89,7 +88,7 @@ public class SlideGameDisplayComponent extends JComponent
 			double spacerSize,
 			double halfSpacerSize)
 	{
-		int gridLengthPx = gridLength * cellSize;
+		int gridLengthPx = round(gridLength * cellSize);
 		int roundedSpacerSize = round(spacerSize);
 		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= gridLength; c++)
