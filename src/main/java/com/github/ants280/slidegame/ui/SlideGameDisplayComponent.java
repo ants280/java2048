@@ -19,7 +19,7 @@ public class SlideGameDisplayComponent extends JComponent
 					RenderingHints.VALUE_ANTIALIAS_ON);
 	private int xOffset;
 	private int yOffset;
-	private int minDimension;
+	private int cellSize;
 
 	public SlideGameDisplayComponent(Grid grid)
 	{
@@ -35,7 +35,7 @@ public class SlideGameDisplayComponent extends JComponent
 		this.setFont(new Font("times", Font.PLAIN, 12));
 		this.xOffset = 0;
 		this.yOffset = 0;
-		this.minDimension = -1;
+		this.cellSize = 50;
 		this.addComponentListener(
 				new SlideGameComponentListener(
 						componentEvent -> this.componentResized()));
@@ -45,10 +45,8 @@ public class SlideGameDisplayComponent extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
-//		g.setFont(tileFont);
 
 		int gridLength = grid.getLength();
-		double cellSize = minDimension / (gridLength + 0d);
 		double tileSize = round(cellSize * 0.90d);
 		double spacerSize = cellSize - tileSize;
 		double halfSpacerSize = spacerSize / 2d;
@@ -56,14 +54,11 @@ public class SlideGameDisplayComponent extends JComponent
 		this.paintGrid(
 				gridLength,
 				g,
-				minDimension,
-				cellSize,
 				spacerSize,
 				halfSpacerSize);
 		this.paintTiles(
 				gridLength,
 				g,
-				cellSize,
 				tileSize,
 				halfSpacerSize);
 	}
@@ -72,14 +67,17 @@ public class SlideGameDisplayComponent extends JComponent
 	{
 		int width = this.getWidth();
 		int height = this.getHeight();
-		minDimension = Math.min(width, height);
-		xOffset = (width - minDimension) / 2;
-		yOffset = (height - minDimension) / 2;
-		float fontSize = (float) (minDimension / (grid.getLength() * 3d));
+		int gridLength = grid.getLength();
+		int minDimension = Math.min(width, height);
+		int newCellSize = minDimension / gridLength;
 
-		if (this.getFont().getSize2D() != fontSize)
+		if (cellSize != newCellSize)
 		{
-			this.setFont(this.getFont().deriveFont(fontSize));
+			xOffset = (width - minDimension) / 2;
+			yOffset = (height - minDimension) / 2;
+			cellSize = newCellSize;
+
+			this.setFont(this.getFont().deriveFont((float) (cellSize / 3d)));
 			this.repaint();
 		}
 	}
@@ -87,18 +85,17 @@ public class SlideGameDisplayComponent extends JComponent
 	private void paintGrid(
 			int gridLength,
 			Graphics g,
-			double minDimension,
-			double cellSize,
 			double spacerSize,
 			double halfSpacerSize)
 	{
+		int minDimension = gridLength * cellSize;
 		g.setColor(SlideGameColors.SPACER_COLOR);
 		for (int c = 0; c <= gridLength; c++)
 		{
 			int x = round(xOffset + (c * cellSize) - halfSpacerSize);
 			int y = round(yOffset);
 			int verticalLineWidth = round(spacerSize);
-			int height = round(minDimension);
+			int height = minDimension;
 			g.fillRect(
 					x, y,
 					verticalLineWidth, height);
@@ -107,7 +104,7 @@ public class SlideGameDisplayComponent extends JComponent
 		{
 			int x = round(xOffset);
 			int y = round(yOffset + (r * cellSize) - halfSpacerSize);
-			int width = round(minDimension);
+			int width = minDimension;
 			int horizontalLineHeight = round(spacerSize);
 			g.fillRect(
 					x, y,
@@ -118,7 +115,6 @@ public class SlideGameDisplayComponent extends JComponent
 	private void paintTiles(
 			int gridLength,
 			Graphics g,
-			double cellSize,
 			double tileSize,
 			double halfSpacerSize)
 	{
@@ -130,7 +126,6 @@ public class SlideGameDisplayComponent extends JComponent
 						g,
 						c,
 						r,
-						cellSize,
 						tileSize,
 						halfSpacerSize);
 			}
@@ -141,7 +136,6 @@ public class SlideGameDisplayComponent extends JComponent
 			Graphics g,
 			int c,
 			int r,
-			double cellSize,
 			double tileSize,
 			double halfSpacerSize)
 	{
@@ -154,7 +148,6 @@ public class SlideGameDisplayComponent extends JComponent
 				g,
 				c,
 				r,
-				cellSize,
 				tileSize,
 				halfSpacerSize);
 
@@ -164,8 +157,7 @@ public class SlideGameDisplayComponent extends JComponent
 					tile.getDisplayValue(),
 					g,
 					c,
-					r,
-					cellSize);
+					r);
 		}
 	}
 
@@ -174,7 +166,6 @@ public class SlideGameDisplayComponent extends JComponent
 			Graphics g,
 			int c,
 			int r,
-			double cellSize,
 			double tileSize,
 			double halfSpacerSize)
 	{
@@ -190,8 +181,7 @@ public class SlideGameDisplayComponent extends JComponent
 			String tileText,
 			Graphics g,
 			int c,
-			int r,
-			double cellSize)
+			int r)
 	{
 		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
 		double fontHeight = g.getFont().getSize2D() * 0.75d;
