@@ -40,7 +40,7 @@ public class SlideGameFrame
 
 		Grid grid = new Grid();
 		JComponent slideGameDisplayComponent
-				= new SlideGameDisplayComponent(grid);
+				= new SlideGameDisplayComponent(grid).getComponent();
 		JLabel gameOverLabel = this.createJLabel(false);
 		JLabel scoreLabel = this.createJLabel(true);
 		JLabel highScoreLabel = this.createJLabel(true);

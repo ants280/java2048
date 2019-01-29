@@ -9,10 +9,10 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JComponent;
 
-public class SlideGameDisplayComponent extends JComponent
+public class SlideGameDisplayComponent
 {
-	private static final long serialVersionUID = 1L;
-	private final transient Grid grid;
+	private final Grid grid;
+	private final JComponent component;
 	private static final RenderingHints ANTIALIAS_ON_RENDERING_HINT
 			= new RenderingHints(
 					RenderingHints.KEY_ANTIALIASING,
@@ -29,22 +29,28 @@ public class SlideGameDisplayComponent extends JComponent
 		super();
 
 		this.grid = grid;
+		this.component = new SlideGameDisplayComponentImpl();
 
 		this.init();
 	}
 
+	public JComponent getComponent()
+	{
+		return component;
+	}
+
 	private void init()
 	{
-		this.setFont(new Font("times", Font.PLAIN, 12));
-		this.addComponentListener(
+		component.setFont(new Font("times", Font.PLAIN, 12));
+		component.addComponentListener(
 				new SlideGameComponentListener(
 						componentEvent -> this.componentResized()));
 	}
 
 	private void componentResized()
 	{
-		int width = this.getWidth();
-		int height = this.getHeight();
+		int width = component.getWidth();
+		int height = component.getHeight();
 		int minDimension = Math.min(width, height);
 		int newCellSize = round(minDimension / (grid.getLength() + 0d));
 
@@ -57,95 +63,102 @@ public class SlideGameDisplayComponent extends JComponent
 			spacerSize = cellSize - tileSize;
 			halfSpacerSize = spacerSize / 2d;
 
-			this.setFont(this.getFont().deriveFont((float) (cellSize / 3d)));
-			this.repaint();
+			component.setFont(component.getFont()
+					.deriveFont((float) (cellSize / 3d)));
+			component.repaint();
 		}
 	}
 
-	//<editor-fold defaultstate="collapsed" desc="painting">
-	@Override
-	public void paintComponent(Graphics g)
+	private class SlideGameDisplayComponentImpl extends JComponent
 	{
-		((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
+		private static final long serialVersionUID = 1L;
 
-		this.paintGrid(g);
-		this.paintTiles(g);
-	}
-
-	private void paintGrid(Graphics g)
-	{
-		g.setColor(SlideGameColors.SPACER_COLOR);
-
-		int gridLengthPx = grid.getLength() * cellSize;
-		for (int i = 0; i <= grid.getLength(); i++)
+		//<editor-fold defaultstate="collapsed" desc="painting">
+		@Override
+		public void paintComponent(Graphics g)
 		{
-			double lineOffset = (i * cellSize) - halfSpacerSize;
+			((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
 
-			// vertical lines:
-			g.fillRect(
-					round(xOffset + lineOffset),
-					round(yOffset),
-					spacerSize,
-					gridLengthPx);
-
-			// horizontal lines:
-			g.fillRect(
-					round(xOffset),
-					round(yOffset + lineOffset),
-					gridLengthPx,
-					spacerSize);
+			this.paintGrid(g);
+			this.paintTiles(g);
 		}
-	}
 
-	private void paintTiles(Graphics g)
-	{
-		for (int c = 0; c < grid.getLength(); c++)
+		private void paintGrid(Graphics g)
 		{
-			for (int r = 0; r < grid.getLength(); r++)
+			g.setColor(SlideGameColors.SPACER_COLOR);
+
+			int gridLengthPx = grid.getLength() * cellSize;
+			for (int i = 0; i <= grid.getLength(); i++)
 			{
-				this.paintTile(g, c, r);
+				double lineOffset = (i * cellSize) - halfSpacerSize;
+
+				// vertical lines:
+				g.fillRect(
+						round(xOffset + lineOffset),
+						round(yOffset),
+						spacerSize,
+						gridLengthPx);
+
+				// horizontal lines:
+				g.fillRect(
+						round(xOffset),
+						round(yOffset + lineOffset),
+						gridLengthPx,
+						spacerSize);
 			}
 		}
-	}
 
-	private void paintTile(Graphics g, int c, int r)
-	{
-		Tile tile = grid.getTile(c, r);
-
-		Color tileColor = tile == null
-				? SlideGameColors.EMPTY_TILE_COLOR
-				: SlideGameColors.getColor(tile);
-		this.paintTileBackground(tileColor, g, c, r);
-
-		if (tile != null)
+		private void paintTiles(Graphics g)
 		{
-			this.paintTileText(tile.getDisplayValue(), g, c, r);
+			for (int c = 0; c < grid.getLength(); c++)
+			{
+				for (int r = 0; r < grid.getLength(); r++)
+				{
+					this.paintTile(g, c, r);
+				}
+			}
 		}
-	}
 
-	private void paintTileBackground(Color tileColor, Graphics g, int c, int r)
-	{
-		g.setColor(tileColor);
+		private void paintTile(Graphics g, int c, int r)
+		{
+			Tile tile = grid.getTile(c, r);
 
-		int x = round(xOffset + c * cellSize + halfSpacerSize);
-		int y = round(yOffset + r * cellSize + halfSpacerSize);
-		g.fillRect(x, y, tileSize, tileSize);
-	}
+			Color tileColor = tile == null
+					? SlideGameColors.EMPTY_TILE_COLOR
+					: SlideGameColors.getColor(tile);
+			this.paintTileBackground(tileColor, g, c, r);
 
-	private void paintTileText(String tileText, Graphics g, int c, int r)
-	{
-		g.setColor(SlideGameColors.TILE_TEXT_COLOR);
+			if (tile != null)
+			{
+				this.paintTileText(tile.getDisplayValue(), g, c, r);
+			}
+		}
 
-		int textWidth = g.getFontMetrics().stringWidth(tileText);
-		double fontHeight = g.getFont().getSize2D() * 0.75d;
-		int x = round(xOffset + ((c + 0.5d) * cellSize - textWidth / 2d));
-		int y = round(yOffset + ((r + 0.5d) * cellSize + fontHeight / 2d));
-		g.drawString(tileText, x, y);
+		private void paintTileBackground(Color tileColor, Graphics g, int c, int r)
+		{
+			g.setColor(tileColor);
+
+			int x = round(xOffset + c * cellSize + halfSpacerSize);
+			int y = round(yOffset + r * cellSize + halfSpacerSize);
+			g.fillRect(x, y, tileSize, tileSize);
+		}
+
+		private void paintTileText(String tileText, Graphics g, int c, int r)
+		{
+			g.setColor(SlideGameColors.TILE_TEXT_COLOR);
+
+			int textWidth = g.getFontMetrics().stringWidth(tileText);
+			double fontHeight = g.getFont().getSize2D() * 0.75d;
+			int x = round(xOffset + ((c + 0.5d) * cellSize - textWidth / 2d));
+			int y = round(yOffset + ((r + 0.5d) * cellSize + fontHeight / 2d));
+			g.drawString(tileText, x, y);
+		}
+
+		//</editor-fold>
 	}
 
 	private static int round(double value)
 	{
 		return (int) (value + 0.5d);
 	}
-	//</editor-fold>
 }
