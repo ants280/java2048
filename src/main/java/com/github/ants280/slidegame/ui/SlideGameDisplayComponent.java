@@ -17,8 +17,8 @@ public class SlideGameDisplayComponent
 			= new RenderingHints(
 					RenderingHints.KEY_ANTIALIASING,
 					RenderingHints.VALUE_ANTIALIAS_ON);
-	private double xOffset;
-	private double yOffset;
+	private int xOffset;
+	private int yOffset;
 	private int cellSize;
 	private int tileSize;
 	private int spacerSize;
@@ -52,12 +52,12 @@ public class SlideGameDisplayComponent
 		int width = component.getWidth();
 		int height = component.getHeight();
 		int minDimension = Math.min(width, height);
-		int newCellSize = round(minDimension / (grid.getLength() + 0d));
+		xOffset = (width - minDimension) / 2;
+		yOffset = (height - minDimension) / 2;
 
+		int newCellSize = round(minDimension / (grid.getLength() + 0d));
 		if (cellSize != newCellSize)
 		{
-			xOffset = (width - minDimension) / 2d;
-			yOffset = (height - minDimension) / 2d;
 			cellSize = newCellSize;
 			tileSize = round(cellSize * 0.90d);
 			spacerSize = cellSize - tileSize;
@@ -79,6 +79,7 @@ public class SlideGameDisplayComponent
 		{
 			((Graphics2D) g).setRenderingHints(ANTIALIAS_ON_RENDERING_HINT);
 
+			g.translate(xOffset, yOffset);
 			this.paintGrid(g);
 			this.paintTiles(g);
 		}
@@ -87,24 +88,16 @@ public class SlideGameDisplayComponent
 		{
 			g.setColor(SlideGameColors.SPACER_COLOR);
 
-			int gridLengthPx = grid.getLength() * cellSize;
+			int gridLengthPx = round(grid.getLength() * cellSize + halfSpacerSize);
 			for (int i = 0; i <= grid.getLength(); i++)
 			{
-				double lineOffset = (i * cellSize) - halfSpacerSize;
+				int lineOffset = round((i * cellSize) - halfSpacerSize);
 
 				// vertical lines:
-				g.fillRect(
-						round(xOffset + lineOffset),
-						round(yOffset),
-						spacerSize,
-						gridLengthPx);
+				g.fillRect(lineOffset, 0, spacerSize, gridLengthPx);
 
 				// horizontal lines:
-				g.fillRect(
-						round(xOffset),
-						round(yOffset + lineOffset),
-						gridLengthPx,
-						spacerSize);
+				g.fillRect(0, lineOffset, gridLengthPx, spacerSize);
 			}
 		}
 
@@ -123,35 +116,35 @@ public class SlideGameDisplayComponent
 		{
 			Tile tile = grid.getTile(c, r);
 
-			Color tileColor = tile == null
-					? SlideGameColors.EMPTY_TILE_COLOR
-					: SlideGameColors.getColor(tile);
-			this.paintTileBackground(tileColor, g, c, r);
+			this.paintTileBackground(g, c, r, tile);
 
 			if (tile != null)
 			{
-				this.paintTileText(tile.getDisplayValue(), g, c, r);
+				this.paintTileText(g, c, r, tile);
 			}
 		}
 
-		private void paintTileBackground(Color tileColor, Graphics g, int c, int r)
+		private void paintTileBackground(Graphics g, int c, int r, Tile tile)
 		{
+			Color tileColor = tile == null
+					? SlideGameColors.EMPTY_TILE_COLOR
+					: SlideGameColors.getColor(tile);
 			g.setColor(tileColor);
 
-			int x = round(xOffset + c * cellSize + halfSpacerSize);
-			int y = round(yOffset + r * cellSize + halfSpacerSize);
+			int x = round(c * cellSize + halfSpacerSize);
+			int y = round(r * cellSize + halfSpacerSize);
 			g.fillRect(x, y, tileSize, tileSize);
 		}
 
-		private void paintTileText(String tileText, Graphics g, int c, int r)
+		private void paintTileText(Graphics g, int c, int r, Tile tile)
 		{
 			g.setColor(SlideGameColors.TILE_TEXT_COLOR);
 
-			int textWidth = g.getFontMetrics().stringWidth(tileText);
+			int textWidth = g.getFontMetrics().stringWidth(tile.getDisplayValue());
 			double fontHeight = g.getFont().getSize2D() * 0.75d;
-			int x = round(xOffset + ((c + 0.5d) * cellSize - textWidth / 2d));
-			int y = round(yOffset + ((r + 0.5d) * cellSize + fontHeight / 2d));
-			g.drawString(tileText, x, y);
+			int x = round((c + 0.5d) * cellSize - textWidth / 2d);
+			int y = round((r + 0.5d) * cellSize + fontHeight / 2d);
+			g.drawString(tile.getDisplayValue(), x, y);
 		}
 
 		//</editor-fold>
