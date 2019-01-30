@@ -17,12 +17,12 @@ public class SlideGameDisplayComponent
 			= new RenderingHints(
 					RenderingHints.KEY_ANTIALIASING,
 					RenderingHints.VALUE_ANTIALIAS_ON);
+	private static final double SPACER_PERCENTAGE = 0.10d;
 	private int xOffset;
 	private int yOffset;
 	private int cellSize;
 	private int tileSize;
 	private int spacerSize;
-	private double halfSpacerSize;
 
 	public SlideGameDisplayComponent(Grid grid)
 	{
@@ -55,13 +55,13 @@ public class SlideGameDisplayComponent
 		xOffset = (width - minDimension) / 2;
 		yOffset = (height - minDimension) / 2;
 
-		int newCellSize = round(minDimension / (grid.getLength() + 0d));
+		int newCellSize
+				= round(minDimension / (grid.getLength() + SPACER_PERCENTAGE));
 		if (cellSize != newCellSize)
 		{
 			cellSize = newCellSize;
-			tileSize = round(cellSize * 0.90d);
-			spacerSize = cellSize - tileSize;
-			halfSpacerSize = spacerSize / 2d;
+			spacerSize = round(cellSize * SPACER_PERCENTAGE);
+			tileSize = cellSize - spacerSize;
 
 			component.setFont(component.getFont()
 					.deriveFont((float) (cellSize / 3d)));
@@ -88,10 +88,10 @@ public class SlideGameDisplayComponent
 		{
 			g.setColor(SlideGameColors.SPACER_COLOR);
 
-			int gridLengthPx = round(grid.getLength() * cellSize + halfSpacerSize);
+			int gridLengthPx = grid.getLength() * cellSize + spacerSize;
 			for (int i = 0; i <= grid.getLength(); i++)
 			{
-				int lineOffset = round((i * cellSize) - halfSpacerSize);
+				int lineOffset = i * cellSize;
 
 				// vertical lines:
 				g.fillRect(lineOffset, 0, spacerSize, gridLengthPx);
@@ -131,8 +131,8 @@ public class SlideGameDisplayComponent
 					: SlideGameColors.getColor(tile);
 			g.setColor(tileColor);
 
-			int x = round(c * cellSize + halfSpacerSize);
-			int y = round(r * cellSize + halfSpacerSize);
+			int x = round(c * cellSize + spacerSize);
+			int y = round(r * cellSize + spacerSize);
 			g.fillRect(x, y, tileSize, tileSize);
 		}
 
@@ -142,8 +142,8 @@ public class SlideGameDisplayComponent
 
 			int textWidth = g.getFontMetrics().stringWidth(tile.getDisplayValue());
 			double fontHeight = g.getFont().getSize2D() * 0.75d;
-			int x = round((c + 0.5d) * cellSize - textWidth / 2d);
-			int y = round((r + 0.5d) * cellSize + fontHeight / 2d);
+			int x = round((c + 0.5d) * cellSize + (spacerSize - textWidth) / 2d);
+			int y = round((r + 0.5d) * cellSize + (spacerSize + fontHeight) / 2d);
 			g.drawString(tile.getDisplayValue(), x, y);
 		}
 
