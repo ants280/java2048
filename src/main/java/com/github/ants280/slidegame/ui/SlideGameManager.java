@@ -6,8 +6,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.HashMap;
-import java.util.Map;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -25,20 +23,6 @@ public class SlideGameManager
 	private boolean gameWon;
 	private boolean listenersAdded;
 	private MouseEvent mousePressedLocation;
-	private static final Map<Integer, MoveDirection> MOVE_DIRECTIONS
-			= new HashMap<>();
-
-	static
-	{
-		MOVE_DIRECTIONS.put(KeyEvent.VK_W, MoveDirection.UP);
-		MOVE_DIRECTIONS.put(KeyEvent.VK_A, MoveDirection.LEFT);
-		MOVE_DIRECTIONS.put(KeyEvent.VK_S, MoveDirection.DOWN);
-		MOVE_DIRECTIONS.put(KeyEvent.VK_D, MoveDirection.RIGHT);
-		MOVE_DIRECTIONS.put(KeyEvent.VK_UP, MoveDirection.UP);
-		MOVE_DIRECTIONS.put(KeyEvent.VK_LEFT, MoveDirection.LEFT);
-		MOVE_DIRECTIONS.put(KeyEvent.VK_DOWN, MoveDirection.DOWN);
-		MOVE_DIRECTIONS.put(KeyEvent.VK_RIGHT, MoveDirection.RIGHT);
-	}
 
 	public SlideGameManager(
 			Grid grid,
@@ -190,7 +174,7 @@ public class SlideGameManager
 
 	private void keyReleased(KeyEvent e)
 	{
-		this.makeMove(MOVE_DIRECTIONS.get(e.getKeyCode()));
+		this.makeMove(MoveDirection.fromKeyEvent(e));
 	}
 
 	private void mousePressed(MouseEvent e)
@@ -211,34 +195,6 @@ public class SlideGameManager
 			return;
 		}
 
-		int deltaX = e.getX() - mousePressedLocation.getX();
-		int deltaY = e.getY() - mousePressedLocation.getY();
-		int absDeltaX = Math.abs(deltaX);
-		int absDeltaY = Math.abs(deltaY);
-
-		MoveDirection moveDirection = null;
-		if (absDeltaX > absDeltaY)
-		{
-			if (deltaX < 0)
-			{
-				moveDirection = MoveDirection.LEFT;
-			}
-			else if (deltaX > 0)
-			{
-				moveDirection = MoveDirection.RIGHT;
-			}
-		}
-		else if (absDeltaY > absDeltaX)
-		{
-			if (deltaY < 0)
-			{
-				moveDirection = MoveDirection.UP;
-			}
-			else if (deltaY > 0)
-			{
-				moveDirection = MoveDirection.DOWN;
-			}
-		}
-		this.makeMove(moveDirection);
+		this.makeMove(MoveDirection.fromMouseEvents(mousePressedLocation, e));
 	}
 }
