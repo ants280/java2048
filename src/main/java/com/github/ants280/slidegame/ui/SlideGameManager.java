@@ -171,7 +171,7 @@ public class SlideGameManager
 	private void removeListeners()
 	{
 		slideGameRootComponent.removeKeyListener(keyListener);
-		slideGameDisplayComponent.addMouseListener(mouseListener);
+		slideGameDisplayComponent.removeMouseListener(mouseListener);
 		mousePressedLocation = null;
 		listenersAdded = false;
 	}
