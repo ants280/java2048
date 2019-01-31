@@ -63,7 +63,7 @@ public class MoveDirectionTest
 	}
 
 	@Test
-	public void testGetKeyCodes_sameNumberForAllMoveDirections()
+	public void testGetKeyCodes_sameLengthForAllMoveDirections()
 	{
 		int expectedKeyCodesLength = -1;
 		MoveDirection[] moveDirections = MoveDirection.values();
