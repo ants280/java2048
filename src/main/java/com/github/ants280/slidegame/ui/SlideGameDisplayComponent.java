@@ -131,8 +131,8 @@ public class SlideGameDisplayComponent
 					: SlideGameColors.getColor(tile);
 			g.setColor(tileColor);
 
-			int x = round(c * cellSize + spacerSize);
-			int y = round(r * cellSize + spacerSize);
+			int x = c * cellSize + spacerSize;
+			int y = r * cellSize + spacerSize;
 			g.fillRect(x, y, tileSize, tileSize);
 		}
 
