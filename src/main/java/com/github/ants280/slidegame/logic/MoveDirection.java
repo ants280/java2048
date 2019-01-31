@@ -71,6 +71,7 @@ public enum MoveDirection
 		int signumX = Integer.signum(deltaX);
 		int signumY = Integer.signum(deltaY);
 
+		// Only care about the sign of the axis with a larger value:
 		if (absDeltaX > absDeltaY)
 		{
 			signumY = 0;
