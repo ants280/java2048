@@ -140,10 +140,13 @@ public class SlideGameDisplayComponent
 		{
 			g.setColor(SlideGameColors.TILE_TEXT_COLOR);
 
-			int textWidth = g.getFontMetrics().stringWidth(tile.getDisplayValue());
+			int textWidth = g.getFontMetrics()
+					.stringWidth(tile.getDisplayValue());
 			double fontHeight = g.getFont().getSize2D() * 0.75d;
-			int x = round((c + 0.5d) * cellSize + (spacerSize - textWidth) / 2d);
-			int y = round((r + 0.5d) * cellSize + (spacerSize + fontHeight) / 2d);
+			int x = round((c + 0.5d) * cellSize
+					+ (spacerSize - textWidth) / 2d);
+			int y = round((r + 0.5d) * cellSize
+					+ (spacerSize + fontHeight) / 2d);
 			g.drawString(tile.getDisplayValue(), x, y);
 		}
 
