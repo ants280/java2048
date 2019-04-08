@@ -10,7 +10,7 @@ public class TileTest
 	@Test
 	public void testGetDisplayValue_distinct()
 	{
-		Tile[] tiles = Stream.iterate(Tile.TWO, tile -> tile.getNext())
+		Tile[] tiles = Stream.iterate(Tile.TWO, Tile::getNext)
 				.limit(11)
 				.toArray(Tile[]::new);
 
